@@ -1,0 +1,210 @@
+import { Card } from "../components/Card";
+import { MetricCard, StatusBadge } from "../components/Widgets";
+import {
+  Cpu, HardDrive, Battery, Thermometer, Shield, RefreshCw,
+  Activity, Zap, Pin, MemoryStick,
+} from "lucide-react";
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { clsx } from "clsx";
+import { useState, useEffect } from "react";
+import { PinToOverviewButton } from "../components/OverviewContext";
+
+const cpuData = Array.from({ length: 60 }, (_, i) => ({
+  t: `${60 - i}s`,
+  cpu: 25 + Math.random() * 25,
+  mem: 42 + Math.random() * 12,
+}));
+
+const batteryData = Array.from({ length: 48 }, (_, i) => ({
+  time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
+  voltage: 12.6 - (i * 0.008) + Math.random() * 0.1,
+  current: 0.35 + Math.random() * 0.15,
+}));
+
+const processes = [
+  { name: "hydrophone_capture", cpu: "18.2%", mem: "124 MB", status: "running" },
+  { name: "telemetry_tx", cpu: "3.1%", mem: "28 MB", status: "running" },
+  { name: "gps_daemon", cpu: "1.4%", mem: "12 MB", status: "running" },
+  { name: "sensor_poll", cpu: "2.8%", mem: "18 MB", status: "running" },
+  { name: "watchdog_svc", cpu: "0.3%", mem: "4 MB", status: "running" },
+  { name: "log_rotate", cpu: "0.0%", mem: "6 MB", status: "idle" },
+  { name: "wifi_manager", cpu: "0.0%", mem: "8 MB", status: "standby" },
+];
+
+export function SystemHealth() {
+  const [liveTime, setLiveTime] = useState(new Date());
+  useEffect(() => { const t = setInterval(() => setLiveTime(new Date()), 1000); return () => clearInterval(t); }, []);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">System Health</h1>
+          <p className="text-slate-500 text-sm mt-1">Embedded compute, power, storage, and watchdog monitoring for BY-04-A.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <StatusBadge status="success">All Systems Nominal</StatusBadge>
+          <PinToOverviewButton widget={{ id: "health-battery", source: "System Health", label: "Battery Status", type: "metric" }} />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <MetricCard title="CPU" value="32" unit="%" trend="neutral" trendValue="Raspberry Pi 4" icon={Cpu} status="success" />
+        <MetricCard title="Memory" value="48" unit="%" trend="neutral" trendValue="1.9 / 4 GB" icon={MemoryStick} status="success" />
+        <MetricCard title="Storage" value="17" unit="%" trend="up" trendValue="45 / 256 GB" icon={HardDrive} status="normal" />
+        <MetricCard title="Battery" value="12.4" unit="V" trend="down" trendValue="-0.02V/h" icon={Battery} status="success" />
+        <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card title="CPU & Memory (60s)" action={
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse"></div>
+            <span className="text-[10px] font-mono text-slate-500">LIVE</span>
+          </div>
+        }>
+          <div className="h-48 w-full mt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={cpuData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <XAxis dataKey="t" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis domain={[0, 100]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} unit="%" />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: 8, fontSize: 11 }} />
+                <Line type="monotone" dataKey="cpu" stroke="#06b6d4" strokeWidth={1.5} dot={false} name="CPU" />
+                <Line type="monotone" dataKey="mem" stroke="#a78bfa" strokeWidth={1.5} dot={false} name="Memory" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex gap-4 mt-2 text-[10px] font-mono text-slate-500">
+            <span className="flex items-center gap-1"><span className="w-2 h-0.5 bg-cyan-500 rounded inline-block"></span> CPU</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-0.5 bg-violet-500 rounded inline-block"></span> Memory</span>
+          </div>
+        </Card>
+
+        <Card title="Battery Voltage & Current (24h)" action={
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse"></div>
+            <span className="text-[10px] font-mono text-slate-500">LIVE</span>
+          </div>
+        }>
+          <div className="h-48 w-full mt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={batteryData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                <XAxis dataKey="time" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="v" domain={[11.5, 13]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="a" orientation="right" domain={[0, 1]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: 8, fontSize: 11 }} />
+                <Line yAxisId="v" type="monotone" dataKey="voltage" stroke="#10b981" strokeWidth={2} dot={false} name="Voltage (V)" />
+                <Line yAxisId="a" type="monotone" dataKey="current" stroke="#f59e0b" strokeWidth={1.5} dot={false} name="Current (A)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex gap-4 mt-2 text-[10px] font-mono text-slate-500">
+            <span className="flex items-center gap-1"><span className="w-2 h-0.5 bg-emerald-500 rounded inline-block"></span> Voltage</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-0.5 bg-amber-500 rounded inline-block"></span> Current</span>
+          </div>
+        </Card>
+      </div>
+
+      {/* Storage breakdown */}
+      <Card title="Storage Breakdown">
+        <div className="space-y-3">
+          {[
+            { label: "Hydrophone Audio", used: "38.2 GB", pct: 85, color: "bg-cyan-500" },
+            { label: "Telemetry Logs", used: "3.8 GB", pct: 8, color: "bg-blue-500" },
+            { label: "Sensor Data", used: "1.9 GB", pct: 4, color: "bg-emerald-500" },
+            { label: "System Logs", used: "0.7 GB", pct: 2, color: "bg-slate-500" },
+            { label: "Free Space", used: "211.4 GB", pct: 0, color: "" },
+          ].map(item => (
+            <div key={item.label} className="flex items-center gap-4">
+              <span className="text-xs text-slate-400 w-36 shrink-0">{item.label}</span>
+              <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                {item.pct > 0 && <div className={clsx("h-full rounded-full", item.color)} style={{ width: `${item.pct}%` }} />}
+              </div>
+              <span className="text-xs font-mono text-slate-500 w-20 text-right">{item.used}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 pt-3 border-t border-slate-800 flex justify-between text-xs font-mono text-slate-500">
+          <span>Total: 256 GB (SD Card)</span>
+          <span>Used: 44.6 GB (17.4%)</span>
+        </div>
+      </Card>
+
+      {/* Running processes */}
+      <Card title="Running Processes" action={<span className="text-[10px] font-mono text-slate-600">{processes.length} services</span>}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-slate-800 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <th className="px-4 py-2">Process</th>
+                <th className="px-4 py-2">CPU</th>
+                <th className="px-4 py-2">Memory</th>
+                <th className="px-4 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm font-mono">
+              {processes.map(p => (
+                <tr key={p.name} className="border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors">
+                  <td className="px-4 py-2 text-slate-200">{p.name}</td>
+                  <td className="px-4 py-2 text-slate-400">{p.cpu}</td>
+                  <td className="px-4 py-2 text-slate-400">{p.mem}</td>
+                  <td className="px-4 py-2">
+                    <StatusBadge status={p.status === "running" ? "success" : p.status === "standby" ? "neutral" : "info"}>
+                      {p.status}
+                    </StatusBadge>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Watchdog & Power */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card title="Watchdog Status" className="!bg-slate-900/60">
+          <div className="space-y-3 text-xs">
+            {[
+              { label: "Hardware Watchdog", value: "Active", status: "success" as const },
+              { label: "Last Kick", value: "4s ago", status: "success" as const },
+              { label: "Timeout", value: "30s", status: "info" as const },
+              { label: "Total Resets", value: "0 (this deployment)", status: "success" as const },
+              { label: "Safe Mode Triggers", value: "0", status: "success" as const },
+            ].map(item => (
+              <div key={item.label} className="flex justify-between items-center">
+                <span className="text-slate-500 font-mono">{item.label}</span>
+                <StatusBadge status={item.status}>{item.value}</StatusBadge>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card title="Power Budget Estimate" className="!bg-slate-900/60">
+          <div className="space-y-3 text-xs">
+            {[
+              { label: "RPi 4 Compute", draw: "2.5 W" },
+              { label: "Hydrophone + AFE", draw: "0.8 W" },
+              { label: "GPS Module", draw: "0.15 W" },
+              { label: "LoRa Radio (TX avg)", draw: "0.12 W" },
+              { label: "Sensors (BME280, DS18B20)", draw: "0.05 W" },
+              { label: "Total Estimated", draw: "~3.6 W" },
+            ].map(item => (
+              <div key={item.label} className={clsx("flex justify-between items-center", item.label.startsWith("Total") && "pt-2 border-t border-slate-800 font-semibold")}>
+                <span className="text-slate-400 font-mono">{item.label}</span>
+                <span className={clsx("font-mono", item.label.startsWith("Total") ? "text-cyan-400" : "text-slate-300")}>{item.draw}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-600">
+            Est. runtime on 100Wh battery: ~27 hours continuous
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,540 @@
+You are a senior product designer, geospatial dashboard designer, environmental data UX designer, and Figma systems architect. You are modifying the existing **Location / Map** section of my engineering dashboard in Figma. This is not a loose concept exercise. I need a concrete, implementation-ready overhaul of the map experience so it becomes one of the strongest parts of the product.
+
+Your task is to redesign the current map experience into a **full-screen operational geospatial monitoring interface** for a coastal multi-sensor buoy system, while preserving the wider dashboard shell and overall visual language.
+
+Do not give vague ideas.
+Do not only describe inspiration.
+Do not keep the current map mostly as-is.
+Actually redesign the map module, its information hierarchy, overlays, interactions, and supporting components so it feels like a real engineering operations and deployment-planning tool.
+
+---
+
+# PROJECT CONTEXT
+
+This dashboard is for a **coastal multi-sensor sensing buoy** project with:
+- hydrophone as a core payload
+- GPS/location tracking
+- IMU/system state
+- environmental sensing
+- battery and telemetry monitoring
+- local-first data logging
+- lightweight live telemetry
+- a web dashboard for live monitoring, environmental context, historical trends, and deployment planning
+
+The map must support both:
+1. **live buoy operations**
+2. **environmental and deployment context**
+
+It should feel:
+- scientific
+- technically credible
+- marine-aware
+- modern
+- dark-mode premium
+- useful for engineers and assessors
+- visually strong enough for portfolio and poster screenshots
+
+---
+
+# WHAT IS WRONG WITH THE CURRENT MAP
+
+The current map is too small, too passive, and not yet delivering the value it should.
+The overlay toggles do not meaningfully work.
+The selected buoy is not emphasised enough.
+The map does not yet feel like an environmental intelligence layer or deployment decision-support tool.
+The right panel needs to float more clearly over the map.
+The map should dominate the page instead of feeling like just another content card.
+
+You must fix all of this.
+
+---
+
+# PRIMARY GOAL
+
+Overhaul the **Location / Map** page so it becomes a **full-screen geospatial control surface** with:
+- a much larger map canvas
+- clearer selected-buoy state
+- actually useful overlay controls
+- environmental context layers
+- deployment suitability context
+- forecast and ocean condition views
+- wildlife / distribution overlays using public data where appropriate
+- strong interactions
+- clean geospatial legends
+- excellent hierarchy
+- parity between this detailed map page and the map shown on the Overview page
+
+---
+
+# KEY VISUAL / LAYOUT CHANGE
+
+## Make the map feel full-screen
+The map should occupy almost the entire content area of the page.
+
+Keep:
+- the left dashboard sidebar visible
+- the top app shell visible if needed
+- a floating right-side contextual panel
+- floating map controls over the map
+- floating legends / active layer chips when needed
+
+But the map itself should visually dominate the page.
+
+Target behaviour:
+- map fills the full main workspace
+- right information panel floats over the map rather than sitting as a rigid side column
+- the map is clearly the primary surface
+- controls feel layered on top, not boxed away from the map
+
+This same improved logic should also be applied to the **map on the Overview page**, in a scaled-down but still strong way.
+
+---
+
+# IMPORTANT DATA / OVERLAY REQUIREMENT
+
+I want the map to support much richer environmental overlays, including publicly available data.
+
+You must:
+- identify appropriate **publicly available datasets / APIs / tile services / map sources**
+- choose sources that are suitable for:
+  - waves
+  - currents
+  - wind
+  - weather / storms
+  - sea state / marine forecast context
+  - climate/environmental context
+  - wildlife distribution / habitat / marine activity context where realistically available
+- use these to inform the Figma design and overlay architecture
+- label source-driven layers clearly in the UI
+- if live integration is not available in design-time, create realistic UI states and source labels that assume those datasets are connected
+
+I do not need you to build the backend.
+I need you to design the map interface **as if it is properly connected to real public marine/environmental data sources**.
+
+Examples of the kinds of layers I want represented in the design:
+- wave height heatmap
+- wave direction / wave energy view
+- current speed heatmap
+- current vectors / streamline overlays
+- wind speed / direction overlay
+- storm / severe weather alerts
+- rainfall or weather fronts if relevant
+- marine forecast regions
+- sea surface or coastal environmental conditions where meaningful
+- wildlife distribution / habitat / protected area layers using public sources where realistic
+- exclusion zones / protected areas / deployment boundaries
+- buoy track / drift / operational footprint
+- risk zones / unsuitable deployment regions
+
+Very important:
+- do not make the map look cluttered or like a GIS tool for specialists only
+- make it feel like a refined engineering dashboard with layers that can be toggled and understood quickly
+
+---
+
+# WHAT I NEED THE MAP EXPERIENCE TO DO
+
+## 1. SELECTED BUOY CLARITY
+The selected buoy must be much more obvious.
+
+Improve selection state with:
+- stronger glow / halo / focus treatment
+- clearer label / nameplate
+- selected state chip in the UI
+- map-centred selection affordance
+- stronger correspondence between selected marker and right-side floating panel
+- hover state vs selected state distinction
+- optional pulse / ring animation if subtle and tasteful
+
+Also improve the relationship between:
+- selected buoy on map
+- active node in header
+- content in floating detail panel
+- historical layers related to that buoy
+- hover tooltip content
+
+## 2. FLOATING RIGHT-SIDE PANEL
+The right-side panel should feel like an operational contextual drawer floating over the map.
+
+It should be redesigned to support:
+- selected buoy summary
+- live position quality
+- depth / drift / fix state
+- environmental context at selected point
+- active overlays
+- deployment suitability summary
+- forecast highlights
+- alert snippets
+- layer-specific details depending on what is selected
+
+This panel should be modular and support variants:
+- buoy info mode
+- overlay details mode
+- deployment planning mode
+- forecast mode
+- wildlife layer mode
+- map legend mode if needed
+
+## 3. FLOATING MAP TOOLBAR / CONTROLS
+Create or improve floating map controls for:
+- zoom
+- recenter on selected buoy
+- fit all buoys
+- switch basemap
+- toggle overlays
+- open legend
+- open time slider
+- open comparison mode if appropriate
+- pin this map state to overview
+- export current map snapshot
+
+Controls should feel polished and minimal, not like default GIS buttons.
+
+## 4. BASEMAP / STYLE OPTIONS
+Add meaningful map styles.
+
+At minimum include:
+- dark operational basemap
+- satellite
+- terrain / relief
+- marine / nautical-inspired style
+
+If useful, include a bathymetry-inspired or coastal analytical style as a future/advanced option.
+
+Make the style switcher elegant and compact.
+Do not bury it.
+
+## 5. WORKING OVERLAY SYSTEM
+The current overlay toggles do not feel real. Redesign them into a proper overlay system.
+
+Support:
+- overlay groups
+- toggles
+- active chips
+- legends
+- opacity / intensity control where useful
+- time dimension where relevant
+- source label
+- units label
+- loading / unavailable states
+- overlay descriptions
+
+Suggested overlay groups:
+### Operational
+- buoy positions
+- buoy tracks
+- anchor radius / drift envelope
+- deployment zones
+- recent alerts
+- comms coverage / confidence if useful
+
+### Ocean conditions
+- wave height
+- wave direction
+- wave period
+- currents
+- current vectors
+- wind
+- sea-state suitability
+
+### Weather / forecast
+- storm warnings
+- forecast overlay
+- forecast timeline
+- adverse conditions zones
+
+### Environmental / ecological
+- marine protected areas
+- habitat / wildlife distribution
+- biologically sensitive zones
+- seasonal ecological activity if public data exists
+
+### Climate / context
+- long-term environmental context
+- anomaly / seasonal pattern layers if realistic
+- climate risk framing if useful but secondary
+
+## 6. HEATMAPS AND FLOW VISUALS
+I want visually clear geospatial layers such as:
+- wave heatmaps
+- current intensity maps
+- wind or storm intensity fields
+- wildlife distribution heatmaps
+- protected region shading
+- hazard or deployment suitability masks
+
+Use clear and restrained design:
+- avoid garish rainbow GIS mess
+- use a coherent dark-theme palette
+- ensure overlays read cleanly over the basemap
+- provide legends and units
+- provide obvious active-layer feedback
+
+Current vectors / streamlines / directional arrows should be considered where relevant for waves/currents/wind, but applied carefully so the page stays readable.
+
+## 7. DEPLOYMENT DECISION SUPPORT
+This is a major requirement.
+
+The map should help answer:
+- is this a good area to deploy?
+- what risks are present?
+- what conditions are expected?
+- where are protected / constrained zones?
+- how do wave/current/weather conditions compare spatially?
+
+Create a deployment-support experience with:
+- deployment suitability card
+- conditions summary
+- risk labels
+- forecast snapshot
+- recommended caution / go-no-go status
+- map regions tinted by suitability if useful
+- selected region details
+
+Possible fields to include:
+- wind
+- wave height
+- current speed
+- visibility
+- weather alerts
+- protected-zone conflicts
+- deployment risk state
+- short recommendation copy such as:
+  - Suitable
+  - Use caution
+  - Poor conditions
+  - Restricted zone
+  - Forecast deteriorating
+
+## 8. WILDLIFE / DISTRIBUTION OVERLAYS
+Add support for wildlife-related context, but do it realistically.
+
+This project is not a whale-species dashboard like SeaStats.
+However, I do want the hydrophone map experience to support public ecological context where available.
+
+Use layers such as:
+- wildlife distribution / habitat probability
+- marine protected areas
+- ecological sensitivity zones
+- seasonal species presence context
+- known biodiversity / habitat regions if supported by public sources
+
+These should be presented as optional context layers, not as fake precision measurements from our own buoy.
+
+Clearly distinguish:
+- onboard buoy data
+- external public context layers
+- forecast/model layers
+- static/reference boundary layers
+
+## 9. TIME / FORECAST INTERACTION
+Add temporal intelligence to the map.
+
+Support:
+- now vs forecast
+- historical layer playback if relevant
+- time slider for forecast layers
+- timestamp chips
+- “latest update” states
+- “forecast valid until” labels
+- layer-specific time controls
+
+For example:
+- waves forecast over next 24h / 72h
+- weather timeline
+- historical buoy track replay
+- public wildlife layer season / month mode if appropriate
+
+## 10. OVERVIEW PAGE MAP MUST ALSO IMPROVE
+Apply the same logic to the Overview page map in a condensed way.
+
+The Overview map should:
+- have better buoy hover tooltips
+- clearly show selected buoy
+- support a small set of quick overlays
+- allow click-through to full Location / Map page
+- feel consistent with the full geospatial experience
+
+Do not let the full map page and overview map feel like separate products.
+
+---
+
+# MAP PAGE CONTENT / MODULES TO DESIGN
+
+Redesign the full Location / Map page to include these kinds of modules:
+
+## Main map surface
+- large full-width/full-height dominant map
+- floating controls
+- active layers visible
+- selected buoy clearly highlighted
+
+## Floating selected buoy card
+Show:
+- buoy ID / name
+- lat/lon
+- depth or deployed depth if available
+- GPS fix state
+- number of satellites if relevant
+- drift / anchor state
+- last sync
+- quick status
+
+## Floating environmental context card
+Show:
+- local wave height
+- current speed
+- wind
+- visibility if relevant
+- forecast condition summary
+- risk badge
+- suitability badge
+
+## Floating overlay manager
+Should include:
+- grouped layer toggles
+- active source labels
+- legend entry access
+- filter chips
+- opacity controls if useful
+
+## Floating legend
+Contextual legend for heatmaps / gradients / vectors / protected zones / wildlife layers
+
+## Bottom time / forecast control if relevant
+- now
+- +6h
+- +12h
+- +24h
+- +48h
+- historical
+- forecast animation/play if appropriate
+
+## Compare region / compare buoy mode if useful
+Optional but valuable:
+- compare selected buoy zone vs another zone
+- compare current site conditions to alternative deployment site
+
+---
+
+# COMPONENTS TO CREATE / MODIFY
+
+Update or create reusable Figma components for:
+
+- full-screen map container
+- buoy marker default
+- buoy marker hover
+- buoy marker selected
+- buoy marker alert state
+- buoy cluster / multi-buoy group if needed
+- hover tooltip
+- selected buoy info card
+- floating panel shell
+- overlay group accordion
+- overlay toggle row
+- active layer chip
+- heatmap legend
+- vector legend
+- time slider
+- basemap switcher
+- deployment suitability badge
+- forecast summary card
+- protected area label chip
+- wildlife distribution layer card
+- map action buttons
+- “open in full map” CTA from overview
+- “pin to overview” CTA from full map
+
+These must feel like part of the same design system as the rest of the dashboard.
+
+---
+
+# UX / INTERACTION RULES
+
+Make the map interactions feel useful and believable.
+
+Key behaviours:
+- hover over buoy shows tooltip
+- click buoy locks selection
+- selected buoy updates right floating panel
+- clicking a layer region can change panel content to layer-specific details
+- turning on an overlay updates legend automatically
+- if multiple overlays are active, visual priority remains clear
+- map state persists when moving between overview and location page where useful
+- “pin to overview” should let map summaries appear on overview
+- on mobile/tablet or constrained width, panel collapses intelligently
+
+Use tasteful motion only:
+- selected buoy subtle pulse
+- panel transition
+- overlay fade
+- time slider progression
+- loading shimmer / data fetch state
+
+Avoid gimmicks.
+
+---
+
+# DATA SOURCE / REALISM REQUIREMENTS
+
+You must explicitly account for the fact that these overlays are from **publicly available external sources** rather than from our buoy directly.
+
+In the UI, label data origin clearly such as:
+- Live buoy telemetry
+- Public marine forecast
+- Public weather data
+- Public habitat layer
+- Static reference boundary
+- Modeled ocean conditions
+
+Ask the AI to identify appropriate public sources/APIs/layers for this purpose and incorporate them into the design logic.
+Where exact live connections are not possible in Figma, create realistic source placeholders and naming structures.
+
+Do not fake that the buoy itself measures all of these map-wide fields.
+
+---
+
+# VISUAL DIRECTION
+
+Use the existing dark oceanic technical style as a base, but improve it significantly.
+
+The map should feel:
+- premium
+- cinematic but restrained
+- professional
+- marine-technical
+- data-rich
+- dark-mode and contrast-controlled
+- clean enough for assessors
+- strong enough for screenshots in a poster or portfolio
+
+Avoid:
+- messy GIS clutter
+- default web map controls
+- random neon
+- unreadable heatmaps
+- too many competing colors
+- low-contrast overlay labels
+
+---
+
+# WHAT I NEED YOU TO PRODUCE
+
+Structure your response as a real design modification plan in this format:
+
+A. Design intent for the map overhaul  
+B. New map page layout and hierarchy  
+C. Overview map upgrades  
+D. Overlay/data-layer architecture  
+E. Public data / API / source strategy to support the design  
+F. Component changes required  
+G. Interaction and behaviour rules  
+H. Selected buoy clarity improvements  
+I. Deployment-support UX improvements  
+J. Figma implementation priority and build order  
+
+Be specific.
+Be implementation-ready.
+Make strong design decisions.
+Do not ask unnecessary clarifying questions.
+Treat this as a serious redesign brief for a flagship geospatial page within an engineering dashboard.
