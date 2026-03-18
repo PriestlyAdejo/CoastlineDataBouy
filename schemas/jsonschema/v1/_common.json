@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/_common.json",
+  "title": "Common schema definitions (v1)",
+  "type": "object",
+  "$defs": {
+    "NodeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "description": "Stable buoy/node identifier. Example: ucl-buoy or BY-04-A"
+    },
+    "IsoTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC3339 timestamp in UTC."
+    },
+    "UnitValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1 }
+      },
+      "required": ["value", "unit"]
+    },
+    "HealthStatus": {
+      "type": "string",
+      "enum": ["ok", "degraded", "fault", "unknown"]
+    },
+    "ModuleState": {
+      "type": "string",
+      "enum": ["active", "installed", "optional", "future", "not_installed", "unknown"]
+    }
+  },
+  "additionalProperties": true
+}
+

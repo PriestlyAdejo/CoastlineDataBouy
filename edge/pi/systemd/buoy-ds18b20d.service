@@ -1,0 +1,17 @@
+[Unit]
+Description=Buoy DS18B20 polling service
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=simple
+User=buoy
+Group=buoy
+EnvironmentFile=-/etc/buoy/buoy.env
+ExecStart=/usr/local/bin/buoy-ds18b20d
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

@@ -11,6 +11,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { clsx } from "clsx";
 import { PinToOverviewButton } from "../components/OverviewContext";
+import { createApiClient } from "../api/client";
 
 const packetData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -32,10 +33,31 @@ const uptimeLog = [
 
 export function Telemetry() {
   const [liveTime, setLiveTime] = useState(new Date());
+  const [apiTs, setApiTs] = useState<string | null>(null);
+  const [apiOk, setApiOk] = useState<boolean | null>(null);
 
   useEffect(() => {
     const t = setInterval(() => setLiveTime(new Date()), 1000);
     return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const client = createApiClient();
+    client
+      .getLatestSnapshots("ucl-buoy")
+      .then((snap) => {
+        if (cancelled) return;
+        setApiTs(snap.ts);
+        setApiOk(true);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setApiOk(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -50,6 +72,10 @@ export function Telemetry() {
           <StatusBadge status="success">LoRa Connected</StatusBadge>
           <PinToOverviewButton widget={{ id: "telemetry-packet-rate", source: "Telemetry", label: "Packet Delivery Rate", type: "metric" }} />
         </div>
+      </div>
+
+      <div className="text-[10px] font-mono text-slate-600">
+        API: {apiOk === null ? "checking…" : apiOk ? `connected (ts=${apiTs ?? "?"})` : "offline (using mock data)"}
       </div>
 
       {/* Key metrics */}

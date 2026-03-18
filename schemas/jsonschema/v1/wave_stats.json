@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/wave_stats.json",
+  "title": "WaveStats (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "node_id": { "$ref": "_common.json#/$defs/NodeId" },
+    "ts": { "$ref": "_common.json#/$defs/IsoTimestamp", "description": "Time the stats were computed/valid for." },
+    "window_s": { "type": "integer", "minimum": 1, "description": "Window length used to compute stats." },
+    "fs_hz": { "type": "number", "minimum": 0.1, "description": "IMU sampling rate used in analysis." },
+
+    "hs_m": { "type": "number", "minimum": 0, "description": "Significant wave height estimate." },
+    "tp_s": { "type": "number", "minimum": 0, "description": "Peak period estimate." },
+    "tm01_s": { "type": "number", "minimum": 0, "description": "Mean period based on m0/m1." },
+    "tz_s": { "type": "number", "minimum": 0, "description": "Mean zero-crossing period estimate." },
+
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "samples": { "type": "integer", "minimum": 0 },
+        "gap_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "notes": { "type": "string" }
+      }
+    }
+  },
+  "required": ["schema_version", "node_id", "ts", "window_s", "fs_hz"]
+}
+

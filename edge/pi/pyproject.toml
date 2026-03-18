@@ -1,0 +1,30 @@
+[project]
+name = "nereus-edge"
+version = "0.1.0"
+description = "Edge services for coastal sensing buoy (Raspberry Pi)."
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7",
+  "pyserial>=3.5",
+  "numpy>=1.26",
+  "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+buoy-seriald = "buoy.services.seriald:main"
+buoy-ds18b20d = "buoy.services.ds18b20d:main"
+buoy-indexd = "buoy.services.indexd:main"
+buoy-audio-capture = "buoy.services.audio_capture:main"
+buoy-wave-derive = "buoy.services.wave_derive:main"
+buoy-uploader = "buoy.services.uploader:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+

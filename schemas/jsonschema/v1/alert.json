@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/alert.json",
+  "title": "Alert (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "alert_id": { "type": "string", "minLength": 1 },
+    "node_id": { "$ref": "_common.json#/$defs/NodeId" },
+    "ts": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+    "severity": { "type": "string", "enum": ["info", "warning", "critical"] },
+    "status": { "type": "string", "enum": ["active", "acknowledged", "resolved"] },
+    "type": { "type": "string", "minLength": 1, "description": "Machine-readable alert type key." },
+    "title": { "type": "string" },
+    "detail": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "source": { "type": "string", "enum": ["edge", "backend"] },
+    "first_seen": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+    "last_seen": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+    "ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "by": { "type": "string" },
+        "ts": { "$ref": "_common.json#/$defs/IsoTimestamp" }
+      }
+    }
+  },
+  "required": ["schema_version", "alert_id", "node_id", "ts", "severity", "status", "type", "title", "source"]
+}
+

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/acoustic_chunk_meta.json",
+  "title": "AcousticChunkMeta (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "node_id": { "$ref": "_common.json#/$defs/NodeId" },
+    "ts_start": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+    "ts_end": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+
+    "format": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "container": { "type": "string", "enum": ["wav"] },
+        "codec": { "type": "string", "enum": ["pcm_s16le", "pcm_s24le", "pcm_s32le"] },
+        "sample_rate_hz": { "type": "integer", "minimum": 8000, "maximum": 384000 },
+        "channels": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "bit_depth": { "type": "integer", "enum": [16, 24, 32] }
+      },
+      "required": ["container", "codec", "sample_rate_hz", "channels", "bit_depth"]
+    },
+
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "alsa_device": { "type": "string", "description": "Selected ALSA device identifier, e.g. hw:0,0." },
+        "alsa_card": { "type": "string" },
+        "alsa_pcm": { "type": "string" }
+      }
+    },
+
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": { "type": "string", "description": "Local path on the Pi (edge) at time of capture." },
+        "size_bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "required": ["path", "size_bytes", "sha256"]
+    }
+  },
+  "required": ["schema_version", "node_id", "ts_start", "ts_end", "format", "artifact"]
+}
+

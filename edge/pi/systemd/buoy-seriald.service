@@ -1,0 +1,18 @@
+[Unit]
+Description=Buoy UART ingest (single owner)
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=simple
+User=buoy
+Group=buoy
+EnvironmentFile=-/etc/buoy/buoy.env
+ExecStart=/usr/local/bin/buoy-seriald
+Restart=always
+RestartSec=2
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
+

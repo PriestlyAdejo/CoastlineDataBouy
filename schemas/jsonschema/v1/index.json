@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/index.json",
+  "title": "Schema index (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "schemas": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["schema_version", "schemas"]
+}
+

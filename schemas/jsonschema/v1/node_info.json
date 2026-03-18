@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/node_info.json",
+  "title": "NodeInfo (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "node_id": { "$ref": "_common.json#/$defs/NodeId" },
+    "hostname": { "type": "string" },
+    "display_name": { "type": "string" },
+    "location_hint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Module/capability identifiers exposed by this node, e.g. hydrophone, ds18b20, imu, battery, mcp23017."
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "module_id": { "type": "string", "minLength": 1 },
+          "state": { "$ref": "_common.json#/$defs/ModuleState" },
+          "notes": { "type": "string" }
+        },
+        "required": ["module_id", "state"]
+      }
+    },
+    "software": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "edge_version": { "type": "string" },
+        "firmware_version": { "type": "string" }
+      }
+    }
+  },
+  "required": ["schema_version", "node_id", "capabilities"]
+}
+

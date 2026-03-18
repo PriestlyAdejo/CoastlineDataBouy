@@ -1,0 +1,51 @@
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+ENV/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+
+# Local runtime data (edge/backend)
+.env
+.env.*
+data/
+tmp/
+spool/
+storage/
+
+# Arduino / PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+*.elf
+*.hex
+*.bin
+

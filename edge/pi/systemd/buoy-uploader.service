@@ -1,0 +1,17 @@
+[Unit]
+Description=Buoy uploader (offline-first sync to backend)
+After=network-online.target local-fs.target
+Wants=network-online.target local-fs.target
+
+[Service]
+Type=simple
+User=buoy
+Group=buoy
+EnvironmentFile=-/etc/buoy/buoy.env
+ExecStart=/usr/local/bin/buoy-uploader
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+

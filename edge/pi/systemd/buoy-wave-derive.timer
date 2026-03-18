@@ -1,0 +1,11 @@
+[Unit]
+Description=Run wave stats derivation periodically
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Unit=buoy-wave-derive.service
+
+[Install]
+WantedBy=timers.target
+

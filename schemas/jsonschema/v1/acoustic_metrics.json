@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nereus.local/v1/acoustic_metrics.json",
+  "title": "AcousticMetrics (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "v1" },
+    "node_id": { "$ref": "_common.json#/$defs/NodeId" },
+    "ts": { "$ref": "_common.json#/$defs/IsoTimestamp" },
+    "window_s": { "type": "integer", "minimum": 1, "description": "Aggregation window duration." },
+
+    "recording_effort_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+
+    "bands_db": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hz_10_100": { "type": "number" },
+        "hz_100_1000": { "type": "number" },
+        "hz_1000_10000": { "type": "number" },
+        "hz_10000_24000": { "type": "number" },
+        "broadband": { "type": "number" }
+      }
+    },
+
+    "spectral_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "leq_db": { "type": "number" },
+        "peak_db": { "type": "number" },
+        "dominant_band": { "type": "string" }
+      }
+    },
+
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": { "type": "string", "description": "Backend or local index id of the referenced audio chunk." },
+        "preview_id": { "type": "string" },
+        "spectrogram_id": { "type": "string" }
+      }
+    }
+  },
+  "required": ["schema_version", "node_id", "ts", "window_s"]
+}
+
