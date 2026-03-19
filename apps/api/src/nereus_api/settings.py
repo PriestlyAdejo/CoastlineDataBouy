@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pydantic import BaseModel
 
 
@@ -23,6 +24,19 @@ class Settings(BaseModel):
 
 
 def get_settings() -> Settings:
-    # v1: simple; later load from env via pydantic-settings
-    return Settings()
+    # Windows-friendly: env overrides without extra dependencies.
+    return Settings(
+        environment=os.getenv("NEREUS_ENV", "dev"),
+        api_prefix=os.getenv("NEREUS_API_PREFIX", "/v1"),
+        buoy_upload_token=os.getenv("NEREUS_BUOY_UPLOAD_TOKEN", "dev-token-change-me"),
+        database_url=os.getenv(
+            "NEREUS_DATABASE_URL",
+            "postgresql+psycopg://nereus:nereus@localhost:5432/nereus",
+        ),
+        s3_endpoint_url=os.getenv("NEREUS_S3_ENDPOINT_URL", "http://localhost:9000"),
+        s3_access_key_id=os.getenv("NEREUS_S3_ACCESS_KEY_ID", "minioadmin"),
+        s3_secret_access_key=os.getenv("NEREUS_S3_SECRET_ACCESS_KEY", "minioadmin"),
+        s3_bucket=os.getenv("NEREUS_S3_BUCKET", "nereus"),
+        s3_region=os.getenv("NEREUS_S3_REGION", "us-east-1"),
+    )
 
