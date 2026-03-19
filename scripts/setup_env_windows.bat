@@ -35,7 +35,7 @@ if errorlevel 1 (
 )
 
 REM Create or update env from environment.yml
-conda env list | findstr /b "buoy-dev" >nul 2>nul
+conda env list | findstr "buoy-dev" >nul 2>nul
 if errorlevel 1 (
   echo Creating Conda env "buoy-dev" from environment.yml...
   conda env create -f "%REPO_ROOT%\environment.yml"
