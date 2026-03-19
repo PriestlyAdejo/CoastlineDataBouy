@@ -2,7 +2,7 @@
 name = "nereus-edge"
 version = "0.1.0"
 description = "Edge services for coastal sensing buoy (Raspberry Pi)."
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
   "pydantic>=2.7",
   "pyserial>=3.5",
@@ -29,7 +29,7 @@ line-length = 100
 target-version = "py311"
 
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]

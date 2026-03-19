@@ -29,9 +29,13 @@ ENV/
 coverage.xml
 htmlcov/
 
-# IDE
-.vscode/
+# IDE — keep repo .vscode/settings.json; ignore local/machine state
+.vscode/*
+!.vscode/settings.json
 .idea/
+
+# Local Conda env created in repo (e.g. conda create --prefix .conda-env)
+.conda-env/
 
 # Local runtime data (edge/backend)
 .env
