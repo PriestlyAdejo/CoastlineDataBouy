@@ -1,42 +1,93 @@
 from __future__ import annotations
 
-import os
-from pydantic import BaseModel
+from functools import lru_cache
+from pathlib import Path
+
+from pydantic import AliasChoices, Field, model_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_API_DIR = Path(__file__).resolve().parents[2]
+_ENV_FILE = _API_DIR / ".env"
 
 
-class Settings(BaseModel):
-    # API
-    environment: str = "dev"
-    api_prefix: str = "/v1"
-
-    # Auth (v1: single shared token for buoy uploads)
-    buoy_upload_token: str = "dev-token-change-me"
-
-    # Database
-    database_url: str = "postgresql+psycopg://nereus:nereus@localhost:5432/nereus"
-
-    # Object storage (S3-compatible, MinIO in docker-compose)
-    s3_endpoint_url: str = "http://localhost:9000"
-    s3_access_key_id: str = "minioadmin"
-    s3_secret_access_key: str = "minioadmin"
-    s3_bucket: str = "nereus"
-    s3_region: str = "us-east-1"
-
-
-def get_settings() -> Settings:
-    # Windows-friendly: env overrides without extra dependencies.
-    return Settings(
-        environment=os.getenv("NEREUS_ENV", "dev"),
-        api_prefix=os.getenv("NEREUS_API_PREFIX", "/v1"),
-        buoy_upload_token=os.getenv("NEREUS_BUOY_UPLOAD_TOKEN", "dev-token-change-me"),
-        database_url=os.getenv(
-            "NEREUS_DATABASE_URL",
-            "postgresql+psycopg://nereus:nereus@localhost:5432/nereus",
-        ),
-        s3_endpoint_url=os.getenv("NEREUS_S3_ENDPOINT_URL", "http://localhost:9000"),
-        s3_access_key_id=os.getenv("NEREUS_S3_ACCESS_KEY_ID", "minioadmin"),
-        s3_secret_access_key=os.getenv("NEREUS_S3_SECRET_ACCESS_KEY", "minioadmin"),
-        s3_bucket=os.getenv("NEREUS_S3_BUCKET", "nereus"),
-        s3_region=os.getenv("NEREUS_S3_REGION", "us-east-1"),
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=_ENV_FILE if _ENV_FILE.is_file() else None,
+        env_file_encoding="utf-8",
+        extra="ignore",
     )
 
+    environment: str = Field(
+        default="dev",
+        validation_alias=AliasChoices("NEREUS_ENV", "ENVIRONMENT"),
+    )
+    api_prefix: str = Field(
+        default="/v1",
+        validation_alias=AliasChoices("NEREUS_API_PREFIX", "API_PREFIX"),
+    )
+    buoy_upload_token: str = Field(
+        default="dev-token-change-me",
+        validation_alias=AliasChoices("NEREUS_BUOY_UPLOAD_TOKEN", "BUOY_UPLOAD_TOKEN"),
+    )
+
+    database_url: str = Field(
+        default="postgresql+psycopg://nereus:nereus@127.0.0.1:5432/nereus",
+        validation_alias=AliasChoices("DATABASE_URL", "NEREUS_DATABASE_URL"),
+    )
+
+    minio_endpoint: str = Field(
+        default="127.0.0.1:9000",
+        validation_alias=AliasChoices("MINIO_ENDPOINT", "NEREUS_S3_ENDPOINT_URL"),
+    )
+    minio_access_key: str = Field(
+        default="",
+        validation_alias=AliasChoices("MINIO_ACCESS_KEY", "NEREUS_S3_ACCESS_KEY_ID"),
+    )
+    minio_secret_key: str = Field(
+        default="",
+        validation_alias=AliasChoices("MINIO_SECRET_KEY", "NEREUS_S3_SECRET_ACCESS_KEY"),
+    )
+    minio_secure: bool = Field(default=False, validation_alias="MINIO_SECURE")
+
+    minio_bucket_raw: str = Field(
+        default="nereus-raw-acoustic",
+        validation_alias="MINIO_BUCKET_RAW",
+    )
+    minio_bucket_derived: str = Field(
+        default="nereus-derived",
+        validation_alias="MINIO_BUCKET_DERIVED",
+    )
+    minio_bucket_exports: str = Field(
+        default="nereus-exports",
+        validation_alias="MINIO_BUCKET_EXPORTS",
+    )
+
+    s3_region: str = Field(
+        default="us-east-1",
+        validation_alias=AliasChoices("S3_REGION", "NEREUS_S3_REGION"),
+    )
+
+    @model_validator(mode="after")
+    def normalize_urls(self):
+        db = self.database_url
+        if db.startswith("postgresql://") and not db.startswith("postgresql+"):
+            self.database_url = db.replace("postgresql://", "postgresql+psycopg://", 1)
+
+        ep = self.minio_endpoint.strip()
+        if not ep.startswith(("http://", "https://")):
+            scheme = "https" if self.minio_secure else "http"
+            self.minio_endpoint = f"{scheme}://{ep}"
+
+        return self
+
+    def minio_bucket_names(self) -> tuple[str, ...]:
+        return (
+            self.minio_bucket_raw,
+            self.minio_bucket_derived,
+            self.minio_bucket_exports,
+        )
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
