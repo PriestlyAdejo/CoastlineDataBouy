@@ -10,6 +10,9 @@ import {
 } from "lucide-react";
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
+import { attachLeafletResizeHandlers } from "../lib/leafletResize";
+import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
+import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 
 // --- Data ---
 const nodes = [
@@ -37,7 +40,7 @@ const forecastTimeline = [
 
 type MapStyle = "dark" | "satellite" | "terrain";
 const tileUrls: Record<MapStyle, { url: string; label: string; icon: typeof MapIcon }> = {
-  dark: { url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", label: "Dark", icon: MapIcon },
+  dark: { url: NEREUS_DARK_BASEMAP.url, label: "Dark", icon: MapIcon },
   satellite: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", label: "Satellite", icon: Satellite },
   terrain: { url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", label: "Terrain", icon: Mountain },
 };
@@ -140,8 +143,10 @@ export function LocationMap() {
 
   // Initialize map
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
-    const map = L.map(mapContainerRef.current, {
+    const el = mapContainerRef.current;
+    if (!el || mapRef.current) return;
+    const map = L.map(el, {
+      ...nereusLeafletMapOptions,
       center: [55.65, -5.15],
       zoom: 11,
       zoomControl: false,
@@ -149,7 +154,10 @@ export function LocationMap() {
     });
     map.getContainer().style.background = "#0f172a";
 
-    const tile = L.tileLayer(tileUrls.dark.url).addTo(map);
+    const tile = L.tileLayer(tileUrls.dark.url, {
+      attribution: NEREUS_DARK_BASEMAP.attribution,
+      maxZoom: 16,
+    }).addTo(map);
     tileRef.current = tile;
 
     // Add MPA circle overlay (static reference)
@@ -206,8 +214,12 @@ export function LocationMap() {
     });
 
     mapRef.current = map;
-    setTimeout(() => map.invalidateSize(), 100);
-    return () => { map.remove(); mapRef.current = null; };
+    const detachResize = attachLeafletResizeHandlers(map, el);
+    return () => {
+      detachResize();
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
 
   // Update tile layer
@@ -236,10 +248,10 @@ export function LocationMap() {
   const riskBg = (r: string) => r === "low" ? "bg-emerald-500/10 border-emerald-500/20" : r === "moderate" ? "bg-amber-500/10 border-amber-500/20" : "bg-rose-500/10 border-rose-500/20";
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative h-full min-h-0 w-full overflow-hidden">
       {/* Full-bleed Map */}
-      <div className="absolute inset-0 z-0">
-        <div ref={mapContainerRef} className="h-full w-full" />
+      <div className="absolute inset-0 z-0 min-h-0">
+        <div ref={mapContainerRef} className="h-full min-h-0 w-full" />
       </div>
 
       {/* Top-left: Status + Active Layers */}

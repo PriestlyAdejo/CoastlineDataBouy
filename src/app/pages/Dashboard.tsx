@@ -16,6 +16,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { useOverview } from "../components/OverviewContext";
 import { createMPAOverlay, createAnchorRadiusOverlay } from "../components/MapOverlays";
+import { attachLeafletResizeHandlers } from "../lib/leafletResize";
+import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
+import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 
 // Fix leaflet defaults
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -109,13 +112,18 @@ export function Dashboard() {
 
   // Initialize map
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
-    const map = L.map(mapContainerRef.current, {
+    const el = mapContainerRef.current;
+    if (!el || mapRef.current) return;
+    const map = L.map(el, {
+      ...nereusLeafletMapOptions,
       center: [55.65, -5.15], zoom: 10,
       zoomControl: false, attributionControl: false,
     });
     map.getContainer().style.background = "#0f172a";
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(map);
+    L.tileLayer(NEREUS_DARK_BASEMAP.url, {
+      attribution: NEREUS_DARK_BASEMAP.attribution,
+      maxZoom: 16,
+    }).addTo(map);
 
     // Add MPA + anchor overlays to match Location/Map
     createMPAOverlay(map).addTo(map);
@@ -149,8 +157,12 @@ export function Dashboard() {
     });
 
     mapRef.current = map;
-    setTimeout(() => map.invalidateSize(), 100);
-    return () => { map.remove(); mapRef.current = null; };
+    const detachResize = attachLeafletResizeHandlers(map, el);
+    return () => {
+      detachResize();
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
 
   // Update marker icons on selection change
@@ -175,10 +187,10 @@ export function Dashboard() {
   const currentNode = useMemo(() => nodes.find(n => n.id === selectedNode) || nodes[0], [selectedNode]);
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative h-full min-h-0 w-full overflow-hidden">
       {/* Full-bleed Map */}
-      <div className="absolute inset-0 z-0">
-        <div ref={mapContainerRef} className="h-full w-full" />
+      <div className="absolute inset-0 z-0 min-h-0">
+        <div ref={mapContainerRef} className="h-full min-h-0 w-full" />
       </div>
 
       {/* Top-left: Status */}

@@ -145,7 +145,7 @@ export function Layout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col">
         <header className="flex h-12 shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900/30 px-6 backdrop-blur-sm">
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-slate-500">Active Node:</span>
@@ -168,12 +168,19 @@ export function Layout() {
             </NavLink>
           </div>
         </header>
-        <div className={clsx(
-          "flex-1 overflow-hidden",
-          !isFullScreen && "overflow-y-auto bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMwZjE3MmEiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMWUyOTNiIi8+PC9zdmc+')]"
-        )}>
+        <div
+          className={clsx(
+            "flex min-h-0 flex-1 flex-col overflow-hidden",
+            !isFullScreen &&
+              "overflow-y-auto bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMwZjE3MmEiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMWUyOTNiIi8+PC9zdmc+')]",
+          )}
+        >
           {isFullScreen ? (
-            <Outlet />
+            <div className="relative min-h-0 flex-1">
+              <div className="absolute inset-0 min-h-0">
+                <Outlet />
+              </div>
+            </div>
           ) : (
             <div className="mx-auto max-w-7xl px-8 py-6">
               <Outlet />

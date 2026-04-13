@@ -12,7 +12,7 @@ _ENV_FILE = _API_DIR / ".env"
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=_ENV_FILE if _ENV_FILE.is_file() else None,
+        env_file=_ENV_FILE,
         env_file_encoding="utf-8",
         extra="ignore",
     )
@@ -39,13 +39,23 @@ class Settings(BaseSettings):
         default="127.0.0.1:9000",
         validation_alias=AliasChoices("MINIO_ENDPOINT", "NEREUS_S3_ENDPOINT_URL"),
     )
+    # MINIO_ACCESS_KEY / MINIO_SECRET_KEY = app/service account (prod). For local dev you can
+    # instead set MINIO_ROOT_USER / MINIO_ROOT_PASSWORD to match docker/compose.backend.yml.
     minio_access_key: str = Field(
         default="",
-        validation_alias=AliasChoices("MINIO_ACCESS_KEY", "NEREUS_S3_ACCESS_KEY_ID"),
+        validation_alias=AliasChoices(
+            "MINIO_ACCESS_KEY",
+            "NEREUS_S3_ACCESS_KEY_ID",
+            "MINIO_ROOT_USER",
+        ),
     )
     minio_secret_key: str = Field(
         default="",
-        validation_alias=AliasChoices("MINIO_SECRET_KEY", "NEREUS_S3_SECRET_ACCESS_KEY"),
+        validation_alias=AliasChoices(
+            "MINIO_SECRET_KEY",
+            "NEREUS_S3_SECRET_ACCESS_KEY",
+            "MINIO_ROOT_PASSWORD",
+        ),
     )
     minio_secure: bool = Field(default=False, validation_alias="MINIO_SECURE")
 

@@ -1,5 +1,26 @@
 @import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
 
+/*
+ * Tailwind preflight sets img, video { max-width: 100%; height: auto } which breaks Leaflet:
+ * tiles are positioned with transforms + explicit pixel sizes; max-width shrinks them and
+ * you get a few scattered fragments instead of a full basemap.
+ */
+.leaflet-container img,
+.leaflet-container svg {
+  max-width: none !important;
+  max-height: none !important;
+}
+.leaflet-container .leaflet-marker-icon,
+.leaflet-container .leaflet-marker-shadow {
+  max-width: none !important;
+}
+
+/* Canvas renderer (preferCanvas): keep panes from inheriting odd sizing */
+.leaflet-container .leaflet-tile-pane canvas {
+  max-width: none !important;
+  display: block;
+}
+
 /* Dark theme overrides for Leaflet */
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
   background-color: #1e293b !important; /* slate-900 */
@@ -51,9 +72,13 @@
   animation: map-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* Ensure the leaflet container fills its parent */
+/* Leaflet needs an explicit box; flex + absolute map panes otherwise get 0 height */
 .leaflet-container {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
   z-index: 0 !important;
+  background: #0f172a;
 }
 
 /* Popup close button styling */

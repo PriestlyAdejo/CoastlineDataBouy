@@ -4,6 +4,9 @@ import { Maximize2, Minimize2, MapPin, Radio, Activity } from 'lucide-react';
 import { clsx } from 'clsx';
 import { StatusBadge } from './Widgets';
 import { createPortal } from 'react-dom';
+import { attachLeafletResizeHandlers } from '../lib/leafletResize';
+import { NEREUS_DARK_BASEMAP } from '../lib/basemap';
+import { nereusLeafletMapOptions } from '../lib/leafletMapOptions';
 
 // Fix leaflet default icon issue in react
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -47,10 +50,12 @@ function LeafletMapView({ mapKey }: { mapKey: string }) {
   const mapInstanceRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current || mapInstanceRef.current) return;
+    const el = containerRef.current;
+    if (!el || mapInstanceRef.current) return;
 
     const centerPos: [number, number] = [55.65, -5.15];
-    const map = L.map(containerRef.current, {
+    const map = L.map(el, {
+      ...nereusLeafletMapOptions,
       center: centerPos,
       zoom: 10,
       zoomControl: false,
@@ -58,8 +63,9 @@ function LeafletMapView({ mapKey }: { mapKey: string }) {
     });
     map.getContainer().style.background = '#0f172a';
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
+    L.tileLayer(NEREUS_DARK_BASEMAP.url, {
+      attribution: NEREUS_DARK_BASEMAP.attribution,
+      maxZoom: 16,
     }).addTo(map);
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -85,15 +91,16 @@ function LeafletMapView({ mapKey }: { mapKey: string }) {
     });
 
     mapInstanceRef.current = map;
-    setTimeout(() => map.invalidateSize(), 100);
+    const detachResize = attachLeafletResizeHandlers(map, el);
 
     return () => {
+      detachResize();
       map.remove();
       mapInstanceRef.current = null;
     };
   }, [mapKey]);
 
-  return <div ref={containerRef} className="h-full w-full" />;
+  return <div ref={containerRef} className="h-full min-h-0 w-full flex-1" />;
 }
 
 interface MapWidgetProps {
@@ -118,7 +125,7 @@ export function MapWidget({ expanded, onToggleExpand }: MapWidgetProps) {
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8">
             <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity" onClick={onToggleExpand} />
             
-            <div className="relative w-full h-full max-w-6xl max-h-[85vh] bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-10 animate-in zoom-in-95 duration-200">
+            <div className="relative z-10 flex h-[85vh] max-h-[900px] w-full max-w-6xl min-h-[280px] flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-200">
               <LeafletMapView mapKey="expanded-map" />
               
               {/* Expand/Collapse Button */}
