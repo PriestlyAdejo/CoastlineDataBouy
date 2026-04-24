@@ -5,10 +5,12 @@ Wants=local-fs.target
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-EnvironmentFile=-/etc/buoy/buoy.env
-ExecStart=/usr/local/bin/buoy-ds18b20d
+User=jason
+Group=jason
+WorkingDirectory=/home/jason/CoastlineDataBouy
+EnvironmentFile=/etc/nereus-edge.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/jason/CoastlineDataBouy/.venv/bin/python -m buoy.services.ds18b20d
 Restart=always
 RestartSec=5
 

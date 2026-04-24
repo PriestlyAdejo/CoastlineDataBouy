@@ -2,13 +2,16 @@
 Description=Buoy uploader (offline-first sync to backend)
 After=network-online.target local-fs.target
 Wants=network-online.target local-fs.target
+RequiresMountsFor=/mnt/harddrive
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-EnvironmentFile=-/etc/buoy/buoy.env
-ExecStart=/usr/local/bin/buoy-uploader
+User=jason
+Group=jason
+WorkingDirectory=/home/jason/CoastlineDataBouy
+EnvironmentFile=/etc/nereus-edge.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/jason/CoastlineDataBouy/.venv/bin/python -m buoy.services.uploader
 Restart=always
 RestartSec=10
 
