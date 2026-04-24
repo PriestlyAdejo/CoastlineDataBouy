@@ -1,0 +1,11 @@
+[Unit]
+Description=Periodic buoy edge update check
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1h
+Persistent=true
+Unit=buoy-gitpull.service
+
+[Install]
+WantedBy=timers.target

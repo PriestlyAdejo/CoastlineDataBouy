@@ -12,11 +12,19 @@ def main() -> None:
     logger = setup_logging("buoy.audio_capture")
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--hw", default=None, help="Explicit ALSA hw id, e.g. hw:0,0")
-    ap.add_argument("--chunk-s", default=15 * 60, type=int)
-    ap.add_argument("--rate", default=96_000, type=int)
-    ap.add_argument("--channels", default=1, type=int)
-    ap.add_argument("--format", default="S24_LE", help="arecord format, e.g. S24_LE")
+    ap.add_argument(
+        "--hw",
+        default=settings.audio.device,
+        help="Explicit ALSA hw id, e.g. hw:0,0",
+    )
+    ap.add_argument("--chunk-s", default=settings.audio.chunk_s, type=int)
+    ap.add_argument("--rate", default=settings.audio.sample_rate_hz, type=int)
+    ap.add_argument("--channels", default=settings.audio.channels, type=int)
+    ap.add_argument(
+        "--format",
+        default=settings.audio.sample_format,
+        help="arecord format, e.g. S24_LE",
+    )
     args = ap.parse_args()
 
     params = CaptureParams(

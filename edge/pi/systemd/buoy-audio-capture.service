@@ -1,14 +1,17 @@
 [Unit]
 Description=Buoy hydrophone audio capture (arecord chunking)
-After=local-fs.target sound.target
-Wants=local-fs.target sound.target
+After=network-online.target local-fs.target sound.target
+Wants=network-online.target local-fs.target sound.target
+RequiresMountsFor=/mnt/harddrive
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-EnvironmentFile=-/etc/buoy/buoy.env
-ExecStart=/usr/local/bin/buoy-audio-capture --chunk-s 900 --rate 96000 --channels 1 --format S24_LE
+User=jason
+Group=jason
+WorkingDirectory=/home/jason/CoastlineDataBouy
+EnvironmentFile=/etc/nereus-edge.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/jason/CoastlineDataBouy/.venv/bin/python -m buoy.services.audio_capture
 Restart=always
 RestartSec=5
 Nice=5

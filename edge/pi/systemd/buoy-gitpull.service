@@ -1,0 +1,10 @@
+[Unit]
+Description=Buoy edge auto-update from git
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/jason/CoastlineDataBouy
+EnvironmentFile=-/etc/nereus-edge.env
+ExecStart=/bin/bash /home/jason/CoastlineDataBouy/edge/pi/scripts/auto_update.sh

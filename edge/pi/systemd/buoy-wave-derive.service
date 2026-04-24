@@ -5,8 +5,10 @@ Wants=local-fs.target
 
 [Service]
 Type=oneshot
-User=buoy
-Group=buoy
-EnvironmentFile=-/etc/buoy/buoy.env
-ExecStart=/usr/local/bin/buoy-wave-derive --window-s 1200
+User=jason
+Group=jason
+WorkingDirectory=/home/jason/CoastlineDataBouy
+EnvironmentFile=/etc/nereus-edge.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/jason/CoastlineDataBouy/.venv/bin/python -m buoy.services.wave_derive --window-s 1200
 
