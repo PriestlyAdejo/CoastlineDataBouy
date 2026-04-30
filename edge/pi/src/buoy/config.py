@@ -59,7 +59,7 @@ class EdgeSettings(BaseModel):
     ds18b20: Ds18b20Config = Ds18b20Config()
     audio: AudioConfig = AudioConfig()
     backend_api_base: str = "http://127.0.0.1:8000/v1"
-    buoy_upload_token: str = "dev-token-change-me"
+    buoy_upload_token: str = "STRONG_UPLOAD_TOKEN_69420"
 
 
 def load_settings() -> EdgeSettings:

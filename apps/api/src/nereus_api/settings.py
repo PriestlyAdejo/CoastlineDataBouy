@@ -26,7 +26,7 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("NEREUS_API_PREFIX", "API_PREFIX"),
     )
     buoy_upload_token: str = Field(
-        default="dev-token-change-me",
+        default="STRONG_UPLOAD_TOKEN_69420",
         validation_alias=AliasChoices("NEREUS_BUOY_UPLOAD_TOKEN", "BUOY_UPLOAD_TOKEN"),
     )
 

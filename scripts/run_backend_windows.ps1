@@ -32,7 +32,7 @@ if ($envList -notmatch "buoy-dev\s") {
 }
 
 $env:PYTHONPATH = Join-Path $RepoRoot "apps\api\src"
-if (-not $env:NEREUS_BUOY_UPLOAD_TOKEN) { $env:NEREUS_BUOY_UPLOAD_TOKEN = "dev-token-change-me" }
+if (-not $env:NEREUS_BUOY_UPLOAD_TOKEN) { $env:NEREUS_BUOY_UPLOAD_TOKEN = "STRONG_UPLOAD_TOKEN_69420" }
 if (-not $env:NEREUS_API_PREFIX) { $env:NEREUS_API_PREFIX = "/v1" }
 
 Write-Host "Starting FastAPI at http://${HostAddr}:$Port/v1" -ForegroundColor Cyan
