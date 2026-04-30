@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import BigInteger, DateTime, Float, Integer, String
+from sqlalchemy import BigInteger, Float, Integer, JSON, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .db import Base
@@ -25,6 +25,7 @@ class TelemetrySample(Base):
     accel_z: Mapped[float | None] = mapped_column(Float, nullable=True)
 
     pack_v: Mapped[float | None] = mapped_column(Float, nullable=True)
+    payload: Mapped[dict] = mapped_column(JSON)
 
 
 class HealthSnapshot(Base):
@@ -43,6 +44,25 @@ class HealthSnapshot(Base):
     storage_mountpoint: Mapped[str | None] = mapped_column(String(256), nullable=True)
     storage_free_bytes: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     storage_total_bytes: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+
+
+class EnvSnapshot(Base):
+    __tablename__ = "env_snapshots"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    node_id: Mapped[str] = mapped_column(String(64), index=True)
+    ts: Mapped[str] = mapped_column(String(64), index=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+
+
+class AcousticMetaSnapshot(Base):
+    __tablename__ = "acoustic_meta_snapshots"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    node_id: Mapped[str] = mapped_column(String(64), index=True)
+    ts: Mapped[str] = mapped_column(String(64), index=True)
+    payload: Mapped[dict] = mapped_column(JSON)
 
 
 class Alert(Base):
