@@ -28,8 +28,8 @@ export function getDefaultMapConfig(): MapConfig {
 
 export function getBrightonMapConfig(): MapConfig {
   return {
-    center: BRIGHTON_TEST,
-    zoom: 16,
+    center: [50.8098, -0.1215],
+    zoom: 14,
     tileUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     showAttribution: true,

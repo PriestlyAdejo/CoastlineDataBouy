@@ -26,6 +26,10 @@ import { createEmptyLayerHandles, updateReplayMapLayers, type ReplayLayerHandles
 import { useLeafletInvalidateSize } from "../lib/useLeafletInvalidateSize";
 import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
+import {
+  deploymentFitInputFromConfig,
+  fitMapToDeploymentContext,
+} from "../lib/mapViewFit";
 
 // --- Data ---
 type MapNode = ReturnType<typeof getDashboardNodes>[number] & {
@@ -223,13 +227,28 @@ export function LocationMap() {
     };
   }, [overlays]);
 
+  const replayPhaseId = vm?.phase.id ?? replay?.getCurrentPhase()?.id;
+
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !vm) return;
     updateReplayMapLayers(map, replayLayersRef.current, vm, overlayEnabled, createSelectedIcon);
     const t = window.setTimeout(() => map.invalidateSize({ animate: false }), 100);
     return () => window.clearTimeout(t);
-  }, [vm?.position.lat, vm?.position.lon, vm?.track.length, vm?.replayTimeMs, overlayEnabled]);
+  }, [vm?.position.lat, vm?.position.lon, vm?.track.length, overlayEnabled]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !isBrightonDemo()) return;
+    const lat = locMetrics?.lat ?? vm?.position.lat;
+    const lon = locMetrics?.lon ?? vm?.position.lon;
+    if (lat == null || lon == null) return;
+    fitMapToDeploymentContext(
+      map,
+      deploymentFitInputFromConfig(mapConfig, { lat, lon }),
+      { maxZoom: 15 },
+    );
+  }, [replayPhaseId, panelOpen, location.pathname]);
 
   // Initialize map
   useEffect(() => {
@@ -261,6 +280,14 @@ export function LocationMap() {
         marker.on("click", () => handleNodeClickRef.current(node.id));
         markersRef.current.set(node.id, marker);
       });
+      const buoy = nodes.find((n) => n.id === "ucl-buoy");
+      if (buoy) {
+        fitMapToDeploymentContext(
+          map,
+          deploymentFitInputFromConfig(mapConfig, { lat: buoy.pos[0], lon: buoy.pos[1] }),
+          { maxZoom: 15, padRatio: 0.45 },
+        );
+      }
       mapRef.current = map;
       const detachResize = attachLeafletResizeHandlers(map, el);
       return () => {
@@ -428,14 +455,45 @@ export function LocationMap() {
         {/* Navigation */}
         <div className="bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-lg shadow-xl overflow-hidden">
           <button
-            onClick={() => { const b = L.latLngBounds(nodes.map((n) => n.pos)); mapRef.current?.flyToBounds(b.pad(0.3)); }}
+            onClick={() => {
+              const map = mapRef.current;
+              if (!map) return;
+              if (isBrightonDemo()) {
+                fitMapToDeploymentContext(
+                  map,
+                  deploymentFitInputFromConfig(mapConfig, {
+                    lat: current.pos[0],
+                    lon: current.pos[1],
+                  }),
+                  { maxZoom: 15 },
+                );
+              } else {
+                const b = L.latLngBounds(nodes.map((n) => n.pos));
+                map.flyToBounds(b.pad(0.3));
+              }
+            }}
             className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"
-            title="Fit all nodes"
+            title="Fit deployment context"
           >
             <Locate size={16} />
           </button>
           <button
-            onClick={() => mapRef.current?.flyTo(current.pos, 13, { duration: 1 })}
+            onClick={() => {
+              const map = mapRef.current;
+              if (!map) return;
+              if (isBrightonDemo()) {
+                fitMapToDeploymentContext(
+                  map,
+                  deploymentFitInputFromConfig(mapConfig, {
+                    lat: current.pos[0],
+                    lon: current.pos[1],
+                  }),
+                  { maxZoom: 15 },
+                );
+              } else {
+                map.flyTo(current.pos, 13, { duration: 1 });
+              }
+            }}
             className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"
             title="Center on selected"
           >

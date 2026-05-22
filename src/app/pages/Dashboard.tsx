@@ -37,6 +37,10 @@ import {
   getWaterTempC,
 } from "../lib/snapshotMetrics";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
+import {
+  deploymentFitInputFromConfig,
+  fitMapToDeploymentContext,
+} from "../lib/mapViewFit";
 
 // Fix leaflet defaults
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -102,10 +106,18 @@ const anomalies = [
 export function Dashboard() {
   const navigate = useNavigate();
   const { pinnedWidgets, unpinWidget } = useOverview();
-  const nodes = useMemo(() => getDashboardNodes(), []);
   const brighton = isBrightonDemo();
   const mapConfig = useMemo(() => getMapConfig(), []);
   const vm = useDeploymentView();
+  const nodes = useMemo(() => {
+    const base = getDashboardNodes();
+    if (!brighton || !vm) return base;
+    return base.map((n) =>
+      n.id === "ucl-buoy"
+        ? { ...n, pos: [vm.position.lat, vm.position.lon] as [number, number] }
+        : n,
+    );
+  }, [brighton, vm?.position.lat, vm?.position.lon]);
   const [panelOpen, setPanelOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<string>(getDefaultNodeId());
   const replay = useReplayData();
@@ -122,10 +134,17 @@ export function Dashboard() {
     setSelectedNode(nodeId);
     const node = nodes.find(n => n.id === nodeId);
     if (node && mapRef.current) {
-      mapRef.current.flyTo(node.pos, mapConfig.zoom, { duration: 1.2 });
+      if (brighton) {
+        fitMapToDeploymentContext(
+          mapRef.current,
+          deploymentFitInputFromConfig(mapConfig, { lat: node.pos[0], lon: node.pos[1] }),
+        );
+      } else {
+        mapRef.current.flyTo(node.pos, mapConfig.zoom, { duration: 1.2 });
+      }
     }
     setPanelOpen(true);
-  }, [nodes, mapConfig.zoom]);
+  }, [nodes, mapConfig, brighton]);
 
   useEffect(() => { handleNodeClickRef.current = handleNodeClick; }, [handleNodeClick]);
 
@@ -184,13 +203,43 @@ export function Dashboard() {
     });
 
     mapRef.current = map;
+    if (brighton) {
+      const node = nodes.find((n) => n.id === "ucl-buoy");
+      fitMapToDeploymentContext(
+        map,
+        deploymentFitInputFromConfig(
+          mapConfig,
+          node ? { lat: node.pos[0], lon: node.pos[1] } : null,
+        ),
+      );
+    }
     const detachResize = attachLeafletResizeHandlers(map, el);
     return () => {
       detachResize();
       map.remove();
       mapRef.current = null;
     };
-  }, [mapConfig, nodes]);
+  }, [mapConfig, nodes, brighton]);
+
+  const replayPhaseId = vm?.phase.id ?? replay?.getCurrentPhase()?.id;
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !brighton) return;
+    const node = nodes.find((n) => n.id === "ucl-buoy");
+    if (!node) return;
+    fitMapToDeploymentContext(
+      map,
+      deploymentFitInputFromConfig(mapConfig, { lat: node.pos[0], lon: node.pos[1] }),
+    );
+  }, [replayPhaseId, panelOpen, brighton, mapConfig]);
+
+  useEffect(() => {
+    if (!brighton) return;
+    const marker = markersRef.current.get("ucl-buoy");
+    const node = nodes.find((n) => n.id === "ucl-buoy");
+    if (marker && node) marker.setLatLng(node.pos);
+  }, [nodes, brighton]);
 
   // Update marker icons on selection change
   useEffect(() => {
@@ -262,7 +311,23 @@ export function Dashboard() {
           <button onClick={() => mapRef.current?.zoomOut()} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors"><ZoomOut size={18} /></button>
         </div>
         <div className="bg-slate-900/85 backdrop-blur-md border border-slate-700/60 rounded-lg shadow-xl overflow-hidden">
-          <button onClick={() => { const b = L.latLngBounds(nodes.map(n => n.pos)); mapRef.current?.flyToBounds(b.pad(0.3), { duration: 1.2 }); }} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><Locate size={18} /></button>
+          <button onClick={() => {
+            const map = mapRef.current;
+            if (!map) return;
+            if (brighton) {
+              const node = nodes.find((n) => n.id === "ucl-buoy");
+              fitMapToDeploymentContext(
+                map,
+                deploymentFitInputFromConfig(
+                  mapConfig,
+                  node ? { lat: node.pos[0], lon: node.pos[1] } : null,
+                ),
+              );
+            } else {
+              const b = L.latLngBounds(nodes.map((n) => n.pos));
+              map.flyToBounds(b.pad(0.3), { duration: 1.2 });
+            }
+          }} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><Locate size={18} /></button>
           <button onClick={() => { if (currentNode) { mapRef.current?.flyTo(currentNode.pos, 13, { duration: 1.2 }); } }} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><Crosshair size={18} /></button>
           <button onClick={() => navigate("/map")} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors" title="Open full map"><ExternalLink size={16} /></button>
         </div>
