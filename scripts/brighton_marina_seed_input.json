@@ -1,0 +1,40 @@
+{
+  "node_id": "ucl-buoy",
+  "display_name": "Brighton Marina Field Test",
+  "test_date": "2026-05-01",
+  "location": {
+    "name": "Brighton Marina",
+    "lat": 50.8118,
+    "lon": -0.1013
+  },
+  "measured": {
+    "deployment_start": null,
+    "deployment_end": null,
+    "water_temp_c": null,
+    "enclosure_temp_c": null,
+    "battery_pack_v": null,
+    "battery_soc_pct": null,
+    "storage_mountpoint": "/mnt/harddrive/buoy",
+    "hydrophone_files": [],
+    "acoustic_metrics": {
+      "leq_db": null,
+      "peak_db": null,
+      "rms_dbfs": null,
+      "peak_dbfs": null,
+      "dominant_band": null,
+      "sample_rate_hz": 96000,
+      "channels": 2,
+      "bit_depth": 32
+    }
+  },
+  "inference_policy": {
+    "allow_inferred_imu": true,
+    "allow_inferred_wave_stats": true,
+    "allow_inferred_battery": true,
+    "allow_inferred_environment": true
+  },
+  "notes": {
+    "field_test": "Brighton Marina May 1st 2026",
+    "imu_note": "No measured IMU data available. IMU and wave fields are inferred for replay/dashboard validation."
+  }
+}

@@ -6,6 +6,11 @@ import {
 } from "lucide-react";
 import { clsx } from "clsx";
 import { useState } from "react";
+import {
+  getActiveNodeDisplayName,
+  getActiveNodeLabel,
+  getReplayBannerText,
+} from "../lib/demoMode";
 
 interface NavItem {
   name: string;
@@ -103,6 +108,9 @@ export function Layout() {
   const location = useLocation();
   const isDashboard = location.pathname === "/";
   const isFullScreen = isDashboard || location.pathname === "/map";
+  const activeNode = getActiveNodeLabel();
+  const activeDisplay = getActiveNodeDisplayName();
+  const replayBanner = getReplayBannerText();
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30">
@@ -133,7 +141,7 @@ export function Layout() {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-mono text-slate-500">SYS_STATUS</span>
-              <span className="text-[10px] font-semibold text-emerald-400">ONLINE — BY-04-A</span>
+              <span className="text-[10px] font-semibold text-emerald-400">ONLINE — {activeNode}</span>
             </div>
           </div>
           <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
@@ -150,8 +158,11 @@ export function Layout() {
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-slate-500">Active Node:</span>
             <div className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
-              BY-04-A
+              {activeDisplay}
             </div>
+            {replayBanner && (
+              <span className="text-[10px] font-mono text-amber-400/80">{replayBanner}</span>
+            )}
             <div className="flex items-center gap-1.5 ml-2">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
               <span className="text-[10px] font-mono text-slate-500">Last sync: 12s ago</span>

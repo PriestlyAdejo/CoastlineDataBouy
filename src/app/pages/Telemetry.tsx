@@ -12,6 +12,7 @@ import { useState, useEffect, useRef } from "react";
 import { clsx } from "clsx";
 import { PinToOverviewButton } from "../components/OverviewContext";
 import { createApiClient } from "../api/client";
+import { getDefaultNodeId, getPageNodeSubtitle } from "../lib/demoMode";
 
 const packetData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -45,7 +46,7 @@ export function Telemetry() {
     let cancelled = false;
     const client = createApiClient();
     client
-      .getLatestSnapshots("ucl-buoy")
+      .getLatestSnapshots(getDefaultNodeId())
       .then((snap) => {
         if (cancelled) return;
         setApiTs(snap.ts);
@@ -66,7 +67,7 @@ export function Telemetry() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Telemetry & Communications</h1>
-          <p className="text-slate-500 text-sm mt-1">Link health, packet delivery, cadence monitoring, and comms status for BY-04-A.</p>
+          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Link health, packet delivery, cadence monitoring, and comms status")}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status="success">LoRa Connected</StatusBadge>

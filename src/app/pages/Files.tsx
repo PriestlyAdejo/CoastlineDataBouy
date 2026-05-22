@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { clsx } from "clsx";
 import { useState } from "react";
+import { getPageNodeSubtitle } from "../lib/demoMode";
 
 type FileCategory = "all" | "audio" | "telemetry" | "sensor" | "system";
 
@@ -57,7 +58,7 @@ export function Files() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Files & Downloads</h1>
-          <p className="text-slate-500 text-sm mt-1">Browse, preview, and download indexed data files from BY-04-A local storage.</p>
+          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Browse, preview, and download indexed data files from local storage")}</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="px-3 py-1.5 rounded bg-slate-800 border border-slate-700 flex items-center gap-2 text-xs text-slate-300 font-mono">

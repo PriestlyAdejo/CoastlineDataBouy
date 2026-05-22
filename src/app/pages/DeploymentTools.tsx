@@ -5,6 +5,7 @@ import {
   MapPin, Clock, Anchor, Shield, Radio, Battery, Eye,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { getSiteDescription, getSitePositionLabel } from "../lib/demoMode";
 
 interface ChecklistItem {
   label: string;
@@ -103,8 +104,8 @@ export function DeploymentTools() {
 
           <Card title="Deployment Site" className="!bg-slate-900/60">
             <div className="space-y-2 text-xs font-mono">
-              <div className="flex justify-between"><span className="text-slate-500">SITE</span><span className="text-slate-200">Firth of Clyde — Test Area Alpha</span></div>
-              <div className="flex justify-between"><span className="text-slate-500">POSITION</span><span className="text-slate-200">55.6500°N, 5.1500°W</span></div>
+              <div className="flex justify-between"><span className="text-slate-500">SITE</span><span className="text-slate-200">{getSiteDescription()}</span></div>
+              <div className="flex justify-between"><span className="text-slate-500">POSITION</span><span className="text-slate-200">{getSitePositionLabel()}</span></div>
               <div className="flex justify-between"><span className="text-slate-500">DEPTH (CHART)</span><span className="text-slate-200">~45 m</span></div>
               <div className="flex justify-between"><span className="text-slate-500">SEABED</span><span className="text-slate-200">Mud / Sand (estimated)</span></div>
               <div className="flex justify-between"><span className="text-slate-500">MOORING TYPE</span><span className="text-slate-200">Taut-line w/ subsurface float</span></div>

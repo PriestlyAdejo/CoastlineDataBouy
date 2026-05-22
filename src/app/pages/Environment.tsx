@@ -11,6 +11,7 @@ import {
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { PinToOverviewButton } from "../components/OverviewContext";
+import { getPageNodeSubtitle } from "../lib/demoMode";
 
 const waterTempData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -70,7 +71,7 @@ export function Environment() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Environmental Sensing</h1>
-          <p className="text-slate-500 text-sm mt-1">Active, installed, and available sensor modules for BY-04-A.</p>
+          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Active, installed, and available sensor modules")}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status="success">4 Active Sensors</StatusBadge>

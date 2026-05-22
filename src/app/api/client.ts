@@ -8,6 +8,7 @@ export type LatestSnapshots = {
   env: unknown | null;
   health: unknown | null;
   acoustics: unknown | null;
+  wave_stats?: unknown | null;
   ts: string;
 };
 

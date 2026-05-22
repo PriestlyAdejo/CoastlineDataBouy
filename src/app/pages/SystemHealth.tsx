@@ -11,6 +11,7 @@ import {
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { PinToOverviewButton } from "../components/OverviewContext";
+import { getPageNodeSubtitle } from "../lib/demoMode";
 
 const cpuData = Array.from({ length: 60 }, (_, i) => ({
   t: `${60 - i}s`,
@@ -43,7 +44,7 @@ export function SystemHealth() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">System Health</h1>
-          <p className="text-slate-500 text-sm mt-1">Embedded compute, power, storage, and watchdog monitoring for BY-04-A.</p>
+          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Embedded compute, power, storage, and watchdog monitoring")}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status="success">All Systems Nominal</StatusBadge>

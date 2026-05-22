@@ -16,8 +16,24 @@ import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { useOverview } from "../components/OverviewContext";
 import { createMPAOverlay, createAnchorRadiusOverlay } from "../components/MapOverlays";
+import { createApiClient, type LatestSnapshots } from "../api/client";
+import {
+  getDashboardNodes,
+  getDefaultNodeId,
+  getMapConfig,
+  getReplayBannerText,
+  isBrightonDemo,
+  shouldShowClydeOverlays,
+  type DashboardNode,
+} from "../lib/demoMode";
 import { attachLeafletResizeHandlers } from "../lib/leafletResize";
-import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
+import {
+  formatMetric,
+  getBatterySocPct,
+  getHealthStatus,
+  getLeqDb,
+  getWaterTempC,
+} from "../lib/snapshotMetrics";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 
 // Fix leaflet defaults
@@ -62,13 +78,6 @@ const warningIcon = L.divIcon({
   iconSize: [32, 32], iconAnchor: [16, 16],
 });
 
-const nodes = [
-  { id: "BY-04-A", pos: [55.65, -5.15] as [number, number], status: "Active" as const, main: true, depth: "42.5m", battery: "87%", temp: "14.3°C" },
-  { id: "BY-02-B", pos: [55.68, -5.05] as [number, number], status: "Standby" as const, main: false, depth: "38.1m", battery: "92%", temp: "14.1°C" },
-  { id: "BY-01-C", pos: [55.59, -5.22] as [number, number], status: "Maintenance" as const, main: false, depth: "45.8m", battery: "34%", temp: "13.9°C" },
-  { id: "BY-03-D", pos: [55.72, -5.30] as [number, number], status: "Active" as const, main: false, depth: "29.2m", battery: "78%", temp: "14.5°C" },
-];
-
 const envData = [
   { time: "00:00", temp: 14.2, do: 8.1 }, { time: "04:00", temp: 14.0, do: 8.0 },
   { time: "08:00", temp: 13.8, do: 7.8 }, { time: "12:00", temp: 14.5, do: 8.2 },
@@ -91,8 +100,13 @@ const anomalies = [
 export function Dashboard() {
   const navigate = useNavigate();
   const { pinnedWidgets, unpinWidget } = useOverview();
+  const nodes = useMemo(() => getDashboardNodes(), []);
+  const brighton = isBrightonDemo();
+  const mapConfig = useMemo(() => getMapConfig(), []);
+  const replayBanner = getReplayBannerText();
   const [panelOpen, setPanelOpen] = useState(true);
-  const [selectedNode, setSelectedNode] = useState<string>("BY-04-A");
+  const [selectedNode, setSelectedNode] = useState<string>(getDefaultNodeId());
+  const [snapshots, setSnapshots] = useState<LatestSnapshots | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<globalThis.Map<string, L.Marker>>(new globalThis.Map());
@@ -103,34 +117,56 @@ export function Dashboard() {
     setSelectedNode(nodeId);
     const node = nodes.find(n => n.id === nodeId);
     if (node && mapRef.current) {
-      mapRef.current.flyTo(node.pos, 13, { duration: 1.2 });
+      mapRef.current.flyTo(node.pos, mapConfig.zoom, { duration: 1.2 });
     }
     setPanelOpen(true);
-  }, []);
+  }, [nodes, mapConfig.zoom]);
 
   useEffect(() => { handleNodeClickRef.current = handleNodeClick; }, [handleNodeClick]);
+
+  useEffect(() => {
+    if (!brighton) return;
+    let cancelled = false;
+    const client = createApiClient();
+    const load = () => {
+      client.getLatestSnapshots(getDefaultNodeId()).then((s) => {
+        if (!cancelled) setSnapshots(s);
+      }).catch(() => { if (!cancelled) setSnapshots(null); });
+    };
+    load();
+    const id = setInterval(load, 5000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [brighton]);
+
+  useEffect(() => {
+    mapRef.current?.invalidateSize({ animate: false });
+  }, [panelOpen]);
 
   // Initialize map
   useEffect(() => {
     const el = mapContainerRef.current;
     if (!el || mapRef.current) return;
+    const defaultId = getDefaultNodeId();
     const map = L.map(el, {
       ...nereusLeafletMapOptions,
-      center: [55.65, -5.15], zoom: 10,
-      zoomControl: false, attributionControl: false,
+      center: mapConfig.center,
+      zoom: mapConfig.zoom,
+      zoomControl: false,
+      attributionControl: mapConfig.showAttribution,
     });
     map.getContainer().style.background = "#0f172a";
-    L.tileLayer(NEREUS_DARK_BASEMAP.url, {
-      attribution: NEREUS_DARK_BASEMAP.attribution,
-      maxZoom: 16,
+    L.tileLayer(mapConfig.tileUrl, {
+      attribution: mapConfig.attribution,
+      maxZoom: 18,
     }).addTo(map);
 
-    // Add MPA + anchor overlays to match Location/Map
-    createMPAOverlay(map).addTo(map);
-    createAnchorRadiusOverlay(map, nodes).addTo(map);
+    if (shouldShowClydeOverlays()) {
+      createMPAOverlay(map).addTo(map);
+      createAnchorRadiusOverlay(map, nodes).addTo(map);
+    }
 
     nodes.forEach(node => {
-      const isSelected = node.id === "BY-04-A";
+      const isSelected = node.id === defaultId;
       const icon = isSelected ? createSelectedIcon() : node.status === "Maintenance" ? warningIcon : secondaryIcon;
       const marker = L.marker(node.pos, { icon, zIndexOffset: isSelected ? 1000 : 0 }).addTo(map);
 
@@ -151,7 +187,7 @@ export function Dashboard() {
       markersRef.current.set(node.id, marker);
 
       if (isSelected) {
-        const label = L.marker(node.pos, { icon: createSelectedLabel(node.id), interactive: false, zIndexOffset: 1001 }).addTo(map);
+        const label = L.marker(node.pos, { icon: createSelectedLabel(node.displayName), interactive: false, zIndexOffset: 1001 }).addTo(map);
         labelsRef.current.set(node.id, label);
       }
     });
@@ -163,7 +199,7 @@ export function Dashboard() {
       map.remove();
       mapRef.current = null;
     };
-  }, []);
+  }, [mapConfig, nodes]);
 
   // Update marker icons on selection change
   useEffect(() => {
@@ -178,19 +214,24 @@ export function Dashboard() {
       marker.setIcon(isSelected ? createSelectedIcon() : node.status === "Maintenance" ? warningIcon : secondaryIcon);
       marker.setZIndexOffset(isSelected ? 1000 : 0);
       if (isSelected) {
-        const label = L.marker(node.pos, { icon: createSelectedLabel(node.id), interactive: false, zIndexOffset: 1001 }).addTo(map);
+        const label = L.marker(node.pos, { icon: createSelectedLabel(node.displayName), interactive: false, zIndexOffset: 1001 }).addTo(map);
         labelsRef.current.set(node.id, label);
       }
     });
-  }, [selectedNode]);
+  }, [selectedNode, nodes]);
 
-  const currentNode = useMemo(() => nodes.find(n => n.id === selectedNode) || nodes[0], [selectedNode]);
+  const currentNode = useMemo(() => nodes.find(n => n.id === selectedNode) || nodes[0], [selectedNode, nodes]);
+
+  const waterTemp = brighton ? formatMetric(getWaterTempC(snapshots)) : "14.3";
+  const batteryPct = brighton ? formatMetric(getBatterySocPct(snapshots), 0) : "87";
+  const noiseDb = brighton ? formatMetric(getLeqDb(snapshots), 1) : "62";
+  const healthStatus = brighton ? (getHealthStatus(snapshots) ?? "—") : "ok";
 
   return (
     <div className="relative h-full min-h-0 w-full overflow-hidden">
       {/* Full-bleed Map */}
       <div className="absolute inset-0 z-0 min-h-0">
-        <div ref={mapContainerRef} className="h-full min-h-0 w-full" />
+        <div ref={mapContainerRef} className="h-full min-h-0 w-full" style={{ minHeight: "100%" }} />
       </div>
 
       {/* Top-left: Status */}
@@ -204,13 +245,22 @@ export function Dashboard() {
             <span className="text-xs font-mono text-emerald-400">LIVE</span>
           </div>
           <div className="w-px h-5 bg-slate-700"></div>
-          <StatusBadge status="success">Transmitting</StatusBadge>
+          <StatusBadge status="success">{brighton ? healthStatus : "Transmitting"}</StatusBadge>
+          {replayBanner && (
+            <>
+              <div className="w-px h-5 bg-slate-700"></div>
+              <span className="text-xs font-mono text-amber-400/90">{replayBanner}</span>
+            </>
+          )}
           <div className="w-px h-5 bg-slate-700"></div>
-          <span className="text-xs font-mono text-slate-500">Last Sync: 12s ago</span>
+          <span className="text-xs font-mono text-slate-500">
+            {brighton && snapshots?.ts ? `Last sync: ${snapshots.ts}` : "Last Sync: 12s ago"}
+          </span>
         </div>
       </div>
 
       {/* Quick overlay chips on the map */}
+      {shouldShowClydeOverlays() && (
       <div className="absolute top-16 left-4 z-10 flex gap-1.5">
         {["MPA", "Anchor Radius"].map(chip => (
           <span key={chip} className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-900/85 backdrop-blur-md border border-slate-700/60 text-[10px] font-mono text-cyan-400 shadow-lg">
@@ -218,6 +268,7 @@ export function Dashboard() {
           </span>
         ))}
       </div>
+      )}
 
       {/* Map Controls */}
       <div className="absolute top-4 z-10 flex flex-col gap-2 transition-all duration-300" style={{ right: panelOpen ? "calc(400px + 1rem)" : "1rem" }}>
@@ -233,6 +284,7 @@ export function Dashboard() {
       </div>
 
       {/* Node chips - Bottom */}
+      {nodes.length > 1 && (
       <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
         {nodes.map(node => (
           <button key={node.id} onClick={() => handleNodeClick(node.id)}
@@ -243,6 +295,7 @@ export function Dashboard() {
           </button>
         ))}
       </div>
+      )}
 
       {/* "Open Full Map" floating CTA - Bottom Center */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
@@ -282,10 +335,10 @@ export function Dashboard() {
 
               {/* Environmental Quick Metrics - always shown */}
               <div className="grid grid-cols-2 gap-3">
-                <MetricCard title="Water Temp" value="14.3" unit="°C" trend="up" trendValue="+0.2°C" icon={Thermometer} status="normal" className="!p-3" />
-                <MetricCard title="Wave Height" value="1.4" unit="m" trend="down" trendValue="-0.2m" icon={Waves} status="info" className="!p-3" />
-                <MetricCard title="Battery" value="87" unit="%" trend="down" trendValue="-1.2W" icon={Battery} status="success" className="!p-3" />
-                <MetricCard title="Noise Floor" value="62" unit="dB" trend="neutral" trendValue="Ambient" icon={Activity} status="warning" className="!p-3" />
+                <MetricCard title="Water Temp" value={waterTemp} unit="°C" trend="up" trendValue={brighton ? "Live" : "+0.2°C"} icon={Thermometer} status="normal" className="!p-3" />
+                <MetricCard title="Wave Height" value={brighton ? "0.2" : "1.4"} unit="m" trend="down" trendValue={brighton ? "Replay" : "-0.2m"} icon={Waves} status="info" className="!p-3" />
+                <MetricCard title="Battery" value={batteryPct} unit="%" trend="down" trendValue={brighton ? "Live" : "-1.2W"} icon={Battery} status="success" className="!p-3" />
+                <MetricCard title="Noise Floor" value={noiseDb} unit="dB" trend="neutral" trendValue="Ambient" icon={Activity} status="warning" className="!p-3" />
               </div>
 
               {/* Pinned Widgets */}
@@ -338,7 +391,7 @@ export function Dashboard() {
 
 // --- Subcomponents ---
 
-function SelectedNodeWidget({ node }: { node: typeof nodes[0] }) {
+function SelectedNodeWidget({ node }: { node: DashboardNode }) {
   return (
     <Card className="!bg-slate-900/60 !p-0">
       <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-3">
@@ -346,7 +399,7 @@ function SelectedNodeWidget({ node }: { node: typeof nodes[0] }) {
           <Radio size={16} />
         </div>
         <div className="flex-1">
-          <div className="text-sm font-mono text-slate-100">{node.id}</div>
+          <div className="text-sm font-mono text-slate-100">{node.displayName}</div>
           <div className="text-[10px] font-mono text-slate-500">{node.pos[0].toFixed(4)}°N, {Math.abs(node.pos[1]).toFixed(4)}°W</div>
         </div>
         <StatusBadge status={node.status === "Active" ? "success" : node.status === "Standby" ? "neutral" : "warning"}>{node.status}</StatusBadge>

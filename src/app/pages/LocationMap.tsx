@@ -11,16 +11,46 @@ import {
 import { clsx } from "clsx";
 import { motion, AnimatePresence } from "motion/react";
 import { attachLeafletResizeHandlers } from "../lib/leafletResize";
+import {
+  getDashboardNodes,
+  getDefaultNodeId,
+  getMapConfig,
+  getReplayBannerText,
+  shouldShowClydeOverlays,
+} from "../lib/demoMode";
 import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 
 // --- Data ---
-const nodes = [
-  { id: "BY-04-A", pos: [55.65, -5.15] as [number, number], status: "Active" as const, depth: "42.5m", battery: "87%", satellites: 8, hdop: 0.9, drift: "<0.5m/24h", anchor: "Deployed", lastSync: "12s ago" },
-  { id: "BY-02-B", pos: [55.68, -5.05] as [number, number], status: "Standby" as const, depth: "38.1m", battery: "92%", satellites: 7, hdop: 1.1, drift: "<0.8m/24h", anchor: "Deployed", lastSync: "45s ago" },
-  { id: "BY-01-C", pos: [55.59, -5.22] as [number, number], status: "Maintenance" as const, depth: "45.8m", battery: "34%", satellites: 5, hdop: 1.8, drift: "1.2m/24h", anchor: "Check required", lastSync: "5m ago" },
-  { id: "BY-03-D", pos: [55.72, -5.30] as [number, number], status: "Active" as const, depth: "29.2m", battery: "78%", satellites: 9, hdop: 0.7, drift: "<0.3m/24h", anchor: "Deployed", lastSync: "8s ago" },
+type MapNode = ReturnType<typeof getDashboardNodes>[number] & {
+  satellites?: number;
+  hdop?: number;
+  drift?: string;
+  anchor?: string;
+  lastSync?: string;
+};
+
+const clydeMapNodes: MapNode[] = [
+  { id: "BY-04-A", displayName: "BY-04-A", pos: [55.65, -5.15], status: "Active", main: true, depth: "42.5m", battery: "87%", temp: "14.3°C", satellites: 8, hdop: 0.9, drift: "<0.5m/24h", anchor: "Deployed", lastSync: "12s ago" },
+  { id: "BY-02-B", displayName: "BY-02-B", pos: [55.68, -5.05], status: "Standby", main: false, depth: "38.1m", battery: "92%", temp: "14.1°C", satellites: 7, hdop: 1.1, drift: "<0.8m/24h", anchor: "Deployed", lastSync: "45s ago" },
+  { id: "BY-01-C", displayName: "BY-01-C", pos: [55.59, -5.22], status: "Maintenance", main: false, depth: "45.8m", battery: "34%", temp: "13.9°C", satellites: 5, hdop: 1.8, drift: "1.2m/24h", anchor: "Check required", lastSync: "5m ago" },
+  { id: "BY-03-D", displayName: "BY-03-D", pos: [55.72, -5.30], status: "Active", main: false, depth: "29.2m", battery: "78%", temp: "14.5°C", satellites: 9, hdop: 0.7, drift: "<0.3m/24h", anchor: "Deployed", lastSync: "8s ago" },
 ];
+
+function getMapNodes(): MapNode[] {
+  const base = getDashboardNodes();
+  if (shouldShowClydeOverlays()) {
+    return clydeMapNodes;
+  }
+  return base.map((n) => ({
+    ...n,
+    satellites: 8,
+    hdop: 0.9,
+    drift: "<0.5m/24h",
+    anchor: "Deployed",
+    lastSync: "live",
+  }));
+}
 
 const envConditions = {
   waveHeight: "1.4m", wavePeriod: "8.2s", waveDir: "NW",
@@ -116,12 +146,15 @@ const warningIcon = L.divIcon({
 });
 
 export function LocationMap() {
+  const nodes = getMapNodes();
+  const mapConfig = getMapConfig();
+  const replayBanner = getReplayBannerText();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const tileRef = useRef<L.TileLayer | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
-  const [mapStyle, setMapStyle] = useState<MapStyle>("dark");
-  const [selectedNode, setSelectedNode] = useState("BY-04-A");
+  const [mapStyle, setMapStyle] = useState<MapStyle>(shouldShowClydeOverlays() ? "dark" : "terrain");
+  const [selectedNode, setSelectedNode] = useState(getDefaultNodeId());
   const [panelOpen, setPanelOpen] = useState(true);
   const [panelMode, setPanelMode] = useState<PanelMode>("buoy");
   const [overlays, setOverlays] = useState(defaultOverlays);
@@ -141,24 +174,47 @@ export function LocationMap() {
   const handleNodeClickRef = useRef(handleNodeClick);
   handleNodeClickRef.current = handleNodeClick;
 
+  useEffect(() => {
+    mapRef.current?.invalidateSize({ animate: false });
+  }, [panelOpen]);
+
   // Initialize map
   useEffect(() => {
     const el = mapContainerRef.current;
     if (!el || mapRef.current) return;
+    const defaultId = getDefaultNodeId();
     const map = L.map(el, {
       ...nereusLeafletMapOptions,
-      center: [55.65, -5.15],
-      zoom: 11,
+      center: mapConfig.center,
+      zoom: mapConfig.zoom,
       zoomControl: false,
-      attributionControl: false,
+      attributionControl: mapConfig.showAttribution,
     });
     map.getContainer().style.background = "#0f172a";
 
-    const tile = L.tileLayer(tileUrls.dark.url, {
-      attribution: NEREUS_DARK_BASEMAP.attribution,
-      maxZoom: 16,
+    const tile = L.tileLayer(mapConfig.tileUrl, {
+      attribution: mapConfig.attribution,
+      maxZoom: 18,
     }).addTo(map);
     tileRef.current = tile;
+
+    if (!shouldShowClydeOverlays()) {
+      nodes.forEach((node) => {
+        const isSelected = node.id === defaultId;
+        const icon = isSelected ? createSelectedIcon() : node.status === "Maintenance" ? warningIcon : secondaryIcon;
+        const marker = L.marker(node.pos, { icon }).addTo(map);
+        marker.on("click", () => handleNodeClickRef.current(node.id));
+        markersRef.current.set(node.id, marker);
+      });
+      mapRef.current = map;
+      const detachResize = attachLeafletResizeHandlers(map, el);
+      return () => {
+        detachResize();
+        map.remove();
+        mapRef.current = null;
+        markersRef.current.clear();
+      };
+    }
 
     // Add MPA circle overlay (static reference)
     L.circle([55.63, -5.20], {
@@ -219,8 +275,9 @@ export function LocationMap() {
       detachResize();
       map.remove();
       mapRef.current = null;
+      markersRef.current.clear();
     };
-  }, []);
+  }, [mapConfig, nodes]);
 
   // Update tile layer
   useEffect(() => {
@@ -251,7 +308,7 @@ export function LocationMap() {
     <div className="relative h-full min-h-0 w-full overflow-hidden">
       {/* Full-bleed Map */}
       <div className="absolute inset-0 z-0 min-h-0">
-        <div ref={mapContainerRef} className="h-full min-h-0 w-full" />
+        <div ref={mapContainerRef} className="h-full min-h-0 w-full" style={{ minHeight: "100%" }} />
       </div>
 
       {/* Top-left: Status + Active Layers */}

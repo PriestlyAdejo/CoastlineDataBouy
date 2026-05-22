@@ -65,6 +65,15 @@ class AcousticMetaSnapshot(Base):
     payload: Mapped[dict] = mapped_column(JSON)
 
 
+class WaveStatsSnapshot(Base):
+    __tablename__ = "wave_stats_snapshots"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    node_id: Mapped[str] = mapped_column(String(64), index=True)
+    ts: Mapped[str] = mapped_column(String(64), index=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+
+
 class Alert(Base):
     __tablename__ = "alerts"
 

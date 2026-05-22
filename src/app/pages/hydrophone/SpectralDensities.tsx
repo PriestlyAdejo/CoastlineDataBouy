@@ -4,6 +4,7 @@ import { SettingsRail, SettingsGroup, SettingsToggle, SettingsSelect } from "../
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, Area, AreaChart, ReferenceLine } from "recharts";
 import { Download } from "lucide-react";
+import { getActiveNodeLabel } from "../../lib/demoMode";
 
 const spectralData = generateSpectralDensityData();
 
@@ -21,7 +22,7 @@ export function SpectralDensities() {
         {/* Header */}
         <div className="flex items-center justify-between text-xs font-mono">
           <div className="text-slate-500">
-            <span className="text-slate-300">BY-04-A</span> | Period: <span className="text-slate-300">{period === "month" ? "Feb 17 - Mar 17 2026" : "Mar 10 - Mar 17 2026"}</span> | H1-Omni 48kHz
+            <span className="text-slate-300">{getActiveNodeLabel()}</span> | Period: <span className="text-slate-300">{period === "month" ? "Feb 17 - Mar 17 2026" : "Mar 10 - Mar 17 2026"}</span> | H1-Omni 48kHz
           </div>
           <button className="flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors">
             <Download size={13} /> Export

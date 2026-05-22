@@ -7,7 +7,13 @@ from sqlalchemy import desc, select
 
 from .auth import require_buoy_token
 from .db import session_scope
-from .models import AcousticMetaSnapshot, EnvSnapshot, HealthSnapshot, TelemetrySample
+from .models import (
+    AcousticMetaSnapshot,
+    EnvSnapshot,
+    HealthSnapshot,
+    TelemetrySample,
+    WaveStatsSnapshot,
+)
 
 router = APIRouter()
 
@@ -26,6 +32,24 @@ def _latest_payload(session, model, node_id: str) -> dict | None:
         .limit(1)
     ).scalar_one_or_none()
     return None if row is None else row.payload
+
+
+def _payload_ts(payload: dict | None) -> str | None:
+    if isinstance(payload, dict):
+        ts = payload.get("ts")
+        if isinstance(ts, str) and ts.strip():
+            return ts
+    return None
+
+
+def _acoustic_ts(payload: dict | None) -> str | None:
+    if not isinstance(payload, dict):
+        return None
+    for key in ("ts", "ts_end", "ts_start"):
+        value = payload.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return None
 
 
 @router.get("/healthz")
@@ -89,6 +113,9 @@ def ingest_env(payload: dict):
 
 @router.post("/ingest/wave_stats", dependencies=[Depends(require_buoy_token)])
 def ingest_wave_stats(payload: dict):
+    node_id, ts = _payload_node_ts(payload)
+    with session_scope() as session:
+        session.add(WaveStatsSnapshot(node_id=node_id, ts=ts, payload=payload))
     return {"accepted": True}
 
 
@@ -113,9 +140,20 @@ def latest_snapshots(node_id: str):
         env = _latest_payload(session, EnvSnapshot, node_id)
         health = _latest_payload(session, HealthSnapshot, node_id)
         acoustics = _latest_payload(session, AcousticMetaSnapshot, node_id)
+        wave_stats = _latest_payload(session, WaveStatsSnapshot, node_id)
 
-    timestamps = [item.get("ts") for item in (telemetry, env, health, acoustics) if isinstance(item, dict)]
-    latest_ts = max(timestamps) if timestamps else datetime.now(timezone.utc).isoformat()
+    valid_timestamps = [
+        ts
+        for ts in (
+            _payload_ts(telemetry),
+            _payload_ts(env),
+            _payload_ts(health),
+            _acoustic_ts(acoustics),
+            _payload_ts(wave_stats),
+        )
+        if ts
+    ]
+    latest_ts = max(valid_timestamps) if valid_timestamps else datetime.now(timezone.utc).isoformat()
 
     return {
         "node_id": node_id,
@@ -123,6 +161,7 @@ def latest_snapshots(node_id: str):
         "env": env,
         "health": health,
         "acoustics": acoustics,
+        "wave_stats": wave_stats,
         "ts": latest_ts,
     }
 

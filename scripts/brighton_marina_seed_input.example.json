@@ -1,0 +1,31 @@
+{
+  "node_id": "ucl-buoy",
+  "display_name": "Brighton Marina Field Test",
+  "test_date": "2026-05-01",
+  "location": {
+    "lat": 50.8118,
+    "lon": -0.1013,
+    "name": "Brighton Marina"
+  },
+  "measured": {
+    "deployment_start": null,
+    "deployment_end": null,
+    "water_temp_c": null,
+    "battery_pack_v": null,
+    "battery_soc_pct": null,
+    "hydrophone_files": [],
+    "acoustic_metrics": {
+      "leq_db": null,
+      "peak_db": null,
+      "rms_dbfs": null,
+      "peak_dbfs": null,
+      "dominant_band": null
+    }
+  },
+  "inference_policy": {
+    "allow_inferred_imu": true,
+    "allow_inferred_wave_stats": true,
+    "allow_inferred_battery": true,
+    "allow_inferred_environment": true
+  }
+}

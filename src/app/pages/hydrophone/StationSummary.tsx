@@ -7,6 +7,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, BarChart, Bar } from "recharts";
 import { clsx } from "clsx";
 import { PinToOverviewButton } from "../../components/OverviewContext";
+import { getHydrophoneStationLabel } from "../../lib/demoMode";
 
 const recentEvents = generateDailyEventData(7);
 
@@ -45,7 +46,7 @@ export function StationSummary() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-slate-100">BY-04-A Hydrophone Station</span>
+                <span className="text-sm font-semibold text-slate-100">{getHydrophoneStationLabel()}</span>
                 <StatusBadge status="success">Online</StatusBadge>
               </div>
               <span className="text-[10px] font-mono text-slate-500">H1-Omni | 48kHz | 24-bit | Continuous | Last chunk: 14:32:00 UTC</span>
