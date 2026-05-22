@@ -7,11 +7,13 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, BarChart, Bar } from "recharts";
 import { clsx } from "clsx";
 import { PinToOverviewButton } from "../../components/OverviewContext";
-import { getHydrophoneStationLabel } from "../../lib/demoMode";
+import { getHydrophoneStationLabel, isBrightonDemo } from "../../lib/demoMode";
+import { useDeploymentView } from "../../hooks/useDeploymentView";
+import { useReplayData } from "../../lib/useReplayData";
 
 const recentEvents = generateDailyEventData(7);
 
-const summaryMetrics = [
+const clydeSummaryMetrics = [
   { title: "Current SPL", value: "94.2", unit: "dB re 1µPa", trend: "neutral" as const, trendValue: "Typical for conditions", icon: Volume2, status: "normal" as const },
   { title: "Peak Frequency", value: "1.2", unit: "kHz", trend: "up" as const, trendValue: "Vessel traffic elevated", icon: Waves, status: "warning" as const },
   { title: "Events (24h)", value: "47", unit: "events", trend: "up" as const, trendValue: "+12 vs yesterday", icon: Zap, status: "info" as const },
@@ -28,13 +30,27 @@ const latestEvents = [
   { id: "EVT-0843", cls: "wave", time: "13:42:19", confidence: 0.94, level: "97.8 dB" },
 ];
 
-// Mini SPL trend
-const splTrend = Array.from({ length: 48 }, (_, i) => ({
-  t: i,
-  spl: 85 + Math.sin(i * 0.3) * 8 + (Math.random() - 0.5) * 5,
-}));
-
 export function StationSummary() {
+  const vm = useDeploymentView();
+  const replay = useReplayData();
+  const acoustic = vm?.acoustic;
+  const summaryMetrics = isBrightonDemo() && acoustic
+    ? [
+        { title: "Display Leq", value: acoustic.displayLevel.replace(/ dB.*/, ""), unit: acoustic.unit, trend: "neutral" as const, trendValue: acoustic.calibrated ? "Calibrated" : "Relative level", icon: Volume2, status: "warning" as const },
+        { title: "Peak Level", value: acoustic.peakLevel.replace(/ dB.*/, ""), unit: acoustic.unit, trend: "neutral" as const, trendValue: "Field test", icon: Waves, status: "warning" as const },
+        { title: "Events (24h)", value: String(acoustic.eventCount24h ?? "—"), unit: "events", trend: "neutral" as const, trendValue: vm?.phase.label ?? "—", icon: Zap, status: "info" as const },
+        { title: "Recording Effort", value: String(acoustic.recordingEffortPct ?? "—"), unit: "%", trend: "neutral" as const, trendValue: "Test day", icon: Clock, status: "success" as const },
+        { title: "Storage Available", value: vm ? vm.storage.freeGb.toFixed(1) : "—", unit: "GB", trend: "neutral" as const, trendValue: "On buoy", icon: HardDrive, status: "normal" as const },
+        { title: "Data Latency", value: "live", unit: "", trend: "neutral" as const, trendValue: vm?.sync.label ?? "—", icon: Database, status: "success" as const },
+      ]
+    : clydeSummaryMetrics;
+
+  const splTrend = (replay ? replay.getHydrophoneCharts() : Array.from({ length: 48 }, (_, i) => ({
+    time: `${i}`,
+    leq: 85 + Math.sin(i * 0.3) * 8,
+    peak: 95 + Math.sin(i * 0.3) * 8,
+  }))).map((p, i) => ({ t: i, spl: "leq" in p ? p.leq : 85, ...p }));
+
   return (
     <div className="flex flex-col gap-6">
       {/* Station Status Banner */}
@@ -49,7 +65,9 @@ export function StationSummary() {
                 <span className="text-sm font-semibold text-slate-100">{getHydrophoneStationLabel()}</span>
                 <StatusBadge status="success">Online</StatusBadge>
               </div>
-              <span className="text-[10px] font-mono text-slate-500">H1-Omni | 48kHz | 24-bit | Continuous | Last chunk: 14:32:00 UTC</span>
+              <span className="text-[10px] font-mono text-slate-500">
+                {isBrightonDemo() ? "96kHz | 32-bit | Replay | 1 May 2026 UTC" : "H1-Omni | 48kHz | 24-bit | Continuous | Last chunk: 14:32:00 UTC"}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -97,7 +115,9 @@ export function StationSummary() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <div className="text-[10px] font-mono text-slate-600 mt-1">dB re 1µPa (broadband RMS) | 30-min averages</div>
+          <div className="text-[10px] font-mono text-slate-600 mt-1">
+            {isBrightonDemo() ? `${acoustic?.unit ?? "dB rel."} (broadband RMS) | test day` : "dB re 1µPa (broadband RMS) | 30-min averages"}
+          </div>
         </Card>
 
         {/* Latest Events */}

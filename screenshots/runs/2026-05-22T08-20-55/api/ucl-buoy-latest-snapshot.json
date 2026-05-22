@@ -1,0 +1,910 @@
+{
+  "node_id": "ucl-buoy",
+  "telemetry": {
+    "schema_version": "v1",
+    "node_id": "ucl-buoy",
+    "ts": "2026-05-22T06:27:29Z",
+    "source": "pi_local",
+    "seq": 1768,
+    "battery": {
+      "pack_v": 12.29,
+      "soc_pct": 83.6
+    },
+    "pack_v": 12.29,
+    "link": {
+      "backend_reachable": true,
+      "backend_api_base": "http://127.0.0.1:8000/v1",
+      "packet_delivery_rate": 0.997,
+      "files_seen": 1776,
+      "files_uploaded": 1776,
+      "files_pending": 0,
+      "bytes_uploaded": 2220000000,
+      "queue_depth": 0,
+      "last_upload_ok": true,
+      "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+    },
+    "gps": {
+      "lat": 50.808166,
+      "lon": -0.124052,
+      "fix": "3D",
+      "satellites": 7,
+      "hdop": 1,
+      "drift_m_24h": 0,
+      "phase_label": "PRE",
+      "phase_key": "pre_record"
+    },
+    "imu": {
+      "accel_mps2": {
+        "x": 0.031,
+        "y": 0.0495,
+        "z": 9.8144
+      },
+      "gyro_rps": {
+        "x": 0.01,
+        "y": 0.01,
+        "z": 0
+      }
+    },
+    "replay": {
+      "tick": 1768,
+      "seq": 1768,
+      "phase_key": "pre_record",
+      "phase_label": "PRE",
+      "phase_color": "lightgrey",
+      "simulated_instant_utc": "2026-05-01T08:47:59.633333Z",
+      "location": {
+        "lat": 50.808166,
+        "lon": -0.124052,
+        "uncertainty_radius_m": 50,
+        "position_source": "inferred_replay",
+        "anchor_state": "dock",
+        "drift_m_24h": 0,
+        "marina_reference": {
+          "lat": 50.808166,
+          "lon": -0.124052
+        },
+        "test_point": {
+          "lat": 50.80675,
+          "lon": -0.12635
+        }
+      },
+      "gps": {
+        "fix": "3D",
+        "satellites": 7,
+        "hdop": 1
+      },
+      "upload": {
+        "backend_reachable": true,
+        "backend_api_base": "http://127.0.0.1:8000/v1",
+        "packet_delivery_rate": 0.997,
+        "files_seen": 1776,
+        "files_uploaded": 1776,
+        "files_pending": 0,
+        "bytes_uploaded": 2220000000,
+        "queue_depth": 0,
+        "last_upload_ok": true,
+        "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+      },
+      "battery": {
+        "pack_v": 12.29,
+        "soc_pct": 83.6
+      },
+      "environment": {
+        "water_temp_c": 12.02,
+        "enclosure_temp_c": 24.4,
+        "enclosure_rh_pct": 64.7,
+        "pressure_hpa": 1014.3
+      },
+      "acoustic_display": {
+        "leq_display_db": 55.2,
+        "peak_display_db": 72.8,
+        "rms_dbfs": -54.4,
+        "peak_dbfs": -24.4,
+        "dominant_band": "broadband",
+        "event_count_24h": 6,
+        "recording_effort_pct": 88.7,
+        "calibration_status": "uncalibrated",
+        "hydrophone_gain_note": "Hydrophone gain known incorrect; no Brighton WAV calibration applied."
+      },
+      "wave": {
+        "hs_m": 0.2,
+        "tp_s": 4.58,
+        "current_mps": 0.12
+      },
+      "files_index": [
+        {
+          "name": "brighton_marina_replay_telemetry_2026-05-01.csv",
+          "category": "telemetry",
+          "size_bytes": 14564000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "indexed"
+        },
+        {
+          "name": "brighton_marina_env_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 365600,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_wave_stats_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 8400,
+          "date": "1 May 2026",
+          "provenance": "inferred_replay",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_hydrophone_2026-05-01_segment_001.wav",
+          "category": "audio",
+          "size_bytes": 0,
+          "date": "1 May 2026",
+          "provenance": "not_uploaded_yet",
+          "upload_status": "pending",
+          "note": "No confirmed Brighton WAV on server"
+        },
+        {
+          "name": "brighton_marina_system_health_2026-05-01.log",
+          "category": "system",
+          "size_bytes": 1064000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        }
+      ],
+      "alerts": [
+        {
+          "id": "BR-GAIN-001",
+          "title": "Hydrophone gain uncalibrated",
+          "description": "Display SPL is replay/estimated, not calibrated.",
+          "severity": "warning",
+          "source": "Acoustic",
+          "time": "1 May 2026",
+          "acknowledged": false
+        },
+        {
+          "id": "BR-REPLAY-1768",
+          "title": "Brighton Marina replay active",
+          "description": "Partial-measurement replay with provenance.",
+          "severity": "info",
+          "source": "Replay",
+          "time": "1 May 2026",
+          "acknowledged": true
+        }
+      ],
+      "weather_source": "fallback_inferred"
+    },
+    "provenance": {
+      "source": "brighton_marina_2026_05_01_replay",
+      "demo_mode": true,
+      "test_date": "2026-05-01",
+      "measured_fields": [
+        "env.water_temp_c",
+        "deployment_start"
+      ],
+      "derived_fields": [],
+      "inferred_fields": [
+        "telemetry.imu",
+        "telemetry.gps",
+        "wave_stats",
+        "display_metrics"
+      ],
+      "replay_fields": [
+        "replay.tick",
+        "replay.phase_key",
+        "replay.upload",
+        "replay.files_index",
+        "replay.alerts"
+      ],
+      "inference_notes": {
+        "imu": "No measured IMU; IMU and wave fields inferred for replay.",
+        "hydrophone": "No confirmed Brighton WAV on server; display metrics are replay/estimated."
+      }
+    }
+  },
+  "env": {
+    "schema_version": "v1",
+    "node_id": "ucl-buoy",
+    "ts": "2026-05-22T06:27:29Z",
+    "source": "replay",
+    "water_temp_c": 12.02,
+    "enclosure_temp_c": 24.4,
+    "enclosure_rh_pct": 64.7,
+    "pressure_hpa": 1014.3,
+    "replay": {
+      "tick": 1768,
+      "seq": 1768,
+      "phase_key": "pre_record",
+      "phase_label": "PRE",
+      "phase_color": "lightgrey",
+      "simulated_instant_utc": "2026-05-01T08:47:59.633333Z",
+      "location": {
+        "lat": 50.808166,
+        "lon": -0.124052,
+        "uncertainty_radius_m": 50,
+        "position_source": "inferred_replay",
+        "anchor_state": "dock",
+        "drift_m_24h": 0,
+        "marina_reference": {
+          "lat": 50.808166,
+          "lon": -0.124052
+        },
+        "test_point": {
+          "lat": 50.80675,
+          "lon": -0.12635
+        }
+      },
+      "gps": {
+        "fix": "3D",
+        "satellites": 7,
+        "hdop": 1
+      },
+      "upload": {
+        "backend_reachable": true,
+        "backend_api_base": "http://127.0.0.1:8000/v1",
+        "packet_delivery_rate": 0.997,
+        "files_seen": 1776,
+        "files_uploaded": 1776,
+        "files_pending": 0,
+        "bytes_uploaded": 2220000000,
+        "queue_depth": 0,
+        "last_upload_ok": true,
+        "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+      },
+      "battery": {
+        "pack_v": 12.29,
+        "soc_pct": 83.6
+      },
+      "environment": {
+        "water_temp_c": 12.02,
+        "enclosure_temp_c": 24.4,
+        "enclosure_rh_pct": 64.7,
+        "pressure_hpa": 1014.3
+      },
+      "acoustic_display": {
+        "leq_display_db": 55.2,
+        "peak_display_db": 72.8,
+        "rms_dbfs": -54.4,
+        "peak_dbfs": -24.4,
+        "dominant_band": "broadband",
+        "event_count_24h": 6,
+        "recording_effort_pct": 88.7,
+        "calibration_status": "uncalibrated",
+        "hydrophone_gain_note": "Hydrophone gain known incorrect; no Brighton WAV calibration applied."
+      },
+      "wave": {
+        "hs_m": 0.2,
+        "tp_s": 4.58,
+        "current_mps": 0.12
+      },
+      "files_index": [
+        {
+          "name": "brighton_marina_replay_telemetry_2026-05-01.csv",
+          "category": "telemetry",
+          "size_bytes": 14564000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "indexed"
+        },
+        {
+          "name": "brighton_marina_env_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 365600,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_wave_stats_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 8400,
+          "date": "1 May 2026",
+          "provenance": "inferred_replay",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_hydrophone_2026-05-01_segment_001.wav",
+          "category": "audio",
+          "size_bytes": 0,
+          "date": "1 May 2026",
+          "provenance": "not_uploaded_yet",
+          "upload_status": "pending",
+          "note": "No confirmed Brighton WAV on server"
+        },
+        {
+          "name": "brighton_marina_system_health_2026-05-01.log",
+          "category": "system",
+          "size_bytes": 1064000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        }
+      ],
+      "alerts": [
+        {
+          "id": "BR-GAIN-001",
+          "title": "Hydrophone gain uncalibrated",
+          "description": "Display SPL is replay/estimated, not calibrated.",
+          "severity": "warning",
+          "source": "Acoustic",
+          "time": "1 May 2026",
+          "acknowledged": false
+        },
+        {
+          "id": "BR-REPLAY-1768",
+          "title": "Brighton Marina replay active",
+          "description": "Partial-measurement replay with provenance.",
+          "severity": "info",
+          "source": "Replay",
+          "time": "1 May 2026",
+          "acknowledged": true
+        }
+      ],
+      "weather_source": "fallback_inferred"
+    },
+    "provenance": {
+      "source": "brighton_marina_2026_05_01_replay",
+      "demo_mode": true,
+      "test_date": "2026-05-01",
+      "measured_fields": [
+        "env.water_temp_c",
+        "deployment_start"
+      ],
+      "derived_fields": [],
+      "inferred_fields": [
+        "telemetry.imu",
+        "telemetry.gps",
+        "wave_stats",
+        "display_metrics"
+      ],
+      "replay_fields": [
+        "replay.tick",
+        "replay.phase_key",
+        "replay.upload",
+        "replay.files_index",
+        "replay.alerts"
+      ],
+      "inference_notes": {
+        "imu": "No measured IMU; IMU and wave fields inferred for replay.",
+        "hydrophone": "No confirmed Brighton WAV on server; display metrics are replay/estimated."
+      }
+    }
+  },
+  "health": {
+    "schema_version": "v1",
+    "node_id": "ucl-buoy",
+    "ts": "2026-05-22T06:27:29Z",
+    "status": "ok",
+    "pi": {
+      "cpu_pct": 13.6,
+      "mem_pct": 40.5,
+      "cpu_temp_c": 46.3,
+      "uptime_s": 12440
+    },
+    "storage": {
+      "mount_ok": true,
+      "mountpoint": "/mnt/harddrive/buoy",
+      "free_bytes": 811600000000,
+      "total_bytes": 2000000000000
+    },
+    "replay": {
+      "tick": 1768,
+      "seq": 1768,
+      "phase_key": "pre_record",
+      "phase_label": "PRE",
+      "phase_color": "lightgrey",
+      "simulated_instant_utc": "2026-05-01T08:47:59.633333Z",
+      "location": {
+        "lat": 50.808166,
+        "lon": -0.124052,
+        "uncertainty_radius_m": 50,
+        "position_source": "inferred_replay",
+        "anchor_state": "dock",
+        "drift_m_24h": 0,
+        "marina_reference": {
+          "lat": 50.808166,
+          "lon": -0.124052
+        },
+        "test_point": {
+          "lat": 50.80675,
+          "lon": -0.12635
+        }
+      },
+      "gps": {
+        "fix": "3D",
+        "satellites": 7,
+        "hdop": 1
+      },
+      "upload": {
+        "backend_reachable": true,
+        "backend_api_base": "http://127.0.0.1:8000/v1",
+        "packet_delivery_rate": 0.997,
+        "files_seen": 1776,
+        "files_uploaded": 1776,
+        "files_pending": 0,
+        "bytes_uploaded": 2220000000,
+        "queue_depth": 0,
+        "last_upload_ok": true,
+        "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+      },
+      "battery": {
+        "pack_v": 12.29,
+        "soc_pct": 83.6
+      },
+      "environment": {
+        "water_temp_c": 12.02,
+        "enclosure_temp_c": 24.4,
+        "enclosure_rh_pct": 64.7,
+        "pressure_hpa": 1014.3
+      },
+      "acoustic_display": {
+        "leq_display_db": 55.2,
+        "peak_display_db": 72.8,
+        "rms_dbfs": -54.4,
+        "peak_dbfs": -24.4,
+        "dominant_band": "broadband",
+        "event_count_24h": 6,
+        "recording_effort_pct": 88.7,
+        "calibration_status": "uncalibrated",
+        "hydrophone_gain_note": "Hydrophone gain known incorrect; no Brighton WAV calibration applied."
+      },
+      "wave": {
+        "hs_m": 0.2,
+        "tp_s": 4.58,
+        "current_mps": 0.12
+      },
+      "files_index": [
+        {
+          "name": "brighton_marina_replay_telemetry_2026-05-01.csv",
+          "category": "telemetry",
+          "size_bytes": 14564000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "indexed"
+        },
+        {
+          "name": "brighton_marina_env_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 365600,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_wave_stats_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 8400,
+          "date": "1 May 2026",
+          "provenance": "inferred_replay",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_hydrophone_2026-05-01_segment_001.wav",
+          "category": "audio",
+          "size_bytes": 0,
+          "date": "1 May 2026",
+          "provenance": "not_uploaded_yet",
+          "upload_status": "pending",
+          "note": "No confirmed Brighton WAV on server"
+        },
+        {
+          "name": "brighton_marina_system_health_2026-05-01.log",
+          "category": "system",
+          "size_bytes": 1064000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        }
+      ],
+      "alerts": [
+        {
+          "id": "BR-GAIN-001",
+          "title": "Hydrophone gain uncalibrated",
+          "description": "Display SPL is replay/estimated, not calibrated.",
+          "severity": "warning",
+          "source": "Acoustic",
+          "time": "1 May 2026",
+          "acknowledged": false
+        },
+        {
+          "id": "BR-REPLAY-1768",
+          "title": "Brighton Marina replay active",
+          "description": "Partial-measurement replay with provenance.",
+          "severity": "info",
+          "source": "Replay",
+          "time": "1 May 2026",
+          "acknowledged": true
+        }
+      ],
+      "weather_source": "fallback_inferred"
+    },
+    "provenance": {
+      "source": "brighton_marina_2026_05_01_replay",
+      "demo_mode": true,
+      "test_date": "2026-05-01",
+      "measured_fields": [
+        "env.water_temp_c",
+        "deployment_start"
+      ],
+      "derived_fields": [],
+      "inferred_fields": [
+        "telemetry.imu",
+        "telemetry.gps",
+        "wave_stats",
+        "display_metrics"
+      ],
+      "replay_fields": [
+        "replay.tick",
+        "replay.phase_key",
+        "replay.upload",
+        "replay.files_index",
+        "replay.alerts"
+      ],
+      "inference_notes": {
+        "imu": "No measured IMU; IMU and wave fields inferred for replay.",
+        "hydrophone": "No confirmed Brighton WAV on server; display metrics are replay/estimated."
+      }
+    }
+  },
+  "acoustics": {
+    "schema_version": "v1",
+    "node_id": "ucl-buoy",
+    "ts": "2026-05-22T06:27:29Z",
+    "ts_start": "2026-05-22T06:27:29Z",
+    "ts_end": "2026-05-22T06:27:29Z",
+    "format": {
+      "container": "wav",
+      "codec": "pcm_s32le",
+      "sample_rate_hz": 96000,
+      "channels": 2,
+      "bit_depth": 32
+    },
+    "artifact": {
+      "path": "replay/brighton_marina/metadata_only.wav",
+      "size_bytes": 0,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "display_metrics": {
+      "leq_db": 55.2,
+      "peak_db": 72.8,
+      "rms_dbfs": -54.4,
+      "peak_dbfs": -24.4,
+      "dominant_band": "broadband",
+      "calibration_status": "uncalibrated"
+    },
+    "replay": {
+      "tick": 1768,
+      "seq": 1768,
+      "phase_key": "pre_record",
+      "phase_label": "PRE",
+      "phase_color": "lightgrey",
+      "simulated_instant_utc": "2026-05-01T08:47:59.633333Z",
+      "location": {
+        "lat": 50.808166,
+        "lon": -0.124052,
+        "uncertainty_radius_m": 50,
+        "position_source": "inferred_replay",
+        "anchor_state": "dock",
+        "drift_m_24h": 0,
+        "marina_reference": {
+          "lat": 50.808166,
+          "lon": -0.124052
+        },
+        "test_point": {
+          "lat": 50.80675,
+          "lon": -0.12635
+        }
+      },
+      "gps": {
+        "fix": "3D",
+        "satellites": 7,
+        "hdop": 1
+      },
+      "upload": {
+        "backend_reachable": true,
+        "backend_api_base": "http://127.0.0.1:8000/v1",
+        "packet_delivery_rate": 0.997,
+        "files_seen": 1776,
+        "files_uploaded": 1776,
+        "files_pending": 0,
+        "bytes_uploaded": 2220000000,
+        "queue_depth": 0,
+        "last_upload_ok": true,
+        "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+      },
+      "battery": {
+        "pack_v": 12.29,
+        "soc_pct": 83.6
+      },
+      "environment": {
+        "water_temp_c": 12.02,
+        "enclosure_temp_c": 24.4,
+        "enclosure_rh_pct": 64.7,
+        "pressure_hpa": 1014.3
+      },
+      "acoustic_display": {
+        "leq_display_db": 55.2,
+        "peak_display_db": 72.8,
+        "rms_dbfs": -54.4,
+        "peak_dbfs": -24.4,
+        "dominant_band": "broadband",
+        "event_count_24h": 6,
+        "recording_effort_pct": 88.7,
+        "calibration_status": "uncalibrated",
+        "hydrophone_gain_note": "Hydrophone gain known incorrect; no Brighton WAV calibration applied."
+      },
+      "wave": {
+        "hs_m": 0.2,
+        "tp_s": 4.58,
+        "current_mps": 0.12
+      },
+      "files_index": [
+        {
+          "name": "brighton_marina_replay_telemetry_2026-05-01.csv",
+          "category": "telemetry",
+          "size_bytes": 14564000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "indexed"
+        },
+        {
+          "name": "brighton_marina_env_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 365600,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_wave_stats_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 8400,
+          "date": "1 May 2026",
+          "provenance": "inferred_replay",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_hydrophone_2026-05-01_segment_001.wav",
+          "category": "audio",
+          "size_bytes": 0,
+          "date": "1 May 2026",
+          "provenance": "not_uploaded_yet",
+          "upload_status": "pending",
+          "note": "No confirmed Brighton WAV on server"
+        },
+        {
+          "name": "brighton_marina_system_health_2026-05-01.log",
+          "category": "system",
+          "size_bytes": 1064000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        }
+      ],
+      "alerts": [
+        {
+          "id": "BR-GAIN-001",
+          "title": "Hydrophone gain uncalibrated",
+          "description": "Display SPL is replay/estimated, not calibrated.",
+          "severity": "warning",
+          "source": "Acoustic",
+          "time": "1 May 2026",
+          "acknowledged": false
+        },
+        {
+          "id": "BR-REPLAY-1768",
+          "title": "Brighton Marina replay active",
+          "description": "Partial-measurement replay with provenance.",
+          "severity": "info",
+          "source": "Replay",
+          "time": "1 May 2026",
+          "acknowledged": true
+        }
+      ],
+      "weather_source": "fallback_inferred"
+    },
+    "provenance": {
+      "source": "brighton_marina_2026_05_01_replay",
+      "demo_mode": true,
+      "test_date": "2026-05-01",
+      "measured_fields": [
+        "env.water_temp_c",
+        "deployment_start"
+      ],
+      "derived_fields": [],
+      "inferred_fields": [
+        "telemetry.imu",
+        "telemetry.gps",
+        "wave_stats",
+        "display_metrics"
+      ],
+      "replay_fields": [
+        "replay.tick",
+        "replay.phase_key",
+        "replay.upload",
+        "replay.files_index",
+        "replay.alerts"
+      ],
+      "inference_notes": {
+        "imu": "No measured IMU; IMU and wave fields inferred for replay.",
+        "hydrophone": "No confirmed Brighton WAV on server; display metrics are replay/estimated.",
+        "display_metrics": "Replay extension; not acoustic_chunk_meta v1 alone."
+      }
+    }
+  },
+  "wave_stats": {
+    "schema_version": "v1",
+    "node_id": "ucl-buoy",
+    "ts": "2026-05-22T06:27:29Z",
+    "window_s": 900,
+    "fs_hz": 50,
+    "hs_m": 0.2,
+    "tp_s": 4.58,
+    "quality": {
+      "samples": 45000,
+      "gap_pct": 0,
+      "notes": "Inferred marina replay; IMU not measured."
+    },
+    "replay": {
+      "tick": 1768,
+      "seq": 1768,
+      "phase_key": "pre_record",
+      "phase_label": "PRE",
+      "phase_color": "lightgrey",
+      "simulated_instant_utc": "2026-05-01T08:47:59.633333Z",
+      "location": {
+        "lat": 50.808166,
+        "lon": -0.124052,
+        "uncertainty_radius_m": 50,
+        "position_source": "inferred_replay",
+        "anchor_state": "dock",
+        "drift_m_24h": 0,
+        "marina_reference": {
+          "lat": 50.808166,
+          "lon": -0.124052
+        },
+        "test_point": {
+          "lat": 50.80675,
+          "lon": -0.12635
+        }
+      },
+      "gps": {
+        "fix": "3D",
+        "satellites": 7,
+        "hdop": 1
+      },
+      "upload": {
+        "backend_reachable": true,
+        "backend_api_base": "http://127.0.0.1:8000/v1",
+        "packet_delivery_rate": 0.997,
+        "files_seen": 1776,
+        "files_uploaded": 1776,
+        "files_pending": 0,
+        "bytes_uploaded": 2220000000,
+        "queue_depth": 0,
+        "last_upload_ok": true,
+        "latest_upload_ts": "2026-05-22T06:27:29.810768Z"
+      },
+      "battery": {
+        "pack_v": 12.29,
+        "soc_pct": 83.6
+      },
+      "environment": {
+        "water_temp_c": 12.02,
+        "enclosure_temp_c": 24.4,
+        "enclosure_rh_pct": 64.7,
+        "pressure_hpa": 1014.3
+      },
+      "acoustic_display": {
+        "leq_display_db": 55.2,
+        "peak_display_db": 72.8,
+        "rms_dbfs": -54.4,
+        "peak_dbfs": -24.4,
+        "dominant_band": "broadband",
+        "event_count_24h": 6,
+        "recording_effort_pct": 88.7,
+        "calibration_status": "uncalibrated",
+        "hydrophone_gain_note": "Hydrophone gain known incorrect; no Brighton WAV calibration applied."
+      },
+      "wave": {
+        "hs_m": 0.2,
+        "tp_s": 4.58,
+        "current_mps": 0.12
+      },
+      "files_index": [
+        {
+          "name": "brighton_marina_replay_telemetry_2026-05-01.csv",
+          "category": "telemetry",
+          "size_bytes": 14564000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "indexed"
+        },
+        {
+          "name": "brighton_marina_env_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 365600,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_wave_stats_2026-05-01.json",
+          "category": "sensor",
+          "size_bytes": 8400,
+          "date": "1 May 2026",
+          "provenance": "inferred_replay",
+          "upload_status": "uploaded"
+        },
+        {
+          "name": "brighton_marina_hydrophone_2026-05-01_segment_001.wav",
+          "category": "audio",
+          "size_bytes": 0,
+          "date": "1 May 2026",
+          "provenance": "not_uploaded_yet",
+          "upload_status": "pending",
+          "note": "No confirmed Brighton WAV on server"
+        },
+        {
+          "name": "brighton_marina_system_health_2026-05-01.log",
+          "category": "system",
+          "size_bytes": 1064000,
+          "date": "1 May 2026",
+          "provenance": "replay_metadata_only",
+          "upload_status": "uploaded"
+        }
+      ],
+      "alerts": [
+        {
+          "id": "BR-GAIN-001",
+          "title": "Hydrophone gain uncalibrated",
+          "description": "Display SPL is replay/estimated, not calibrated.",
+          "severity": "warning",
+          "source": "Acoustic",
+          "time": "1 May 2026",
+          "acknowledged": false
+        },
+        {
+          "id": "BR-REPLAY-1768",
+          "title": "Brighton Marina replay active",
+          "description": "Partial-measurement replay with provenance.",
+          "severity": "info",
+          "source": "Replay",
+          "time": "1 May 2026",
+          "acknowledged": true
+        }
+      ],
+      "weather_source": "fallback_inferred"
+    },
+    "provenance": {
+      "source": "brighton_marina_2026_05_01_replay",
+      "demo_mode": true,
+      "test_date": "2026-05-01",
+      "measured_fields": [
+        "env.water_temp_c",
+        "deployment_start"
+      ],
+      "derived_fields": [],
+      "inferred_fields": [
+        "telemetry.imu",
+        "telemetry.gps",
+        "wave_stats",
+        "display_metrics"
+      ],
+      "replay_fields": [
+        "replay.tick",
+        "replay.phase_key",
+        "replay.upload",
+        "replay.files_index",
+        "replay.alerts"
+      ],
+      "inference_notes": {
+        "imu": "No measured IMU; IMU and wave fields inferred for replay.",
+        "hydrophone": "No confirmed Brighton WAV on server; display metrics are replay/estimated."
+      }
+    }
+  },
+  "ts": "2026-05-22T06:27:29Z"
+}

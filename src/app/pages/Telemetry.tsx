@@ -2,7 +2,7 @@ import { Card } from "../components/Card";
 import { MetricCard, StatusBadge } from "../components/Widgets";
 import {
   Activity, Radio, Wifi, Signal, Clock, ArrowUpDown,
-  RefreshCw, Pin, Eye,
+  RefreshCw, Pin, Eye, Battery,
 } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -11,8 +11,9 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { clsx } from "clsx";
 import { PinToOverviewButton } from "../components/OverviewContext";
-import { createApiClient } from "../api/client";
-import { getDefaultNodeId, getPageNodeSubtitle } from "../lib/demoMode";
+import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { selectChartSeries } from "../lib/replaySelectors";
 
 const packetData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -33,32 +34,16 @@ const uptimeLog = [
 ];
 
 export function Telemetry() {
+  const vm = useDeploymentView();
+  const tel = vm?.telemetry;
+  const packetChart = isBrightonDemo()
+    ? selectChartSeries(vm, "packet").map((p) => ({ time: p.label, received: p.value, latency: 120 }))
+    : packetData;
   const [liveTime, setLiveTime] = useState(new Date());
-  const [apiTs, setApiTs] = useState<string | null>(null);
-  const [apiOk, setApiOk] = useState<boolean | null>(null);
 
   useEffect(() => {
     const t = setInterval(() => setLiveTime(new Date()), 1000);
     return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    const client = createApiClient();
-    client
-      .getLatestSnapshots(getDefaultNodeId())
-      .then((snap) => {
-        if (cancelled) return;
-        setApiTs(snap.ts);
-        setApiOk(true);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setApiOk(false);
-      });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   return (
@@ -75,16 +60,29 @@ export function Telemetry() {
         </div>
       </div>
 
-      <div className="text-[10px] font-mono text-slate-600">
-        API: {apiOk === null ? "checking…" : apiOk ? `connected (ts=${apiTs ?? "?"})` : "offline (using mock data)"}
-      </div>
+      {isBrightonDemo() && (
+        <div className="text-[10px] font-mono text-slate-600">
+          Sync: {vm?.sync.label ?? "Replay data"}
+        </div>
+      )}
 
       {/* Key metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <MetricCard title="Packet Rate" value="59" unit="/min" trend="neutral" trendValue="Nominal" icon={ArrowUpDown} status="success" />
-        <MetricCard title="Packet Loss" value="0.21" unit="%" trend="down" trendValue="-0.03% (24h)" icon={Activity} status="success" />
-        <MetricCard title="Avg Latency" value="142" unit="ms" trend="up" trendValue="+8ms" icon={Clock} status="normal" />
-        <MetricCard title="Uptime" value="14d 7h" unit="" trend="neutral" trendValue="Since last reset" icon={RefreshCw} status="info" />
+        {isBrightonDemo() && tel ? (
+          <>
+            <MetricCard title="Replay Seq" value={String(tel.seq ?? "—")} unit="" trend="neutral" trendValue={`Phase: ${tel.phaseLabel}`} icon={ArrowUpDown} status="success" />
+            <MetricCard title="Upload Delivery" value={tel.uploadRate.replace("%", "")} unit="%" trend="neutral" trendValue={`${tel.filesUploaded ?? 0} uploaded`} icon={Activity} status="success" />
+            <MetricCard title="Battery SOC" value={tel.socPct.replace("%", "")} unit="%" trend="neutral" trendValue={tel.packV} icon={Battery} status="success" />
+            <MetricCard title="Pending Files" value={String(tel.filesPending ?? 0)} unit="" trend="neutral" trendValue="Replay queue" icon={RefreshCw} status="info" />
+          </>
+        ) : (
+          <>
+            <MetricCard title="Packet Rate" value="59" unit="/min" trend="neutral" trendValue="Nominal" icon={ArrowUpDown} status="success" />
+            <MetricCard title="Packet Loss" value="0.21" unit="%" trend="down" trendValue="-0.03% (24h)" icon={Activity} status="success" />
+            <MetricCard title="Avg Latency" value="142" unit="ms" trend="up" trendValue="+8ms" icon={Clock} status="normal" />
+            <MetricCard title="Uptime" value="14d 7h" unit="" trend="neutral" trendValue="Since last reset" icon={RefreshCw} status="info" />
+          </>
+        )}
       </div>
 
       {/* Comms channels */}
@@ -147,7 +145,7 @@ export function Telemetry() {
         }>
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={packetData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+              <AreaChart data={packetChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
                 <defs>
                   <linearGradient id="packetGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.25} />
@@ -217,34 +215,42 @@ export function Telemetry() {
         </div>
       </Card>
 
-      {/* Live packet log */}
-      <Card title="Recent Packet Log" action={<span className="text-[10px] font-mono text-slate-600">Last 10 entries</span>}>
+      <Card title="Recent Packet Log" action={<span className="text-[10px] font-mono text-slate-600">Last entries (RSSI / SNR in caption)</span>}>
         <div className="space-y-1 font-mono text-xs">
-          {Array.from({ length: 10 }).map((_, i) => {
-            const t = new Date(Date.now() - i * 30000);
-            const types = ["TELEM", "HEALTH", "GPS", "ENV", "TELEM", "ALERT", "TELEM", "HEALTH", "TELEM", "GPS"];
-            const type = types[i];
-            return (
+          {(isBrightonDemo() && vm?.telemetry.recentPackets.length
+            ? vm.telemetry.recentPackets.map((p, i) => (
               <div key={i} className="flex items-center gap-4 px-3 py-1.5 rounded hover:bg-slate-800/30 transition-colors">
-                <span className="text-slate-600 w-20">{t.toLocaleTimeString("en-GB")}</span>
-                <span className={clsx(
-                  "w-16 text-center px-1.5 py-0.5 rounded text-[10px]",
-                  type === "ALERT" ? "bg-amber-500/10 text-amber-400" :
-                  type === "GPS" ? "bg-blue-500/10 text-blue-400" :
-                  type === "ENV" ? "bg-emerald-500/10 text-emerald-400" :
-                  "bg-slate-800 text-slate-400"
-                )}>{type}</span>
+                <span className="text-slate-600 w-28">{p.time}</span>
+                <span className="w-16 text-center px-1.5 py-0.5 rounded text-[10px] bg-blue-500/10 text-blue-400">GPS</span>
                 <span className="text-slate-400 flex-1 truncate">
-                  {type === "TELEM" ? `rssi=-${70 + Math.floor(Math.random() * 15)}dBm snr=${(8 + Math.random() * 5).toFixed(1)}dB bat=${(12.2 + Math.random() * 0.6).toFixed(1)}V` :
-                   type === "GPS" ? `lat=55.6${(500 + Math.floor(Math.random() * 10))} lon=-5.1${(500 + Math.floor(Math.random() * 10))} fix=3D sats=8` :
-                   type === "ENV" ? `water_t=14.${Math.floor(Math.random() * 9)}°C int_t=22.${Math.floor(Math.random() * 9)}°C hum=${40 + Math.floor(Math.random() * 20)}%` :
-                   type === "HEALTH" ? `cpu=${30 + Math.floor(Math.random() * 20)}% mem=${45 + Math.floor(Math.random() * 15)}% disk=${17 + Math.floor(Math.random() * 3)}% wdog=OK` :
-                   `threshold_breach: noise_floor > 70dB`}
+                  lat={p.lat} lon={p.lon} fix=3D rssi={p.rssi}dBm snr={p.snr}dB status={p.status}
                 </span>
-                <span className="text-slate-700">{32 + Math.floor(Math.random() * 40)}B</span>
               </div>
-            );
-          })}
+            ))
+            : Array.from({ length: 10 }).map((_, i) => {
+              const t = new Date(Date.now() - i * 30000);
+              const types = ["TELEM", "HEALTH", "GPS", "ENV", "TELEM", "ALERT", "TELEM", "HEALTH", "TELEM", "GPS"];
+              const type = types[i];
+              return (
+                <div key={i} className="flex items-center gap-4 px-3 py-1.5 rounded hover:bg-slate-800/30 transition-colors">
+                  <span className="text-slate-600 w-20">{t.toLocaleTimeString("en-GB")}</span>
+                  <span className={clsx(
+                    "w-16 text-center px-1.5 py-0.5 rounded text-[10px]",
+                    type === "ALERT" ? "bg-amber-500/10 text-amber-400" :
+                    type === "GPS" ? "bg-blue-500/10 text-blue-400" :
+                    type === "ENV" ? "bg-emerald-500/10 text-emerald-400" :
+                    "bg-slate-800 text-slate-400"
+                  )}>{type}</span>
+                  <span className="text-slate-400 flex-1 truncate">
+                    {type === "TELEM" ? `rssi=-${70 + Math.floor(Math.random() * 15)}dBm snr=${(8 + Math.random() * 5).toFixed(1)}dB` :
+                     type === "GPS" ? `lat=55.65 lon=-5.15 fix=3D sats=8` :
+                     type === "ENV" ? `water_t=14.3°C` :
+                     type === "HEALTH" ? `cpu=32% mem=48% wdog=OK` :
+                     `threshold_breach: noise_floor > 70dB`}
+                  </span>
+                </div>
+              );
+            }))}
         </div>
       </Card>
     </div>

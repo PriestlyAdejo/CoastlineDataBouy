@@ -11,7 +11,9 @@ import {
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { PinToOverviewButton } from "../components/OverviewContext";
-import { getPageNodeSubtitle } from "../lib/demoMode";
+import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { selectChartSeries } from "../lib/replaySelectors";
 
 const cpuData = Array.from({ length: 60 }, (_, i) => ({
   t: `${60 - i}s`,
@@ -36,6 +38,16 @@ const processes = [
 ];
 
 export function SystemHealth() {
+  const vm = useDeploymentView();
+  const health = vm?.health;
+  const tel = vm?.telemetry;
+  const storage = vm?.storage;
+  const cpuChart = isBrightonDemo()
+    ? selectChartSeries(vm, "cpu").map((p, i) => ({ t: p.label, cpu: p.value, mem: (vm?.health.memPct ?? 38) + Math.sin(i) * 3 }))
+    : cpuData;
+  const battChart = isBrightonDemo()
+    ? selectChartSeries(vm, "battery").map((p) => ({ time: p.label, voltage: p.value, current: 0.35 }))
+    : batteryData;
   const [liveTime, setLiveTime] = useState(new Date());
   useEffect(() => { const t = setInterval(() => setLiveTime(new Date()), 1000); return () => clearInterval(t); }, []);
 
@@ -53,11 +65,23 @@ export function SystemHealth() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <MetricCard title="CPU" value="32" unit="%" trend="neutral" trendValue="Raspberry Pi 4" icon={Cpu} status="success" />
-        <MetricCard title="Memory" value="48" unit="%" trend="neutral" trendValue="1.9 / 4 GB" icon={MemoryStick} status="success" />
-        <MetricCard title="Storage" value="17" unit="%" trend="up" trendValue="45 / 256 GB" icon={HardDrive} status="normal" />
-        <MetricCard title="Battery" value="12.4" unit="V" trend="down" trendValue="-0.02V/h" icon={Battery} status="success" />
-        <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
+        {isBrightonDemo() && health ? (
+          <>
+            <MetricCard title="CPU" value={String(health.cpuPct)} unit="%" trend="neutral" trendValue="Compute module" icon={Cpu} status="success" />
+            <MetricCard title="Memory" value={String(health.memPct)} unit="%" trend="neutral" trendValue="Live" icon={MemoryStick} status="success" />
+            <MetricCard title="Storage Free" value={storage?.freeGb.toFixed(1) ?? health.freeGb} unit="GB" trend="neutral" trendValue={health.mountpoint} icon={HardDrive} status="normal" />
+            <MetricCard title="Battery" value={tel?.packV.replace(" V", "") ?? "—"} unit="V" trend="neutral" trendValue={tel?.socPct ?? "—"} icon={Battery} status="success" />
+            <MetricCard title="Phase" value={vm?.phase.label ?? health.phaseLabel} unit="" trend="neutral" trendValue="Deployment" icon={Thermometer} status="success" className="min-w-0 [&_.text-2xl]:truncate [&_.text-2xl]:text-base" />
+          </>
+        ) : (
+          <>
+            <MetricCard title="CPU" value="32" unit="%" trend="neutral" trendValue="Raspberry Pi 4" icon={Cpu} status="success" />
+            <MetricCard title="Memory" value="48" unit="%" trend="neutral" trendValue="1.9 / 4 GB" icon={MemoryStick} status="success" />
+            <MetricCard title="Storage" value="17" unit="%" trend="up" trendValue="45 / 256 GB" icon={HardDrive} status="normal" />
+            <MetricCard title="Battery" value="12.4" unit="V" trend="down" trendValue="-0.02V/h" icon={Battery} status="success" />
+            <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
+          </>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -69,7 +93,7 @@ export function SystemHealth() {
         }>
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={cpuData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+              <LineChart data={cpuChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                 <XAxis dataKey="t" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
                 <YAxis domain={[0, 100]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} unit="%" />
@@ -93,7 +117,7 @@ export function SystemHealth() {
         }>
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={batteryData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+              <LineChart data={battChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                 <XAxis dataKey="time" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
                 <YAxis yAxisId="v" domain={[11.5, 13]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />

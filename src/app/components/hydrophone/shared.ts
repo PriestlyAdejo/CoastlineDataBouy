@@ -30,22 +30,34 @@ export const FREQUENCY_BANDS = [
   { id: 'broadband', label: 'Broadband', desc: 'Full spectrum' },
 ];
 
+import { isBrightonDemo } from "../../lib/demoMode";
+
 // Generate deterministic-ish mock data
 const seededRandom = (seed: number) => {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 };
 
+function mockBaseDate(): Date {
+  return isBrightonDemo() ? new Date(2026, 4, 1) : new Date(2026, 2, 17);
+}
+
+function mockMonthLabel(d: Date): string {
+  return isBrightonDemo()
+    ? `${d.getDate()} May`
+    : `${d.getDate()} Mar`;
+}
+
 export function generateDailyEventData(days: number = 30) {
   const data = [];
-  const baseDate = new Date(2026, 2, 17); // Mar 17 2026
+  const baseDate = mockBaseDate();
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date(baseDate);
     d.setDate(d.getDate() - i);
     const effort = 70 + seededRandom(i * 7) * 30;
     data.push({
       date: d.toISOString().slice(0, 10),
-      label: `${d.getDate()} Mar`,
+      label: mockMonthLabel(d),
       vessel: Math.floor(seededRandom(i * 1) * 8),
       wave: Math.floor(seededRandom(i * 2) * 15 + 5),
       rain: Math.floor(seededRandom(i * 3) * 6),
@@ -61,13 +73,13 @@ export function generateDailyEventData(days: number = 30) {
 
 export function generateSoundLevelData(days: number = 30) {
   const data = [];
-  const baseDate = new Date(2026, 2, 17);
+  const baseDate = mockBaseDate();
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date(baseDate);
     d.setDate(d.getDate() - i);
     data.push({
       date: d.toISOString().slice(0, 10),
-      label: `${d.getDate()} Mar`,
+      label: mockMonthLabel(d),
       vlf: 85 + seededRandom(i * 11) * 25,
       lf: 75 + seededRandom(i * 12) * 20,
       mf: 60 + seededRandom(i * 13) * 18,
@@ -80,7 +92,7 @@ export function generateSoundLevelData(days: number = 30) {
 
 export function generateRecordingEffortData(days: number = 60) {
   const data = [];
-  const baseDate = new Date(2026, 2, 17);
+  const baseDate = mockBaseDate();
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date(baseDate);
     d.setDate(d.getDate() - i);

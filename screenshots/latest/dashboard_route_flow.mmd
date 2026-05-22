@@ -1,0 +1,6 @@
+flowchart TD
+  user[User opens dashboard] --> ls[localStorage demo mode and API base URL]
+  ls --> route[React Router page route]
+  route --> poll[BrightonReplayProvider polls snapshots/latest]
+  poll --> vm[buildDeploymentViewModel]
+  vm --> ui[Page cards charts map panels]

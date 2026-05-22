@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import { StatusBadge } from "../components/Widgets";
 import { Card } from "../components/Card";
 import {
@@ -9,15 +9,21 @@ import {
   Radio, MapPin, Compass, Activity, Thermometer, Droplets, Fish, TreePine,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { useLocation } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { attachLeafletResizeHandlers } from "../lib/leafletResize";
 import {
   getDashboardNodes,
   getDefaultNodeId,
   getMapConfig,
-  getReplayBannerText,
+  isBrightonDemo,
   shouldShowClydeOverlays,
 } from "../lib/demoMode";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { useReplayData } from "../lib/useReplayData";
+import { BRIGHTON_MARINA_REF, BRIGHTON_TEST_POINT } from "../lib/mapConfig";
+import { createEmptyLayerHandles, updateReplayMapLayers, type ReplayLayerHandles } from "../hooks/useMapLayers";
+import { useLeafletInvalidateSize } from "../lib/useLeafletInvalidateSize";
 import { NEREUS_DARK_BASEMAP } from "../lib/basemap";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 
@@ -146,13 +152,36 @@ const warningIcon = L.divIcon({
 });
 
 export function LocationMap() {
-  const nodes = getMapNodes();
+  const location = useLocation();
+  const vm = useDeploymentView();
+  const replay = useReplayData();
+  const locMetrics = vm?.location ?? replay?.getLocationMetrics();
+  const wave = vm?.wave ?? replay?.getWaveMetrics();
+  const env = vm?.environment ?? replay?.getEnvironmentMetrics();
+  const nodes = useMemo(() => {
+    const base = getMapNodes();
+    if (!isBrightonDemo() || locMetrics?.lat == null || locMetrics.lon == null) return base;
+    return base.map((n) =>
+      n.id === "ucl-buoy"
+        ? {
+            ...n,
+            pos: [locMetrics.lat!, locMetrics.lon!] as [number, number],
+            drift: locMetrics.driftM24h != null ? `${locMetrics.driftM24h}m/24h` : n.drift,
+            anchor: locMetrics.anchorState ?? n.anchor,
+            lastSync: "live",
+            battery: replay?.getTelemetryMetrics().socPct ?? n.battery,
+            temp: env?.waterTempC ? `${env.waterTempC}°C` : n.temp,
+          }
+        : n,
+    );
+  }, [locMetrics?.lat, locMetrics?.lon, locMetrics?.driftM24h, replay?.snapshots?.ts]);
   const mapConfig = getMapConfig();
-  const replayBanner = getReplayBannerText();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const tileRef = useRef<L.TileLayer | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
+  const replayLayersRef = useRef<ReplayLayerHandles>(createEmptyLayerHandles());
+  const [basemapError, setBasemapError] = useState(false);
   const [mapStyle, setMapStyle] = useState<MapStyle>(shouldShowClydeOverlays() ? "dark" : "terrain");
   const [selectedNode, setSelectedNode] = useState(getDefaultNodeId());
   const [panelOpen, setPanelOpen] = useState(true);
@@ -174,9 +203,33 @@ export function LocationMap() {
   const handleNodeClickRef = useRef(handleNodeClick);
   handleNodeClickRef.current = handleNodeClick;
 
+  useLeafletInvalidateSize(mapRef.current, mapContainerRef.current, [panelOpen, location.pathname]);
+
   useEffect(() => {
-    mapRef.current?.invalidateSize({ animate: false });
-  }, [panelOpen]);
+    const map = mapRef.current;
+    if (!map || !isBrightonDemo()) return;
+    const marker = markersRef.current.get("ucl-buoy");
+    const node = nodes.find((n) => n.id === "ucl-buoy");
+    if (marker && node) marker.setLatLng(node.pos);
+  }, [nodes]);
+
+  const overlayEnabled = useMemo(() => {
+    const on = (id: string) => overlays.find((o) => o.id === id)?.enabled ?? false;
+    return {
+      buoy: on("buoy_positions"),
+      tracks: on("buoy_tracks"),
+      anchor: on("anchor_radius"),
+      zones: on("deployment_zones"),
+    };
+  }, [overlays]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !vm) return;
+    updateReplayMapLayers(map, replayLayersRef.current, vm, overlayEnabled, createSelectedIcon);
+    const t = window.setTimeout(() => map.invalidateSize({ animate: false }), 100);
+    return () => window.clearTimeout(t);
+  }, [vm?.position.lat, vm?.position.lon, vm?.track.length, vm?.replayTimeMs, overlayEnabled]);
 
   // Initialize map
   useEffect(() => {
@@ -196,6 +249,8 @@ export function LocationMap() {
       attribution: mapConfig.attribution,
       maxZoom: 18,
     }).addTo(map);
+    tile.on("tileerror", () => setBasemapError(true));
+    tile.on("load", () => setBasemapError(false));
     tileRef.current = tile;
 
     if (!shouldShowClydeOverlays()) {
@@ -277,7 +332,7 @@ export function LocationMap() {
       mapRef.current = null;
       markersRef.current.clear();
     };
-  }, [mapConfig, nodes]);
+  }, [mapConfig.center, mapConfig.zoom, mapConfig.tileUrl]);
 
   // Update tile layer
   useEffect(() => {
@@ -309,6 +364,11 @@ export function LocationMap() {
       {/* Full-bleed Map */}
       <div className="absolute inset-0 z-0 min-h-0">
         <div ref={mapContainerRef} className="h-full min-h-0 w-full" style={{ minHeight: "100%" }} />
+        {basemapError && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-[5] px-3 py-1 rounded bg-amber-500/20 border border-amber-500/40 text-[10px] font-mono text-amber-300">
+            Basemap unavailable
+          </div>
+        )}
       </div>
 
       {/* Top-left: Status + Active Layers */}
@@ -653,7 +713,12 @@ export function LocationMap() {
 
 // --- Panel Components ---
 
-function BuoyPanel({ node }: { node: typeof nodes[0] }) {
+function BuoyPanel({ node }: { node: MapNode }) {
+  const replay = useReplayData();
+  const wave = replay?.getWaveMetrics();
+  const env = replay?.getEnvironmentMetrics();
+  const loc = replay?.getLocationMetrics();
+  const brighton = isBrightonDemo();
   return (
     <>
       {/* Selected Buoy Card */}
@@ -691,10 +756,22 @@ function BuoyPanel({ node }: { node: typeof nodes[0] }) {
       </Card>
 
       {/* Environmental Context */}
-      <Card title="Environmental Context" className="!bg-slate-900/60">
+      <Card title="Environmental context" className="!bg-slate-900/60">
         <div className="space-y-2.5 text-xs font-mono mt-1">
-          <div className="text-[9px] text-slate-600 uppercase tracking-wider mb-1">Source: Public marine forecast</div>
-          {[
+          <div className="text-[9px] text-slate-600 uppercase tracking-wider mb-1">
+            {brighton ? "Field test forecast" : "Source: Public marine forecast"}
+          </div>
+          {(brighton && wave
+            ? [
+                { label: "PHASE", value: loc?.phaseLabel ?? "—" },
+                { label: "WAVE HS", value: `${wave.hsM} m` },
+                { label: "WAVE TP", value: `${wave.tpS} s` },
+                { label: "CURRENT", value: `${wave.currentMps} m/s` },
+                { label: "WATER TEMP", value: `${env?.waterTempC ?? "—"} °C` },
+                { label: "POSITION", value: loc?.anchorState ?? "—" },
+                { label: "UNCERTAINTY", value: `${loc?.uncertaintyRadiusM ?? 50} m` },
+              ]
+            : [
             { label: "WAVE HEIGHT", value: `${envConditions.waveHeight} (${envConditions.waveDir})` },
             { label: "WAVE PERIOD", value: envConditions.wavePeriod },
             { label: "CURRENT", value: `${envConditions.currentSpeed} ${envConditions.currentDir}` },
@@ -702,7 +779,7 @@ function BuoyPanel({ node }: { node: typeof nodes[0] }) {
             { label: "SEA STATE", value: envConditions.seaState },
             { label: "SST", value: envConditions.sst },
             { label: "VISIBILITY", value: envConditions.visibility },
-          ].map((item) => (
+          ]).map((item) => (
             <div key={item.label} className="flex justify-between items-center">
               <span className="text-slate-500">{item.label}</span>
               <span className="text-slate-200">{item.value}</span>
@@ -817,7 +894,7 @@ function ForecastPanel({ forecastIdx }: { forecastIdx: number }) {
       <Card title="Forecast Summary" className="!bg-slate-900/60">
         <div className="text-xs text-slate-400 mt-1 space-y-2">
           <p>Current conditions are acceptable. Winds expected to increase over the next 12-24 hours with a weather system moving through from the northwest. Conditions should begin improving after 48 hours.</p>
-          <p className="text-slate-500 italic">Forecast valid: 17 Mar 2026 12:00 UTC — Updated every 6h</p>
+          <p className="text-slate-500 italic">Forecast valid: 1 May 2026 12:00 UTC — Updated every 6h</p>
         </div>
       </Card>
     </>

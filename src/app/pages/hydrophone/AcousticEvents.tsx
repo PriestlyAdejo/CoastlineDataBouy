@@ -1,12 +1,14 @@
 import { Card } from "../../components/Card";
 import { EVENT_CLASSES, generateAcousticEvents, AcousticEvent } from "../../components/hydrophone/shared";
+import { isBrightonDemo } from "../../lib/demoMode";
+import { useDeploymentView } from "../../hooks/useDeploymentView";
 import { SettingsRail, SettingsGroup, SettingsToggle, SettingsSelect } from "../../components/hydrophone/SettingsRail";
 import { useState, useMemo } from "react";
 import { clsx } from "clsx";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, ZAxis } from "recharts";
 import { X, Download, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
-const allEvents = generateAcousticEvents(80);
+const clydeEvents = generateAcousticEvents(80);
 
 function EventDetailPanel({ event, onClose }: { event: AcousticEvent; onClose: () => void }) {
   const cls = EVENT_CLASSES.find((c) => c.id === event.eventClass);
@@ -126,6 +128,22 @@ function EventDetailPanel({ event, onClose }: { event: AcousticEvent; onClose: (
 }
 
 export function AcousticEvents() {
+  const vm = useDeploymentView();
+  const allEvents = useMemo<AcousticEvent[]>(() => {
+    if (!isBrightonDemo() || !vm) return clydeEvents;
+    return vm.acoustic.events.map((e) => ({
+      id: e.id,
+      eventClass: e.cls as AcousticEvent["eventClass"],
+      timestamp: vm.replayTimeMs,
+      hour: new Date(vm.replayTimeMs).getHours(),
+      duration: 12,
+      confidence: e.confidence,
+      peakLevel: parseFloat(e.level) || 60,
+      dominantBand: "lf",
+      reviewed: e.reviewed,
+    }));
+  }, [vm, vm?.replayTimeMs, vm?.phase.id]);
+
   const [selectedEvent, setSelectedEvent] = useState<AcousticEvent | null>(null);
   const [classFilter, setClassFilter] = useState("all");
   const [showReviewedOnly, setShowReviewedOnly] = useState(false);
@@ -138,7 +156,7 @@ export function AcousticEvents() {
       if (showReviewedOnly && !e.reviewed) return false;
       return true;
     });
-  }, [classFilter, showReviewedOnly]);
+  }, [allEvents, classFilter, showReviewedOnly]);
 
   const scatterData = filtered.map((e) => ({
     ...e,

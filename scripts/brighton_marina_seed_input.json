@@ -4,37 +4,36 @@
   "test_date": "2026-05-01",
   "location": {
     "name": "Brighton Marina",
-    "lat": 50.8118,
-    "lon": -0.1013
+    "marina_reference": { "lat": 50.808166, "lon": -0.124052 },
+    "test_point": { "lat": 50.80675, "lon": -0.12635, "uncertainty_radius_m": 50 }
   },
   "measured": {
-    "deployment_start": null,
-    "deployment_end": null,
-    "water_temp_c": null,
-    "enclosure_temp_c": null,
-    "battery_pack_v": null,
-    "battery_soc_pct": null,
+    "deployment_start": "2026-05-01T11:37:00Z",
+    "deployment_end": "2026-05-01T12:53:00Z",
+    "water_temp_c": 12.0,
     "storage_mountpoint": "/mnt/harddrive/buoy",
-    "hydrophone_files": [],
     "acoustic_metrics": {
-      "leq_db": null,
-      "peak_db": null,
-      "rms_dbfs": null,
-      "peak_dbfs": null,
-      "dominant_band": null,
-      "sample_rate_hz": 96000,
-      "channels": 2,
-      "bit_depth": 32
+      "calibration_status": "uncalibrated",
+      "gain_warning": true,
+      "acoustic_gain_correction_db": null,
+      "calibration_note": "Absolute SPL/Leq are replay/relative levels unless calibrated hydrophone gain is supplied. dBFS and event levels are separate from dB re 1 µPa.",
+      "hydrophone_gain_note": "Hydrophone gain was known incorrect during Brighton Marina test; no confirmed calibration factor."
     }
   },
-  "inference_policy": {
-    "allow_inferred_imu": true,
-    "allow_inferred_wave_stats": true,
-    "allow_inferred_battery": true,
-    "allow_inferred_environment": true
-  },
+  "phases": [
+    { "id": "pre_record", "key": "pre_record", "label": "PRE", "start": "2026-05-01T00:00:00", "end": "2026-05-01T12:37:00", "colour": "lightgrey", "description": "Pre-record period before field movement." },
+    { "id": "on_land", "key": "on_land", "label": "LAND", "start": "2026-05-01T12:37:00", "end": "2026-05-01T12:38:00", "colour": "tan", "description": "Buoy on land before boat transfer." },
+    { "id": "on_boat_pre", "key": "on_boat_pre", "label": "ON-BOAT", "start": "2026-05-01T12:38:00", "end": "2026-05-01T12:57:00", "colour": "lightsteelblue", "description": "Buoy on boat before free-floating deployment." },
+    { "id": "free_floating", "key": "free_floating", "label": "FREE-FLOATING", "start": "2026-05-01T12:57:00", "end": "2026-05-01T13:11:00", "colour": "skyblue", "description": "Free-floating near test point with drift." },
+    { "id": "on_boat_mid", "key": "on_boat_mid", "label": "BOAT", "start": "2026-05-01T13:11:00", "end": "2026-05-01T13:14:00", "colour": "lightsteelblue", "description": "Recovered/handled on boat mid-test." },
+    { "id": "anchored_quiet", "key": "anchored_quiet", "label": "ANCHORED", "start": "2026-05-01T13:14:00", "end": "2026-05-01T13:17:00", "colour": "lightgreen", "description": "Moored relatively still." },
+    { "id": "anchored_disturbed", "key": "anchored_disturbed", "label": "BOAT CIRCLING BUOY", "start": "2026-05-01T13:17:00", "end": "2026-05-01T13:36:00", "colour": "salmon", "description": "Boat circling buoy; elevated acoustic activity." },
+    { "id": "post_test", "key": "post_test", "label": "ON-BOAT", "start": "2026-05-01T13:36:00", "end": "2026-05-01T13:53:00", "colour": "lightsteelblue", "description": "Post-test on boat/recovery." },
+    { "id": "after_test", "key": "after_test", "label": "DOCK", "start": "2026-05-01T13:53:00", "end": "2026-05-01T23:59:59", "colour": "lightgrey", "description": "After-test dock/static state." }
+  ],
   "notes": {
-    "field_test": "Brighton Marina May 1st 2026",
-    "imu_note": "No measured IMU data available. IMU and wave fields are inferred for replay/dashboard validation."
+    "excluded_files": ["flac_test.wav"],
+    "imu_note": "No measured IMU; IMU and wave fields are inferred for replay.",
+    "hydrophone_note": "No confirmed Brighton WAV on server unless supplied via --hydrophone-path."
   }
 }

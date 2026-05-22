@@ -1,0 +1,112 @@
+{"timestamp":"2026-05-22T08:21:06.513Z","route":"(storage-init)","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:06.592Z","route":"(storage-init)","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:07.026Z","route":"(storage-init)","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:08.141Z","route":"/","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:08.225Z","route":"/","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:08.474Z","route":"/","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:09.164Z","route":"/","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:09.168Z","route":"/","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:11.860Z","route":"/","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:11.864Z","route":"/","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:12.987Z","route":"/telemetry","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:13.151Z","route":"/telemetry","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:13.421Z","route":"/telemetry","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:13.857Z","route":"/telemetry","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:13.862Z","route":"/telemetry","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:16.882Z","route":"/telemetry","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:16.886Z","route":"/telemetry","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:17.923Z","route":"/environment","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:17.955Z","route":"/environment","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:18.200Z","route":"/environment","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:18.496Z","route":"/environment","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:18.503Z","route":"/environment","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:21.533Z","route":"/environment","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:21.537Z","route":"/environment","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:22.879Z","route":"/map","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:22.965Z","route":"/map","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:23.317Z","route":"/map","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:24.306Z","route":"/map","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:24.314Z","route":"/map","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:26.358Z","route":"/map","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:26.362Z","route":"/map","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:29.338Z","route":"/map","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:29.342Z","route":"/map","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:32.365Z","route":"/map","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:32.370Z","route":"/map","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:34.861Z","route":"/system-health","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:34.942Z","route":"/system-health","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:35.135Z","route":"/system-health","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:35.421Z","route":"/system-health","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:35.425Z","route":"/system-health","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:38.362Z","route":"/system-health","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:38.366Z","route":"/system-health","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:39.953Z","route":"/alerts","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:40.002Z","route":"/alerts","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:40.241Z","route":"/alerts","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:40.454Z","route":"/alerts","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:40.457Z","route":"/alerts","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:43.533Z","route":"/alerts","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:43.537Z","route":"/alerts","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:44.121Z","route":"/data","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:44.152Z","route":"/data","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:44.526Z","route":"/data","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:44.784Z","route":"/data","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:44.787Z","route":"/data","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:47.780Z","route":"/data","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:47.783Z","route":"/data","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:48.227Z","route":"/files","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:48.300Z","route":"/files","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:48.580Z","route":"/files","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:48.797Z","route":"/files","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:48.801Z","route":"/files","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:51.801Z","route":"/files","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:51.805Z","route":"/files","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:52.487Z","route":"/hydrophone","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:52.600Z","route":"/hydrophone","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:52.853Z","route":"/hydrophone","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:52.906Z","route":"/hydrophone","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:52.910Z","route":"/hydrophone","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:55.841Z","route":"/hydrophone","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:55.845Z","route":"/hydrophone","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:21:56.879Z","route":"/hydrophone/daily-events","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:21:56.932Z","route":"/hydrophone/daily-events","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:21:57.254Z","route":"/hydrophone/daily-events","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:21:57.567Z","route":"/hydrophone/daily-events","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:21:57.570Z","route":"/hydrophone/daily-events","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:00.332Z","route":"/hydrophone/daily-events","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:00.334Z","route":"/hydrophone/daily-events","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:01.170Z","route":"/hydrophone/acoustic-events","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:22:01.252Z","route":"/hydrophone/acoustic-events","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:22:01.543Z","route":"/hydrophone/acoustic-events","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:22:01.861Z","route":"/hydrophone/acoustic-events","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:01.865Z","route":"/hydrophone/acoustic-events","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:04.857Z","route":"/hydrophone/acoustic-events","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:04.861Z","route":"/hydrophone/acoustic-events","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:05.792Z","route":"/hydrophone/soundscape","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:22:05.923Z","route":"/hydrophone/soundscape","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:22:06.218Z","route":"/hydrophone/soundscape","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:22:06.235Z","route":"/hydrophone/soundscape","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:06.238Z","route":"/hydrophone/soundscape","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:09.142Z","route":"/hydrophone/soundscape","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:09.146Z","route":"/hydrophone/soundscape","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:09.926Z","route":"/hydrophone/spectral","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:22:09.961Z","route":"/hydrophone/spectral","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:22:10.234Z","route":"/hydrophone/spectral","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:22:10.592Z","route":"/hydrophone/spectral","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:10.595Z","route":"/hydrophone/spectral","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:13.517Z","route":"/hydrophone/spectral","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:13.520Z","route":"/hydrophone/spectral","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:14.176Z","route":"/hydrophone/levels","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:22:14.243Z","route":"/hydrophone/levels","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:22:14.514Z","route":"/hydrophone/levels","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:22:14.834Z","route":"/hydrophone/levels","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:14.837Z","route":"/hydrophone/levels","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:17.800Z","route":"/hydrophone/levels","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:17.803Z","route":"/hydrophone/levels","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:18.437Z","route":"/hydrophone/effort","type":"debug","text":"[vite] connecting..."}
+{"timestamp":"2026-05-22T08:22:18.534Z","route":"/hydrophone/effort","type":"debug","text":"[vite] connected."}
+{"timestamp":"2026-05-22T08:22:18.743Z","route":"/hydrophone/effort","type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+{"timestamp":"2026-05-22T08:22:18.969Z","route":"/hydrophone/effort","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:18.973Z","route":"/hydrophone/effort","type":"error","text":"Failed to load resource: net::ERR_FAILED"}
+{"timestamp":"2026-05-22T08:22:21.886Z","route":"/hydrophone/effort","type":"error","text":"Access to fetch at 'http://127.0.0.1:8000/v1/nodes/ucl-buoy/snapshots/latest' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."}
+{"timestamp":"2026-05-22T08:22:21.889Z","route":"/hydrophone/effort","type":"error","text":"Failed to load resource: net::ERR_FAILED"}

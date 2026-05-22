@@ -1,0 +1,128 @@
+{
+  "capturedAt": "2026-05-22T08:21:05.754Z",
+  "t0": {
+    "ts": "2026-05-22T06:27:29Z",
+    "phase_key": "pre_record",
+    "phase_label": "PRE",
+    "test_time_local": null,
+    "gps_lat": 50.808166,
+    "gps_lon": -0.124052,
+    "water_temp_c": 12.02,
+    "battery_pack_v": 12.29,
+    "battery_soc_pct": null,
+    "storage_free_bytes": 811600000000,
+    "storage_used_bytes": null,
+    "storage_total_bytes": 2000000000000,
+    "telemetry_seq": 1768,
+    "files_uploaded": 1776,
+    "files_pending": 0,
+    "acoustic_leq_db": 55.2,
+    "wave_hs_m": 0.2
+  },
+  "t10": {
+    "ts": "2026-05-22T06:27:29Z",
+    "phase_key": "pre_record",
+    "phase_label": "PRE",
+    "test_time_local": null,
+    "gps_lat": 50.808166,
+    "gps_lon": -0.124052,
+    "water_temp_c": 12.02,
+    "battery_pack_v": 12.29,
+    "battery_soc_pct": null,
+    "storage_free_bytes": 811600000000,
+    "storage_used_bytes": null,
+    "storage_total_bytes": 2000000000000,
+    "telemetry_seq": 1768,
+    "files_uploaded": 1776,
+    "files_pending": 0,
+    "acoustic_leq_db": 55.2,
+    "wave_hs_m": 0.2
+  },
+  "fields": {
+    "ts": {
+      "t0": "2026-05-22T06:27:29Z",
+      "t10": "2026-05-22T06:27:29Z",
+      "changed": false
+    },
+    "phase_key": {
+      "t0": "pre_record",
+      "t10": "pre_record",
+      "changed": false
+    },
+    "phase_label": {
+      "t0": "PRE",
+      "t10": "PRE",
+      "changed": false
+    },
+    "test_time_local": {
+      "t0": null,
+      "t10": null,
+      "changed": false
+    },
+    "gps_lat": {
+      "t0": 50.808166,
+      "t10": 50.808166,
+      "changed": false
+    },
+    "gps_lon": {
+      "t0": -0.124052,
+      "t10": -0.124052,
+      "changed": false
+    },
+    "water_temp_c": {
+      "t0": 12.02,
+      "t10": 12.02,
+      "changed": false
+    },
+    "battery_pack_v": {
+      "t0": 12.29,
+      "t10": 12.29,
+      "changed": false
+    },
+    "battery_soc_pct": {
+      "t0": null,
+      "t10": null,
+      "changed": false
+    },
+    "storage_free_bytes": {
+      "t0": 811600000000,
+      "t10": 811600000000,
+      "changed": false
+    },
+    "storage_used_bytes": {
+      "t0": null,
+      "t10": null,
+      "changed": false
+    },
+    "storage_total_bytes": {
+      "t0": 2000000000000,
+      "t10": 2000000000000,
+      "changed": false
+    },
+    "telemetry_seq": {
+      "t0": 1768,
+      "t10": 1768,
+      "changed": false
+    },
+    "files_uploaded": {
+      "t0": 1776,
+      "t10": 1776,
+      "changed": false
+    },
+    "files_pending": {
+      "t0": 0,
+      "t10": 0,
+      "changed": false
+    },
+    "acoustic_leq_db": {
+      "t0": 55.2,
+      "t10": 55.2,
+      "changed": false
+    },
+    "wave_hs_m": {
+      "t0": 0.2,
+      "t10": 0.2,
+      "changed": false
+    }
+  }
+}

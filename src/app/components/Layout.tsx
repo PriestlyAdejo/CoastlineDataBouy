@@ -9,8 +9,11 @@ import { useState } from "react";
 import {
   getActiveNodeDisplayName,
   getActiveNodeLabel,
-  getReplayBannerText,
+  isBrightonDemo,
 } from "../lib/demoMode";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { DataQualityIndicator } from "./DataQualityIndicator";
+import { ReplayControlPanel } from "./ReplayControlPanel";
 
 interface NavItem {
   name: string;
@@ -58,6 +61,15 @@ const navGroups: NavGroup[] = [
     ],
   },
 ];
+
+function buildNavGroups(alertBadge: string): NavGroup[] {
+  return navGroups.map((g) => ({
+    ...g,
+    items: g.items.map((item) =>
+      item.path === "/alerts" ? { ...item, badge: alertBadge } : item,
+    ),
+  }));
+}
 
 function NavSection({ group }: { group: NavGroup }) {
   const [open, setOpen] = useState(group.defaultOpen ?? true);
@@ -110,7 +122,13 @@ export function Layout() {
   const isFullScreen = isDashboard || location.pathname === "/map";
   const activeNode = getActiveNodeLabel();
   const activeDisplay = getActiveNodeDisplayName();
-  const replayBanner = getReplayBannerText();
+  const vm = useDeploymentView();
+  const sidebar = vm?.sidebar;
+  const alertCount = vm ? vm.alerts.filter((a) => !a.acknowledged).length : 3;
+  const groups = buildNavGroups(String(alertCount));
+  const headerTime = isBrightonDemo()
+    ? (vm?.display.testTimeBst ?? "1 May 2026")
+    : "17 Mar 2026 14:32 GMT";
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30">
@@ -127,7 +145,7 @@ export function Layout() {
         </div>
 
         <nav className="flex-1 p-2 overflow-y-auto space-y-1">
-          {navGroups.map((group) => (
+          {groups.map((group) => (
             <NavSection key={group.label} group={group} />
           ))}
         </nav>
@@ -145,8 +163,8 @@ export function Layout() {
             </div>
           </div>
           <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
-            <span>BATT: 87%</span>
-            <span>LoRa: OK</span>
+            <span>BATT: {sidebar?.battery ?? "87%"}</span>
+            <span>{isBrightonDemo() ? `PHASE: ${sidebar?.phase ?? "—"}` : "LoRa: OK"}</span>
             <span>GPS: FIX</span>
           </div>
         </div>
@@ -160,16 +178,17 @@ export function Layout() {
             <div className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
               {activeDisplay}
             </div>
-            {replayBanner && (
-              <span className="text-[10px] font-mono text-amber-400/80">{replayBanner}</span>
-            )}
+            {isBrightonDemo() && <ReplayControlPanel compact />}
+            {isBrightonDemo() && <DataQualityIndicator />}
             <div className="flex items-center gap-1.5 ml-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
-              <span className="text-[10px] font-mono text-slate-500">Last sync: 12s ago</span>
+              <div className={`h-1.5 w-1.5 rounded-full ${vm?.sync.source === "api" ? "bg-emerald-500" : "bg-amber-500"}`}></div>
+              <span className="text-[10px] font-mono text-slate-500">
+                {isBrightonDemo() ? (vm?.sync.label ?? "Replay data") : "Last sync: 12s ago"}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-3 text-slate-400">
-            <span className="text-[10px] font-mono text-slate-600">17 Mar 2026 14:32 GMT</span>
+            <span className="text-[10px] font-mono text-slate-600">{headerTime}</span>
             <NavLink to="/alerts" className="hover:text-slate-200 transition-colors relative">
               <Bell size={16} />
               <span className="absolute -top-1 -right-1 flex h-2 w-2 rounded-full bg-cyan-500 ring-2 ring-slate-950"></span>

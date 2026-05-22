@@ -11,7 +11,10 @@ import {
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { PinToOverviewButton } from "../components/OverviewContext";
-import { getPageNodeSubtitle } from "../lib/demoMode";
+import { lastUpdateLabel } from "../lib/deploymentDisplay";
+import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { selectChartSeries } from "../lib/replaySelectors";
 
 const waterTempData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -56,6 +59,10 @@ const statusConfig: Record<SensorStatus, { label: string; badge: "success" | "in
 };
 
 export function Environment() {
+  const vm = useDeploymentView();
+  const env = vm?.environment;
+  const waterChart = isBrightonDemo() ? selectChartSeries(vm, "water").map((p) => ({ time: p.label, temp: p.value })) : waterTempData;
+  const pressChart = isBrightonDemo() ? selectChartSeries(vm, "pressure").map((p) => ({ time: p.label, pressure: p.value })) : pressureData;
   const [filter, setFilter] = useState<SensorStatus | "all">("all");
   const [liveTime, setLiveTime] = useState(new Date());
 
@@ -64,7 +71,20 @@ export function Environment() {
     return () => clearInterval(t);
   }, []);
 
-  const filtered = filter === "all" ? sensorModules : sensorModules.filter(s => s.status === filter);
+  const modules = isBrightonDemo() && env
+    ? sensorModules.map((s) =>
+        s.name === "Water Temperature"
+          ? { ...s, value: env.waterTempC, lastUpdate: lastUpdateLabel() }
+          : s.name === "Enclosure Temperature"
+            ? { ...s, value: env.enclosureTempC, lastUpdate: lastUpdateLabel() }
+            : s.name === "Internal Humidity"
+              ? { ...s, value: env.enclosureRhPct, lastUpdate: lastUpdateLabel() }
+              : s.name === "Barometric Pressure"
+                ? { ...s, value: env.pressureHpa, lastUpdate: lastUpdateLabel() }
+                : s,
+      )
+    : sensorModules;
+  const filtered = filter === "all" ? modules : modules.filter(s => s.status === filter);
 
   return (
     <div className="flex flex-col gap-6">
@@ -81,7 +101,7 @@ export function Environment() {
 
       {/* Active metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <MetricCard title="Water Temp" value="14.3" unit="°C" trend="up" trendValue="+0.2°C (1h)" icon={Thermometer} status="normal" />
+        <MetricCard title="Water Temp" value={env?.waterTempC ?? "14.3"} unit="°C" trend="up" trendValue="Live" icon={Thermometer} status="normal" />
         <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
         <MetricCard title="Humidity" value="38" unit="%RH" trend="down" trendValue="-2% (1h)" icon={Droplets} status="success" />
         <MetricCard title="Pressure" value="1013.2" unit="hPa" trend="neutral" trendValue="Stable" icon={Gauge} status="normal" />
@@ -97,7 +117,7 @@ export function Environment() {
         }>
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={waterTempData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+              <AreaChart data={waterChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
                 <defs>
                   <linearGradient id="tempGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.25} />
@@ -126,7 +146,7 @@ export function Environment() {
         }>
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={pressureData} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+              <LineChart data={pressChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                 <XAxis dataKey="time" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
                 <YAxis domain={[1005, 1020]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />

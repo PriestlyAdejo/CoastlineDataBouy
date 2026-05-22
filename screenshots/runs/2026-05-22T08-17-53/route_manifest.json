@@ -1,0 +1,173 @@
+[
+  {
+    "route": "/",
+    "screenshot": "overview.png",
+    "pageName": "Overview",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "ucl-buoy|field deployment",
+      "water|temp",
+      "battery"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/telemetry",
+    "screenshot": "telemetry.png",
+    "pageName": "Telemetry",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "telemetry",
+      "packet|upload"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/environment",
+    "screenshot": "environment.png",
+    "pageName": "Environment",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "environmental",
+      "water temp|temperature"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/map",
+    "screenshot": "map.png",
+    "pageName": "Location / Map",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "gps|map|location"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": "Extra map-container.png; extended Leaflet wait"
+  },
+  {
+    "route": "/system-health",
+    "screenshot": "system-health.png",
+    "pageName": "System Health",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "system health",
+      "cpu|memory|storage"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/alerts",
+    "screenshot": "alerts.png",
+    "pageName": "Alerts",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "alert"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/data",
+    "screenshot": "historical-data.png",
+    "pageName": "Historical Data",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "archive|historical"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/files",
+    "screenshot": "files-downloads.png",
+    "pageName": "Files / Downloads",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "files",
+      "search|\\.wav|\\.csv|\\.json"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone",
+    "screenshot": "hydrophone-summary.png",
+    "pageName": "Hydrophone Summary",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "acoustic|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/daily-events",
+    "screenshot": "hydrophone-daily-events.png",
+    "pageName": "Daily Events",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "daily events|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/acoustic-events",
+    "screenshot": "hydrophone-acoustic-events.png",
+    "pageName": "Acoustic Events",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "acoustic events|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/soundscape",
+    "screenshot": "hydrophone-soundscape.png",
+    "pageName": "Soundscape",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "soundscape|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/spectral",
+    "screenshot": "hydrophone-spectral-density.png",
+    "pageName": "Spectral Density",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "spectral|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/levels",
+    "screenshot": "hydrophone-sound-levels.png",
+    "pageName": "Sound Levels",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "sound levels|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  },
+  {
+    "route": "/hydrophone/effort",
+    "screenshot": "hydrophone-recording-effort.png",
+    "pageName": "Recording Effort",
+    "expectedDataSource": "GET /v1/nodes/ucl-buoy/snapshots/latest + BrightonReplayProvider local engine",
+    "expectedVisibleValues": [
+      "recording effort|hydrophone"
+    ],
+    "requiresApiSnapshot": true,
+    "notes": ""
+  }
+]

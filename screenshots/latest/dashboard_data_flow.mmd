@@ -1,0 +1,6 @@
+flowchart TD
+  seeder[seed_brighton_marina_replay.py] --> ingest[POST /v1/ingest health env telemetry acoustic_meta wave_stats]
+  ingest --> db[(Database snapshots)]
+  db --> latest[GET /v1/nodes/ucl-buoy/snapshots/latest]
+  latest --> fe[Frontend API client poll]
+  fe --> pages[Dashboard pages]

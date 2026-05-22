@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import { clsx } from "clsx";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, Area, AreaChart } from "recharts";
 import { Download } from "lucide-react";
+import { isBrightonDemo } from "../../lib/demoMode";
 
 const allData = generateDailyEventData(30);
 
@@ -35,7 +36,7 @@ export function DailyEvents() {
       <div className="flex-1 min-w-0 flex flex-col gap-6">
         {/* Summary strip */}
         <div className="flex items-center gap-6 text-xs font-mono">
-          <div><span className="text-slate-500">Period:</span> <span className="text-slate-300">16 Feb - 17 Mar 2026</span></div>
+          <div><span className="text-slate-500">Period:</span> <span className="text-slate-300">{isBrightonDemo() ? "1 May 2026 (field test)" : "16 Feb - 17 Mar 2026"}</span></div>
           <div><span className="text-slate-500">Total Events:</span> <span className="text-cyan-400">{totalEvents}</span></div>
           <div><span className="text-slate-500">Low-effort Days:</span> <span className={lowEffortDays > 0 ? "text-amber-400" : "text-emerald-400"}>{lowEffortDays}</span></div>
           <div className="ml-auto">

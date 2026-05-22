@@ -7,6 +7,8 @@ import { createPortal } from 'react-dom';
 import { attachLeafletResizeHandlers } from '../lib/leafletResize';
 import { NEREUS_DARK_BASEMAP } from '../lib/basemap';
 import { nereusLeafletMapOptions } from '../lib/leafletMapOptions';
+import { getActiveMapConfig } from '../lib/mapConfig';
+import { isBrightonDemo } from '../lib/demoMode';
 
 // Fix leaflet default icon issue in react
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -53,19 +55,23 @@ function LeafletMapView({ mapKey }: { mapKey: string }) {
     const el = containerRef.current;
     if (!el || mapInstanceRef.current) return;
 
-    const centerPos: [number, number] = [55.65, -5.15];
+    const mapCfg = getActiveMapConfig();
+    const centerPos = mapCfg.center;
     const map = L.map(el, {
       ...nereusLeafletMapOptions,
       center: centerPos,
-      zoom: 10,
+      zoom: mapCfg.zoom,
       zoomControl: false,
       attributionControl: false,
     });
     map.getContainer().style.background = '#0f172a';
 
-    L.tileLayer(NEREUS_DARK_BASEMAP.url, {
-      attribution: NEREUS_DARK_BASEMAP.attribution,
-      maxZoom: 16,
+    const tile = isBrightonDemo()
+      ? { url: mapCfg.tileUrl, attribution: mapCfg.attribution }
+      : NEREUS_DARK_BASEMAP;
+    L.tileLayer(tile.url, {
+      attribution: tile.attribution,
+      maxZoom: 18,
     }).addTo(map);
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);

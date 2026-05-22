@@ -6,7 +6,10 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "schema:ts": "node tools/dev/gen_typescript_from_jsonschema.js"
+    "schema:ts": "node tools/dev/gen_typescript_from_jsonschema.js",
+    "capture:evidence": "node scripts/capture_dashboard_evidence.mjs",
+    "capture:evidence:headed": "node scripts/capture_dashboard_evidence.mjs --headed",
+    "postinstall": "playwright install chromium"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -70,6 +73,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "4.1.12",
     "@vitejs/plugin-react": "4.7.0",
+    "playwright": "^1.49.0",
     "tailwindcss": "4.1.12",
     "vite": "6.3.5"
   },

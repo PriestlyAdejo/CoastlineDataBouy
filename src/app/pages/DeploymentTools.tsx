@@ -5,7 +5,8 @@ import {
   MapPin, Clock, Anchor, Shield, Radio, Battery, Eye,
 } from "lucide-react";
 import { clsx } from "clsx";
-import { getSiteDescription, getSitePositionLabel } from "../lib/demoMode";
+import { getSiteDescription, getSitePositionLabel, isBrightonDemo } from "../lib/demoMode";
+import { useReplayData } from "../lib/useReplayData";
 
 interface ChecklistItem {
   label: string;
@@ -45,8 +46,18 @@ const deploymentLog = [
 ];
 
 export function DeploymentTools() {
+  const replay = useReplayData();
+  const loc = replay?.getLocationMetrics();
   const passCount = preDeployChecklist.filter(c => c.status === "pass").length;
   const totalCount = preDeployChecklist.length;
+  const deploymentLogBrighton = loc
+    ? [
+        { date: "1 May 2026 11:37", event: `Phase: ${loc.phaseLabel ?? loc.phaseKey}`, status: "info" as const },
+        { date: "1 May 2026 12:14", event: "Anchored at test point SW of marina", status: "success" as const },
+        { date: "1 May 2026 12:53", event: "Field test complete — return to dock", status: "success" as const },
+      ]
+    : deploymentLog;
+  const log = isBrightonDemo() ? deploymentLogBrighton : deploymentLog;
 
   return (
     <div className="flex flex-col gap-6">
@@ -118,7 +129,7 @@ export function DeploymentTools() {
       {/* Deployment activity log */}
       <Card title="Deployment Activity Log">
         <div className="space-y-1">
-          {deploymentLog.map((entry, i) => (
+          {log.map((entry, i) => (
             <div key={i} className="flex items-center gap-4 px-3 py-2 rounded hover:bg-slate-800/20 transition-colors">
               <span className="text-[10px] font-mono text-slate-600 w-40 shrink-0">{entry.date}</span>
               <StatusBadge status={entry.status === "success" ? "success" : entry.status === "warning" ? "warning" : "info"}>

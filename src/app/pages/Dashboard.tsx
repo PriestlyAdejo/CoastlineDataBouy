@@ -16,12 +16,14 @@ import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { useOverview } from "../components/OverviewContext";
 import { createMPAOverlay, createAnchorRadiusOverlay } from "../components/MapOverlays";
-import { createApiClient, type LatestSnapshots } from "../api/client";
+import type { LatestSnapshots } from "../api/client";
+import { useDeploymentView } from "../hooks/useDeploymentView";
+import { useReplayData } from "../lib/useReplayData";
+import { selectChartSeries } from "../lib/replaySelectors";
 import {
   getDashboardNodes,
   getDefaultNodeId,
   getMapConfig,
-  getReplayBannerText,
   isBrightonDemo,
   shouldShowClydeOverlays,
   type DashboardNode,
@@ -103,10 +105,13 @@ export function Dashboard() {
   const nodes = useMemo(() => getDashboardNodes(), []);
   const brighton = isBrightonDemo();
   const mapConfig = useMemo(() => getMapConfig(), []);
-  const replayBanner = getReplayBannerText();
+  const vm = useDeploymentView();
   const [panelOpen, setPanelOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<string>(getDefaultNodeId());
-  const [snapshots, setSnapshots] = useState<LatestSnapshots | null>(null);
+  const replay = useReplayData();
+  const snapshots = brighton ? replay?.snapshots ?? null : null;
+  const chartEnv = brighton ? selectChartSeries(vm, "overview") : envData;
+  const chartWave = brighton ? selectChartSeries(vm, "overview").map((p, i) => ({ time: p.label, height: p.value })) : waveData;
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<globalThis.Map<string, L.Marker>>(new globalThis.Map());
@@ -123,20 +128,6 @@ export function Dashboard() {
   }, [nodes, mapConfig.zoom]);
 
   useEffect(() => { handleNodeClickRef.current = handleNodeClick; }, [handleNodeClick]);
-
-  useEffect(() => {
-    if (!brighton) return;
-    let cancelled = false;
-    const client = createApiClient();
-    const load = () => {
-      client.getLatestSnapshots(getDefaultNodeId()).then((s) => {
-        if (!cancelled) setSnapshots(s);
-      }).catch(() => { if (!cancelled) setSnapshots(null); });
-    };
-    load();
-    const id = setInterval(load, 5000);
-    return () => { cancelled = true; clearInterval(id); };
-  }, [brighton]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize({ animate: false });
@@ -246,15 +237,9 @@ export function Dashboard() {
           </div>
           <div className="w-px h-5 bg-slate-700"></div>
           <StatusBadge status="success">{brighton ? healthStatus : "Transmitting"}</StatusBadge>
-          {replayBanner && (
-            <>
-              <div className="w-px h-5 bg-slate-700"></div>
-              <span className="text-xs font-mono text-amber-400/90">{replayBanner}</span>
-            </>
-          )}
           <div className="w-px h-5 bg-slate-700"></div>
           <span className="text-xs font-mono text-slate-500">
-            {brighton && snapshots?.ts ? `Last sync: ${snapshots.ts}` : "Last Sync: 12s ago"}
+            {brighton ? (vm?.sync.label ?? "Replay data") : "Last Sync: 12s ago"}
           </span>
         </div>
       </div>

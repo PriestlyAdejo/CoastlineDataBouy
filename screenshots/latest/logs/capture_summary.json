@@ -1,0 +1,211 @@
+{
+  "capturedAt": "2026-05-22T08:28:17.407Z",
+  "runId": "2026-05-22T08-28-17",
+  "frontendBaseUrl": "http://localhost:5173",
+  "backendApiUrl": "http://127.0.0.1:8000/v1",
+  "nodeId": "ucl-buoy",
+  "demoMode": "brighton-marina-2026-05-01",
+  "delayMs": 2500,
+  "mapDelayMs": 5000,
+  "routes": [
+    {
+      "route": "/",
+      "screenshot": "overview.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/telemetry",
+      "screenshot": "telemetry.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/environment",
+      "screenshot": "environment.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/map",
+      "screenshot": "map.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/system-health",
+      "screenshot": "system-health.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/alerts",
+      "screenshot": "alerts.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/data",
+      "screenshot": "historical-data.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/files",
+      "screenshot": "files-downloads.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone",
+      "screenshot": "hydrophone-summary.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/daily-events",
+      "screenshot": "hydrophone-daily-events.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/acoustic-events",
+      "screenshot": "hydrophone-acoustic-events.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/soundscape",
+      "screenshot": "hydrophone-soundscape.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/spectral",
+      "screenshot": "hydrophone-spectral-density.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/levels",
+      "screenshot": "hydrophone-sound-levels.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    },
+    {
+      "route": "/hydrophone/effort",
+      "screenshot": "hydrophone-recording-effort.png",
+      "status": "ok",
+      "visibleCheck": {
+        "pass": true,
+        "reason": "visible checks ok"
+      },
+      "error": null
+    }
+  ],
+  "routeList": [
+    "/",
+    "/telemetry",
+    "/environment",
+    "/map",
+    "/system-health",
+    "/alerts",
+    "/data",
+    "/files",
+    "/hydrophone",
+    "/hydrophone/daily-events",
+    "/hydrophone/acoustic-events",
+    "/hydrophone/soundscape",
+    "/hydrophone/spectral",
+    "/hydrophone/levels",
+    "/hydrophone/effort"
+  ],
+  "screenshots": [
+    "overview.png",
+    "telemetry.png",
+    "environment.png",
+    "map-container.png",
+    "map.png",
+    "system-health.png",
+    "alerts.png",
+    "historical-data.png",
+    "files-downloads.png",
+    "hydrophone-summary.png",
+    "hydrophone-daily-events.png",
+    "hydrophone-acoustic-events.png",
+    "hydrophone-soundscape.png",
+    "hydrophone-spectral-density.png",
+    "hydrophone-sound-levels.png",
+    "hydrophone-recording-effort.png"
+  ],
+  "apiFiles": [
+    "openapi.json",
+    "healthz.json",
+    "nodes.json",
+    "ucl-buoy-latest-snapshot.json",
+    "ucl-buoy-latest-snapshot-t0.json",
+    "ucl-buoy-latest-snapshot-t10.json",
+    "snapshot-delta.json"
+  ],
+  "apiFailures": [],
+  "consoleErrors": 64,
+  "failedRequests": 33,
+  "failedRoutes": [],
+  "frontendReachable": true
+}
