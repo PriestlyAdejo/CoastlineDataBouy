@@ -19,6 +19,8 @@ dev = [
 [project.scripts]
 buoy-seriald = "buoy.services.seriald:main"
 buoy-ds18b20d = "buoy.services.ds18b20d:main"
+buoy-gnssd = "buoy.services.gnssd:main"
+buoy-healthd = "buoy.services.healthd:main"
 buoy-indexd = "buoy.services.indexd:main"
 buoy-audio-capture = "buoy.services.audio_capture:main"
 buoy-wave-derive = "buoy.services.wave_derive:main"

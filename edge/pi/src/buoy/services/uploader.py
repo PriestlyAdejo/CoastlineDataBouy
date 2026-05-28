@@ -13,7 +13,25 @@ from buoy.upload.http_client import post_json
 KIND_TO_ENDPOINT = {
     "wave_stats_jsonl": "/ingest/wave_stats",
     "audio_wav": "/ingest/acoustic_meta",
+    "serial_telemetry_jsonl": "/ingest/telemetry",
+    "gnss_jsonl": "/ingest/telemetry",
+    "env_jsonl": "/ingest/env",
+    "health_jsonl": "/ingest/health",
 }
+
+
+def _load_cursor_state(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_cursor_state(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
 def _post_artifact(settings, artifact: dict) -> tuple[bool, str]:
@@ -34,6 +52,9 @@ def _post_artifact(settings, artifact: dict) -> tuple[bool, str]:
     elif kind == "wave_stats_jsonl":
         meta_json = artifact.get("meta_json")
         payload = json.loads(meta_json) if meta_json else {"node_id": settings.node_id}
+    elif kind in {"serial_telemetry_jsonl", "gnss_jsonl", "env_jsonl", "health_jsonl"}:
+        meta_json = artifact.get("meta_json")
+        payload = json.loads(meta_json) if meta_json else {"node_id": settings.node_id}
     else:
         payload = {"node_id": settings.node_id}
 
@@ -44,6 +65,7 @@ def _post_artifact(settings, artifact: dict) -> tuple[bool, str]:
 
 
 def main() -> None:
+    """Upload queued artifacts with persistent status and exponential backoff."""
     settings = load_settings()
     logger = setup_logging("buoy.uploader")
 
@@ -53,6 +75,8 @@ def main() -> None:
 
     kinds = list(KIND_TO_ENDPOINT.keys())
     backoff_s = 2.0
+    cursor_path = settings.paths.base_dir / "run" / "uploader_cursor.json"
+    cursor_state = _load_cursor_state(cursor_path)
 
     while True:
         pending = get_pending_upload_artifacts(con, node_id=settings.node_id, kinds=kinds, limit=25)
@@ -66,13 +90,21 @@ def main() -> None:
             ok, detail = _post_artifact(settings, a)
             if ok:
                 set_upload_status(con, artifact_id=artifact_id, status="done", remote_ref=detail)
-                logger.info("upload_ok id=%s kind=%s", artifact_id, a["kind"])
+                cursor_state[a["kind"]] = artifact_id
+                _save_cursor_state(cursor_path, cursor_state)
+                logger.info("upload_ok id=%s kind=%s endpoint=%s", artifact_id, a["kind"], KIND_TO_ENDPOINT.get(a["kind"]))
                 backoff_s = 2.0
             else:
                 set_upload_status(con, artifact_id=artifact_id, status="failed", last_error=detail)
-                logger.warning("upload_failed id=%s kind=%s err=%s", artifact_id, a["kind"], detail)
+                logger.warning(
+                    "upload_failed id=%s kind=%s endpoint=%s err=%s",
+                    artifact_id,
+                    a["kind"],
+                    KIND_TO_ENDPOINT.get(a["kind"]),
+                    detail,
+                )
                 time.sleep(min(backoff_s, 60.0))
-                backoff_s *= 1.5
+                backoff_s = min(backoff_s * 2.0, 60.0)
 
 
 if __name__ == "__main__":

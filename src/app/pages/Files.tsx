@@ -1,18 +1,20 @@
 import { Card } from "../components/Card";
 import { StatusBadge } from "../components/Widgets";
 import {
-  Download, FileArchive, FileText, HardDrive, Search, Calendar,
-  Filter, FolderOpen, Play, Eye, Clock, ChevronRight,
+  Download, FileArchive, FileText, HardDrive, Search, ChevronRight,
 } from "lucide-react";
 import { clsx } from "clsx";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { storageLabel } from "../lib/deploymentDisplay";
-import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
+import { getPageNodeSubtitle, getDemoMode } from "../lib/demoMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
+import { createApiClient, type FileItem } from "../api/client";
+import { useLiveNode } from "../components/LiveNodeProvider";
 
 type FileCategory = "all" | "audio" | "telemetry" | "sensor" | "system";
 
 interface FileEntry {
+  file_id?: string;
   name: string;
   size: string;
   category: Exclude<FileCategory, "all">;
@@ -40,8 +42,32 @@ const categoryConfig = {
 
 export function Files() {
   const vm = useDeploymentView();
+  const live = useLiveNode();
+  const [apiFiles, setApiFiles] = useState<FileItem[]>([]);
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await createApiClient().listFiles();
+        setApiFiles(data.items ?? []);
+      } catch {
+        setApiFiles([]);
+      }
+    };
+    void load();
+  }, [live?.lastUpdateIso]);
   const files = useMemo<FileEntry[]>(() => {
-    if (!isBrightonDemo() || !vm) return clydeFiles;
+    if (apiFiles.length > 0) {
+      return apiFiles.map((f) => ({
+        file_id: f.file_id,
+        name: f.filename,
+        size: f.size_bytes != null ? `${(f.size_bytes / (1024 * 1024)).toFixed(2)} MB` : "—",
+        category: f.type.toLowerCase().includes("wav") ? "audio" : "system",
+        date: f.timestamp ?? "—",
+        records: f.status,
+        provenance: f.source,
+      }));
+    }
+    if (!getDemoMode() || !vm) return clydeFiles;
     return vm.files.map((f) => ({
       name: f.name,
       size: f.size,
@@ -143,12 +169,29 @@ export function Files() {
                 {selectedFile.provenance && (<><span>Provenance</span><span className="text-slate-200">{selectedFile.provenance}</span></>)}
               </div>
               <StatusBadge status="info">Indexed — download when artifact on server</StatusBadge>
+              {selectedFile.file_id && (
+                <div className="flex gap-2 mt-2">
+                  <a className="text-xs text-cyan-400 hover:underline" href={`${live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files/${selectedFile.file_id}/download`} target="_blank" rel="noreferrer">
+                    Download
+                  </a>
+                  <a className="text-xs text-slate-400 hover:underline" href={`${live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files/${selectedFile.file_id}`} target="_blank" rel="noreferrer">
+                    API JSON
+                  </a>
+                </div>
+              )}
             </div>
           ) : (
             <p className="text-slate-500 text-sm mt-4">Select a file to view details.</p>
           )}
         </Card>
       </div>
+      <Card title="Programmatic API examples">
+        <div className="text-xs font-mono text-slate-400 space-y-1">
+          <div>curl {live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files</div>
+          <div>curl {live?.apiBase ?? "http://127.0.0.1:8000/v1"}/exports/latest_snapshot.json</div>
+          <div>curl {live?.apiBase ?? "http://127.0.0.1:8000/v1"}/exports/telemetry.csv</div>
+        </div>
+      </Card>
     </div>
   );
 }

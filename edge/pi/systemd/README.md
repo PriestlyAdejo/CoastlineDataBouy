@@ -9,6 +9,7 @@ They assume:
 - edge python package is installed system-wide (so `/usr/local/bin/buoy-seriald` etc exist)
 - runtime configuration is provided via `/etc/buoy/buoy.env`
 - runtime user `buoy` exists
+- repo checkout is at `/opt/buoy/CoastlineDataBouy`
 
 ## Suggested enable set
 

@@ -6,42 +6,15 @@ import selectors
 import socket
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 
 import serial
 
 from buoy.config import load_settings
+from buoy.hardware.serial_detect import detect_serial_port
+from buoy.index.sqlite_index import add_artifact, init_db, open_db
 from buoy.logging import setup_logging
-
-
-def parse_csv_line(line: str) -> dict | None:
-    """
-    v1 parser for the currently described Arduino payload:
-      millis_timestamp, temperature, accel_x, accel_y, accel_z
-
-    Returns a TelemetrySample-like dict (not yet enforced with schema validation).
-    """
-    parts = [p.strip() for p in line.split(",")]
-    if len(parts) < 5:
-        return None
-    try:
-        arduino_ms = int(parts[0])
-        temp_c = float(parts[1])
-        ax = float(parts[2])
-        ay = float(parts[3])
-        az = float(parts[4])
-    except ValueError:
-        return None
-
-    return {
-        "schema_version": "v1",
-        "ts": datetime.now(timezone.utc).isoformat(),
-        "source": "arduino_serial1",
-        "arduino_ms": arduino_ms,
-        "env": {"onboard_temp_c": temp_c},
-        "imu": {"accel_mps2": {"x": ax, "y": ay, "z": az}},
-    }
+from buoy.parsing.serial_payload import parse_serial_payload
 
 
 @dataclass
@@ -79,8 +52,14 @@ def main() -> None:
     pub_sock_path = settings.paths.base_dir / "run" / "seriald_pub.sock"
     cmd_sock_path = settings.paths.base_dir / "run" / "seriald_cmd.sock"
 
-    port = settings.serial.port
+    port = (
+        detect_serial_port(settings.serial.port, settings.serial.baud, settings.serial.read_timeout_s)
+        if settings.serial.auto_detect
+        else settings.serial.port
+    )
     baud = settings.serial.baud
+    con = open_db(settings.paths.data_dir / "index" / "buoy.sqlite")
+    init_db(con)
 
     logger.info("opening uart port=%s baud=%s", port, baud)
 
@@ -110,14 +89,24 @@ def main() -> None:
                             line = ""
                         if line:
                             f_raw.write(line + "\n")
-                            rec = parse_csv_line(line)
+                            parsed = parse_serial_payload(line)
+                            rec = parsed.payload
                             if rec is None:
-                                logger.warning("parse_failed line=%r", line[:200])
+                                logger.warning("parse_failed reason=%s line=%r", parsed.reason, line[:200])
                             else:
                                 rec["node_id"] = settings.node_id
                                 payload = json.dumps(rec, separators=(",", ":")) + "\n"
                                 f_jsonl.write(payload)
                                 f_jsonl.flush()
+                                add_artifact(
+                                    con,
+                                    node_id=settings.node_id,
+                                    kind="serial_telemetry_jsonl",
+                                    path=str(out_path),
+                                    ts_start=rec.get("ts"),
+                                    ts_end=rec.get("ts"),
+                                    meta_json=payload.strip(),
+                                )
 
                                 # Fan-out publish (best-effort)
                                 dead: list[Client] = []

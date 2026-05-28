@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from ..logging import setup_logging
-from .alsa import AlsaHw, list_capture_hw_devices, pick_hifiberry_like
+from .alsa import AlsaHw, list_capture_hw_devices, pick_capture_device
 
 
 @dataclass(frozen=True)
@@ -40,14 +40,13 @@ def format_chunk_name(node_id: str, ts_start: datetime, ts_end: datetime) -> str
 
 def choose_device(explicit_hw: str | None = None) -> AlsaHw | None:
     devs = list_capture_hw_devices()
-    if explicit_hw:
-        # allow explicit "hw:X,Y"
-        for d in devs:
-            if d.hw_id == explicit_hw:
-                return d
+    hw, _reason = pick_capture_device(devs, explicit_hw=explicit_hw)
+    if not hw:
         return None
-    picked = pick_hifiberry_like(devs)
-    return picked or (devs[0] if devs else None)
+    for d in devs:
+        if d.hw_id == hw:
+            return d
+    return None
 
 
 def record_chunk(

@@ -20,6 +20,7 @@ import {
   shouldShowClydeOverlays,
 } from "../lib/demoMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
+import { useLiveNode } from "../components/LiveNodeProvider";
 import { useReplayData } from "../lib/useReplayData";
 import { BRIGHTON_MARINA_REF, BRIGHTON_TEST_POINT } from "../lib/mapConfig";
 import { createEmptyLayerHandles, updateReplayMapLayers, type ReplayLayerHandles } from "../hooks/useMapLayers";
@@ -158,8 +159,17 @@ const warningIcon = L.divIcon({
 export function LocationMap() {
   const location = useLocation();
   const vm = useDeploymentView();
+  const live = useLiveNode();
   const replay = useReplayData();
-  const locMetrics = vm?.location ?? replay?.getLocationMetrics();
+  const liveGps = (live?.gps as any) ?? null;
+  const locMetrics = vm?.location ?? (!isBrightonDemo() && liveGps ? {
+    lat: liveGps.lat,
+    lon: liveGps.lon,
+    anchorState: liveGps.source === "ip_fallback" ? "approximate" : "gnss_fix",
+    phaseLabel: live?.modeLabel ?? "LIVE API",
+    driftM24h: null,
+    uncertaintyRadiusM: liveGps.source === "ip_fallback" ? 1000 : 30,
+  } : replay?.getLocationMetrics());
   const wave = vm?.wave ?? replay?.getWaveMetrics();
   const env = vm?.environment ?? replay?.getEnvironmentMetrics();
   const nodes = useMemo(() => {

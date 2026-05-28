@@ -6,6 +6,13 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 
 
+def _bool_env(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
 class Paths(BaseModel):
     """
     Paths are intentionally explicit so we can safely redirect to SSD mounts.
@@ -38,6 +45,16 @@ class SerialConfig(BaseModel):
     port: str = "/dev/ttyAMA0"
     baud: int = 115200
     read_timeout_s: float = 1.0
+    auto_detect: bool = True
+
+
+class GnssConfig(BaseModel):
+    port: str = "/dev/ttyUSB0"
+    baud: int = 9600
+    read_timeout_s: float = 1.0
+    auto_detect: bool = True
+    interval_s: int = 5
+    enable_ip_fallback: bool = False
 
 
 class Ds18b20Config(BaseModel):
@@ -50,16 +67,22 @@ class AudioConfig(BaseModel):
     channels: int = 2
     sample_format: str = "S32_LE"
     chunk_s: int = 15 * 60
+    auto_detect: bool = True
+    device_hint: str = ""
 
 
 class EdgeSettings(BaseModel):
     node_id: str = "ucl-buoy"
     paths: Paths = Paths()
     serial: SerialConfig = SerialConfig()
+    gnss: GnssConfig = GnssConfig()
     ds18b20: Ds18b20Config = Ds18b20Config()
     audio: AudioConfig = AudioConfig()
     backend_api_base: str = "http://127.0.0.1:8000/v1"
     buoy_upload_token: str = "STRONG_UPLOAD_TOKEN_69420"
+    upload_interval_s: int = 5
+    health_interval_s: int = 15
+    env_interval_s: int = 10
 
 
 def load_settings() -> EdgeSettings:
@@ -78,6 +101,31 @@ def load_settings() -> EdgeSettings:
                     "BUOY_SERIAL_READ_TIMEOUT_S",
                     str(SerialConfig.model_fields["read_timeout_s"].default),
                 )
+            ),
+            auto_detect=_bool_env(
+                "BUOY_SERIAL_AUTO_DETECT",
+                bool(SerialConfig.model_fields["auto_detect"].default),
+            ),
+        ),
+        gnss=GnssConfig(
+            port=os.getenv("BUOY_GNSS_PORT", GnssConfig.model_fields["port"].default),
+            baud=int(os.getenv("BUOY_GNSS_BAUD", str(GnssConfig.model_fields["baud"].default))),
+            read_timeout_s=float(
+                os.getenv(
+                    "BUOY_GNSS_READ_TIMEOUT_S",
+                    str(GnssConfig.model_fields["read_timeout_s"].default),
+                )
+            ),
+            auto_detect=_bool_env(
+                "BUOY_GNSS_AUTO_DETECT",
+                bool(GnssConfig.model_fields["auto_detect"].default),
+            ),
+            interval_s=int(
+                os.getenv("BUOY_GNSS_INTERVAL_S", str(GnssConfig.model_fields["interval_s"].default))
+            ),
+            enable_ip_fallback=_bool_env(
+                "BUOY_ENABLE_LOCATION_IP_FALLBACK",
+                bool(GnssConfig.model_fields["enable_ip_fallback"].default),
             ),
         ),
         ds18b20=Ds18b20Config(
@@ -100,12 +148,32 @@ def load_settings() -> EdgeSettings:
                 "BUOY_AUDIO_FORMAT", AudioConfig.model_fields["sample_format"].default
             ),
             chunk_s=int(os.getenv("BUOY_AUDIO_CHUNK_S", str(AudioConfig.model_fields["chunk_s"].default))),
+            auto_detect=_bool_env(
+                "BUOY_AUDIO_AUTO_DETECT",
+                bool(AudioConfig.model_fields["auto_detect"].default),
+            ),
+            device_hint=os.getenv("BUOY_AUDIO_DEVICE_HINT", AudioConfig.model_fields["device_hint"].default),
         ),
         backend_api_base=os.getenv(
             "BUOY_BACKEND_API_BASE", EdgeSettings.model_fields["backend_api_base"].default
         ),
         buoy_upload_token=os.getenv(
             "BUOY_UPLOAD_TOKEN", EdgeSettings.model_fields["buoy_upload_token"].default
+        ),
+        upload_interval_s=int(
+            os.getenv(
+                "BUOY_UPLOAD_INTERVAL_S",
+                str(EdgeSettings.model_fields["upload_interval_s"].default),
+            )
+        ),
+        health_interval_s=int(
+            os.getenv(
+                "BUOY_HEALTH_INTERVAL_S",
+                str(EdgeSettings.model_fields["health_interval_s"].default),
+            )
+        ),
+        env_interval_s=int(
+            os.getenv("BUOY_ENV_INTERVAL_S", str(EdgeSettings.model_fields["env_interval_s"].default))
         ),
     )
     s.paths.ensure()

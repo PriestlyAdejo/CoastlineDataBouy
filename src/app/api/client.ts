@@ -12,6 +12,18 @@ export type LatestSnapshots = {
   ts: string;
 };
 
+export type FileItem = {
+  file_id: string;
+  filename: string;
+  type: string;
+  source: string;
+  size_bytes: number | null;
+  timestamp: string | null;
+  available: boolean;
+  status: string;
+  reason?: string | null;
+};
+
 async function httpGet<T>(url: string): Promise<T> {
   const r = await fetch(url, { method: "GET" });
   if (!r.ok) {
@@ -35,6 +47,9 @@ export function createApiClient(opts?: Partial<ApiClientOptions>) {
     },
     async getLatestSnapshots(nodeId: string): Promise<LatestSnapshots> {
       return await httpGet(`${baseUrl}/nodes/${encodeURIComponent(nodeId)}/snapshots/latest`);
+    },
+    async listFiles(): Promise<{ items: FileItem[] }> {
+      return await httpGet(`${baseUrl}/files`);
     },
   };
 }

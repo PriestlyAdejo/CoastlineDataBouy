@@ -29,6 +29,7 @@ const ROUTES = [
   { path: "/hydrophone/spectral", file: "hydrophone-spectral-density.png", name: "Spectral Density", checks: [/spectral|hydrophone/i] },
   { path: "/hydrophone/levels", file: "hydrophone-sound-levels.png", name: "Sound Levels", checks: [/sound levels|hydrophone/i] },
   { path: "/hydrophone/effort", file: "hydrophone-recording-effort.png", name: "Recording Effort", checks: [/recording effort|hydrophone/i] },
+  { path: "/docs", file: "docs.png", name: "Docs", checks: [/docs|api/i] },
 ];
 
 function parseArgs(argv) {
@@ -38,12 +39,14 @@ function parseArgs(argv) {
     node: "ucl-buoy",
     headed: false,
     demo: true,
+    mode: "replay",
     delay: 2500,
     mapDelay: 5000,
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--headed") opts.headed = true;
+    else if (a === "--mode" && argv[i + 1]) opts.mode = argv[++i];
     else if (a === "--no-demo") opts.demo = false;
     else if (a === "--frontend" && argv[i + 1]) opts.frontend = argv[++i].replace(/\/$/, "");
     else if (a === "--api" && argv[i + 1]) opts.api = argv[++i].replace(/\/$/, "");
@@ -404,7 +407,7 @@ async function captureRoutes(opts, runDir, summary, logPaths) {
         if (demo) localStorage.setItem("nereus.demoMode", demoKey);
         else localStorage.removeItem("nereus.demoMode");
       },
-      { api: opts.api, demo: opts.demo, demoKey: DEMO_MODE },
+      { api: opts.api, demo: opts.mode === "replay" ? opts.demo : false, demoKey: DEMO_MODE },
     );
 
     for (const routeDef of ROUTES) {
@@ -484,6 +487,9 @@ async function captureApiEvidence(opts, runDir, summary) {
     ["healthz.json", `${opts.api}/healthz`],
     ["nodes.json", `${opts.api}/nodes`],
     ["ucl-buoy-latest-snapshot.json", `${opts.api}/nodes/${opts.node}/snapshots/latest`],
+    ["files.json", `${opts.api}/files`],
+    ["latest_export.json", `${opts.api}/exports/latest_snapshot.json`],
+    ["telemetry_export.csv.json", `${opts.api}/exports/telemetry.csv`],
   ]) {
     const r = await fetchJson(url);
     writeJson(path.join(apiDir, name), r.ok ? r.body : r);

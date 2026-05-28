@@ -75,3 +75,28 @@ def pick_hifiberry_like(devs: list[AlsaHw]) -> AlsaHw | None:
         return None
     return preferred[0][1]
 
+
+def pick_capture_device(devs: list[AlsaHw], explicit_hw: str | None = None) -> tuple[str | None, str]:
+    """Pick ALSA device with explicit override then scored preference order."""
+    if explicit_hw:
+        return explicit_hw, "explicit"
+    if not devs:
+        return None, "no_capture_devices"
+    ranked: list[tuple[int, AlsaHw]] = []
+    for d in devs:
+        name = f"{d.card_name} {d.device_name}".lower()
+        score = 0
+        if "hifiberry" in name or "snd_rpi_hifiberry" in name:
+            score += 100
+        if "adc" in name:
+            score += 60
+        if "dac+ adc" in name:
+            score += 40
+        if "usb audio" in name:
+            score += 20
+        ranked.append((score, d))
+    ranked.sort(key=lambda x: x[0], reverse=True)
+    if ranked[0][0] > 0:
+        return ranked[0][1].hw_id, "ranked_match"
+    return devs[0].hw_id, "first_capture_fallback"
+

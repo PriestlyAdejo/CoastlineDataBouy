@@ -1,0 +1,105 @@
+from __future__ import annotations
+
+import json
+import shutil
+import socket
+import subprocess
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+from buoy.config import load_settings
+from buoy.index.sqlite_index import add_artifact, init_db, open_db
+from buoy.logging import setup_logging
+
+
+def _read_cpu_temp() -> float | None:
+    p = Path("/sys/class/thermal/thermal_zone0/temp")
+    if not p.exists():
+        return None
+    try:
+        return int(p.read_text(encoding="utf-8").strip()) / 1000.0
+    except Exception:
+        return None
+
+
+def _service_state(name: str) -> str:
+    try:
+        out = subprocess.check_output(["systemctl", "is-active", name], text=True).strip()
+        return out or "unknown"
+    except Exception:
+        return "unknown"
+
+
+def _backend_reachable(host: str, port: int) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=2.0):
+            return True
+    except OSError:
+        return False
+
+
+def main() -> None:
+    """Collect Pi health snapshots and queue uploads."""
+    settings = load_settings()
+    logger = setup_logging("buoy.healthd")
+    telemetry_path = settings.paths.data_dir / "telemetry" / "health.jsonl"
+    telemetry_path.parent.mkdir(parents=True, exist_ok=True)
+    con = open_db(settings.paths.data_dir / "index" / "buoy.sqlite")
+    init_db(con)
+    backend_host = settings.backend_api_base.replace("http://", "").replace("https://", "").split("/")[0]
+    host = backend_host.split(":")[0]
+    port = int(backend_host.split(":")[1]) if ":" in backend_host else 80
+
+    while True:
+        disk = shutil.disk_usage(settings.paths.data_dir)
+        payload = {
+            "schema_version": "v1",
+            "node_id": settings.node_id,
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "status": "ok",
+            "pi": {
+                "cpu_pct": None,
+                "mem_pct": None,
+                "cpu_temp_c": _read_cpu_temp(),
+                "uptime_s": int(time.time()),
+            },
+            "storage": {
+                "mount_ok": settings.paths.data_dir.exists(),
+                "mountpoint": str(settings.paths.data_dir),
+                "free_bytes": disk.free,
+                "used_bytes": disk.used,
+                "total_bytes": disk.total,
+            },
+            "services": {
+                "buoy-seriald": _service_state("buoy-seriald"),
+                "buoy-ds18b20d": _service_state("buoy-ds18b20d"),
+                "buoy-gnssd": _service_state("buoy-gnssd"),
+                "buoy-audio-capture": _service_state("buoy-audio-capture"),
+                "buoy-wave-derive": _service_state("buoy-wave-derive"),
+                "buoy-uploader": _service_state("buoy-uploader"),
+            },
+            "network": {
+                "online": True,
+                "backend_reachable": _backend_reachable(host, port),
+                "tailscale": "unknown",
+            },
+        }
+        line = json.dumps(payload, separators=(",", ":"))
+        with telemetry_path.open("a", encoding="utf-8") as f:
+            f.write(line + "\n")
+        add_artifact(
+            con,
+            node_id=settings.node_id,
+            kind="health_jsonl",
+            path=str(telemetry_path),
+            ts_start=payload["ts"],
+            ts_end=payload["ts"],
+            meta_json=line,
+        )
+        logger.info("health_sample_written backend_reachable=%s", payload["network"]["backend_reachable"])
+        time.sleep(max(5, settings.health_interval_s))
+
+
+if __name__ == "__main__":
+    main()

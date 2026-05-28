@@ -14,6 +14,7 @@ import {
 import { useDeploymentView } from "../hooks/useDeploymentView";
 import { DataQualityIndicator } from "./DataQualityIndicator";
 import { ReplayControlPanel } from "./ReplayControlPanel";
+import { useLiveNode } from "./LiveNodeProvider";
 
 interface NavItem {
   name: string;
@@ -123,6 +124,7 @@ export function Layout() {
   const activeNode = getActiveNodeLabel();
   const activeDisplay = getActiveNodeDisplayName();
   const vm = useDeploymentView();
+  const live = useLiveNode();
   const sidebar = vm?.sidebar;
   const alertCount = vm ? vm.alerts.filter((a) => !a.acknowledged).length : 3;
   const groups = buildNavGroups(String(alertCount));
@@ -181,9 +183,9 @@ export function Layout() {
             {isBrightonDemo() && <ReplayControlPanel compact />}
             {isBrightonDemo() && <DataQualityIndicator />}
             <div className="flex items-center gap-1.5 ml-2">
-              <div className={`h-1.5 w-1.5 rounded-full ${vm?.sync.source === "api" ? "bg-emerald-500" : "bg-amber-500"}`}></div>
+              <div className={`h-1.5 w-1.5 rounded-full ${(vm?.sync.source === "api" || live?.modeLabel === "LIVE API") ? "bg-emerald-500" : "bg-amber-500"}`}></div>
               <span className="text-[10px] font-mono text-slate-500">
-                {isBrightonDemo() ? (vm?.sync.label ?? "Replay data") : "Last sync: 12s ago"}
+                {isBrightonDemo() ? (vm?.sync.label ?? "Replay data") : (live?.modeLabel ?? "LIVE API")}
               </span>
             </div>
           </div>

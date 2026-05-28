@@ -1,7 +1,7 @@
 [Unit]
-Description=Buoy DS18B20 polling service
-After=local-fs.target
-Wants=local-fs.target
+Description=Buoy health collector service
+After=local-fs.target network-online.target
+Wants=local-fs.target network-online.target
 RequiresMountsFor=/mnt/ssd/buoy
 
 [Service]
@@ -11,10 +11,9 @@ Group=buoy
 WorkingDirectory=/opt/buoy/CoastlineDataBouy
 EnvironmentFile=/etc/buoy/buoy.env
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/opt/buoy/CoastlineDataBouy/.venv/bin/python -m buoy.services.ds18b20d
+ExecStart=/opt/buoy/CoastlineDataBouy/.venv/bin/python -m buoy.services.healthd
 Restart=always
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
-
