@@ -41,7 +41,7 @@ if errorlevel 1 (
 
 echo Running API migrations...
 cd /d "%REPO_ROOT%\apps\api"
-conda run -n buoy-dev python -m alembic -c alembic.ini upgrade head
+call conda run -n buoy-dev python -m alembic -c alembic.ini upgrade head
 if errorlevel 1 (
   echo ERROR: migration failed.
   exit /b 6
@@ -67,4 +67,4 @@ echo.
 echo If the Pi cannot reach this API over Tailscale, allow Python/Uvicorn through Windows Firewall on private/Tailscale networks.
 echo.
 
-conda run -n buoy-dev python -m uvicorn nereus_api.main:app --reload --host %HOST% --port %PORT%
+call conda run -n buoy-dev python -m uvicorn nereus_api.main:app --reload --host %HOST% --port %PORT%
