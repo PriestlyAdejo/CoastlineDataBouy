@@ -58,13 +58,13 @@ set PORT=8000
 echo.
 echo API is starting for handover on %HOST%:%PORT%
 echo Local API URL:               http://127.0.0.1:%PORT%/v1
-echo Tailscale API URL:           http://^<LAPTOP_TAILSCALE_HOST_OR_IP^>:%PORT%/v1
-echo FastAPI docs URL:            http://127.0.0.1:%PORT%/docs
+echo Tailscale API URL:           http://^<laptop-tailscale-ip^>:%PORT%/v1
 echo Health URL:                  http://127.0.0.1:%PORT%/v1/healthz
 echo Latest snapshot URL:         http://127.0.0.1:%PORT%/v1/nodes/ucl-buoy/snapshots/latest
+echo Files URL:                   http://127.0.0.1:%PORT%/v1/files
+echo Docs URL:                    http://127.0.0.1:%PORT%/docs
 echo.
-echo IMPORTANT: If Pi cannot reach API over Tailscale, allow Python/Uvicorn through
-echo Windows Firewall on Private/Tailscale network profiles.
+echo If the Pi cannot reach this API over Tailscale, allow Python/Uvicorn through Windows Firewall on private/Tailscale networks.
 echo.
 
-conda run -n buoy-dev python -m uvicorn nereus_api.main:app --host %HOST% --port %PORT%
+conda run -n buoy-dev python -m uvicorn nereus_api.main:app --reload --host %HOST% --port %PORT%
