@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * MECH0073 dashboard evidence capture — full-page screenshots, API JSON, logs.
- * Usage: node scripts/capture_dashboard_evidence.mjs [--headed] [--no-demo] ...
+ * Usage: node scripts/capture_dashboard_evidence.mjs [--headed] [--no-demo] [--mode handover] [--api URL] ...
  */
 import { chromium } from "playwright";
 import fs from "fs";
@@ -32,6 +32,17 @@ const ROUTES = [
   { path: "/docs", file: "docs.png", name: "Docs", checks: [/docs|api/i] },
 ];
 
+const HANDOVER_ROUTES = [
+  "/",
+  "/telemetry",
+  "/environment",
+  "/map",
+  "/system-health",
+  "/files",
+  "/hydrophone",
+  "/docs",
+];
+
 function parseArgs(argv) {
   const opts = {
     frontend: "http://localhost:5173",
@@ -54,7 +65,55 @@ function parseArgs(argv) {
     else if (a === "--delay" && argv[i + 1]) opts.delay = Number(argv[++i]);
     else if (a === "--map-delay" && argv[i + 1]) opts.mapDelay = Number(argv[++i]);
   }
+  if (opts.mode === "handover") {
+    opts.demo = false;
+  }
   return opts;
+}
+
+function routesForMode(mode) {
+  if (mode === "handover") {
+    return ROUTES.filter((r) => HANDOVER_ROUTES.includes(r.path));
+  }
+  return ROUTES;
+}
+
+function writeHandoverAcceptanceSummary(latestDir, opts, summary, apiDir) {
+  const healthPath = path.join(apiDir, "healthz.json");
+  const snapPath = path.join(apiDir, "ucl-buoy-latest-snapshot.json");
+  const filesPath = path.join(apiDir, "files.json");
+  const health = fs.existsSync(healthPath) ? JSON.parse(fs.readFileSync(healthPath, "utf8")) : null;
+  const snap = fs.existsSync(snapPath) ? JSON.parse(fs.readFileSync(snapPath, "utf8")) : null;
+  const files = fs.existsSync(filesPath) ? JSON.parse(fs.readFileSync(filesPath, "utf8")) : null;
+  const loc = snap?.location ?? null;
+  const warnings = [];
+  if (!health?.ok) warnings.push("backend not healthy");
+  if (!loc) warnings.push("no location object on latest snapshot");
+  else if (loc.quality === "no_fix") warnings.push("Pi alive but no GNSS fix yet");
+  if (!snap?.health?.ts) warnings.push("no health timestamp in snapshot");
+  if (!snap?.acoustics) warnings.push("no recent acoustic metadata");
+  const okRoutes = summary.routes.filter((r) => r.status === "ok").length;
+
+  const md = `# Handover acceptance summary
+
+Generated: ${new Date().toISOString()}
+Mode: ${opts.mode}
+API: ${opts.api}
+
+| Check | Status |
+|-------|--------|
+| Backend alive | ${health?.ok ? "yes" : "no"} |
+| Pi heartbeat seen (health ts) | ${snap?.health?.ts ? snap.health.ts : "not seen"} |
+| Latest location status | ${loc ? `${loc.quality ?? "unknown"} (${loc.source ?? "—"})` : "missing"} |
+| Latest health timestamp | ${snap?.health?.ts ?? "—"} |
+| Latest audio metadata timestamp | ${snap?.acoustics?.ts_end ?? snap?.acoustics?.ts_start ?? snap?.acoustics?.ts ?? "—"} |
+| Files endpoint available | ${files?.items != null ? `yes (${files.items.length} items)` : "no"} |
+| Dashboard pages captured | ${okRoutes}/${summary.routes.length} |
+| Known warnings | ${warnings.length ? warnings.join("; ") : "none"} |
+
+See \`api/\` and \`pages/\` in this folder for evidence artifacts.
+`;
+  fs.writeFileSync(path.join(latestDir, "HANDOVER_ACCEPTANCE_SUMMARY.md"), md, "utf8");
 }
 
 function tsFolder() {
@@ -410,7 +469,8 @@ async function captureRoutes(opts, runDir, summary, logPaths) {
       { api: opts.api, demo: opts.mode === "replay" ? opts.demo : false, demoKey: DEMO_MODE },
     );
 
-    for (const routeDef of ROUTES) {
+    const routes = routesForMode(opts.mode);
+    for (const routeDef of routes) {
       currentRoute = routeDef.path;
       const routeResult = {
         route: routeDef.path,
@@ -539,7 +599,8 @@ async function main() {
     delayMs: opts.delay,
     mapDelayMs: opts.mapDelay,
     routes: [],
-    routeList: ROUTES.map((r) => r.path),
+    mode: opts.mode,
+    routeList: routesForMode(opts.mode).map((r) => r.path),
     screenshots: [],
     apiFiles: [],
     apiFailures: [],
@@ -568,7 +629,7 @@ async function main() {
     await captureRoutes(opts, runDir, summary, logPaths);
   } else {
     console.warn("Skipping browser screenshots (frontend offline).");
-    for (const r of ROUTES) {
+    for (const r of routesForMode(opts.mode)) {
       summary.routes.push({
         route: r.path,
         screenshot: r.file,
@@ -594,8 +655,12 @@ async function main() {
   ensureDir(latestDir);
   copyDirRecursive(runDir, latestDir);
 
+  if (opts.mode === "handover") {
+    writeHandoverAcceptanceSummary(latestDir, opts, summary, path.join(runDir, "api"));
+  }
+
   const okRoutes = summary.routes.filter((r) => r.status === "ok").length;
-  const totalRoutes = ROUTES.length;
+  const totalRoutes = routesForMode(opts.mode).length;
 
   console.log("\n--- Capture summary ---");
   console.log(`Latest:  screenshots/latest/`);

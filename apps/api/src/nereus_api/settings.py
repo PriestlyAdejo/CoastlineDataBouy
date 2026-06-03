@@ -29,6 +29,10 @@ class Settings(BaseSettings):
         default="STRONG_UPLOAD_TOKEN_69420",
         validation_alias=AliasChoices("NEREUS_BUOY_UPLOAD_TOKEN", "BUOY_UPLOAD_TOKEN"),
     )
+    cors_origins_raw: str = Field(
+        default="",
+        validation_alias=AliasChoices("NEREUS_CORS_ORIGINS", "CORS_ORIGINS"),
+    )
 
     database_url: str = Field(
         default="postgresql+psycopg://nereus:nereus@127.0.0.1:5432/nereus",
@@ -96,6 +100,23 @@ class Settings(BaseSettings):
             self.minio_bucket_derived,
             self.minio_bucket_exports,
         )
+
+    def cors_origins(self) -> list[str]:
+        """
+        Return allowed CORS origins.
+
+        `NEREUS_CORS_ORIGINS` supports comma-separated origins.
+        """
+        if self.cors_origins_raw.strip():
+            return [x.strip() for x in self.cors_origins_raw.split(",") if x.strip()]
+        # Safe dev/handover defaults.
+        return [
+            "http://127.0.0.1:5173",
+            "http://localhost:5173",
+            "http://0.0.0.0:5173",
+            "http://127.0.0.1:8000",
+            "http://localhost:8000",
+        ]
 
 
 @lru_cache

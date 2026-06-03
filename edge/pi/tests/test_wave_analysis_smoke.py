@@ -1,4 +1,6 @@
-import numpy as np
+import pytest
+
+np = pytest.importorskip("numpy")
 
 from buoy.waves.analysis import compute_wave_stats_from_accel_z
 

@@ -161,14 +161,22 @@ export function LocationMap() {
   const vm = useDeploymentView();
   const live = useLiveNode();
   const replay = useReplayData();
-  const liveGps = (live?.gps as any) ?? null;
-  const locMetrics = vm?.location ?? (!isBrightonDemo() && liveGps ? {
-    lat: liveGps.lat,
-    lon: liveGps.lon,
-    anchorState: liveGps.source === "ip_fallback" ? "approximate" : "gnss_fix",
-    phaseLabel: live?.modeLabel ?? "LIVE API",
+  const locView = live?.locationView;
+  const liveLoc = locView?.location;
+  const locMetrics = vm?.location ?? (!isBrightonDemo() && liveLoc?.lat != null && liveLoc?.lon != null ? {
+    lat: liveLoc.lat,
+    lon: liveLoc.lon,
+    anchorState: locView?.kind === "approximate_ip_fallback" ? "approximate" : "gnss_fix",
+    phaseLabel: locView?.label ?? live?.modeLabel ?? "LIVE API",
     driftM24h: null,
-    uncertaintyRadiusM: liveGps.source === "ip_fallback" ? 1000 : 30,
+    uncertaintyRadiusM: locView?.kind === "approximate_ip_fallback" ? 1000 : 30,
+  } : !isBrightonDemo() ? {
+    lat: null,
+    lon: null,
+    anchorState: "no_fix",
+    phaseLabel: locView?.label ?? "No live GNSS fix yet",
+    driftM24h: null,
+    uncertaintyRadiusM: null,
   } : replay?.getLocationMetrics());
   const wave = vm?.wave ?? replay?.getWaveMetrics();
   const env = vm?.environment ?? replay?.getEnvironmentMetrics();
@@ -419,9 +427,20 @@ export function LocationMap() {
             <span className="text-xs font-mono text-emerald-400">LIVE</span>
           </div>
           <div className="w-px h-5 bg-slate-700"></div>
-          <span className="text-xs font-mono text-slate-400">GPS 3D Fix — {current.satellites} Sats</span>
-          <div className="w-px h-5 bg-slate-700"></div>
-          <span className="text-[10px] font-mono text-slate-500">HDOP: {current.hdop}</span>
+          <span className="text-xs font-mono text-slate-200">
+            {isBrightonDemo()
+              ? `GPS replay — ${current.satellites} sats`
+              : locView?.label ?? "No live GNSS fix yet"}
+          </span>
+          {!isBrightonDemo() && locView?.kind === "live_gnss_fix" && (
+            <>
+              <div className="w-px h-5 bg-slate-700"></div>
+              <span className="text-xs font-mono text-slate-400">
+                {liveLoc?.satellites != null ? `${liveLoc.satellites} sats` : "GNSS"}
+                {liveLoc?.hdop != null ? ` · HDOP ${liveLoc.hdop}` : ""}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Active layer chips */}

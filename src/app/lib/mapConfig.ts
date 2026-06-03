@@ -11,14 +11,16 @@ export type MapConfig = {
   uncertaintyRadiusM?: number;
 };
 
+/** Neutral UK overview until live GNSS fix is available. */
+const LIVE_DEFAULT_CENTER: [number, number] = [54.0, -2.0];
 const CLYDE_CENTER: [number, number] = [55.65, -5.15];
 const BRIGHTON_TEST: [number, number] = [50.80675, -0.12635];
 const BRIGHTON_MARINA: [number, number] = [50.808166, -0.124052];
 
 export function getDefaultMapConfig(): MapConfig {
   return {
-    center: CLYDE_CENTER,
-    zoom: 10,
+    center: LIVE_DEFAULT_CENTER,
+    zoom: 6,
     tileUrl:
       "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
     attribution: "Tiles &copy; Esri",

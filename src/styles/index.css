@@ -9,3 +9,21 @@ body,
 #root {
   height: 100%;
 }
+
+/* Projector / handover readable mode — toggle via Layout */
+html.handover-readable {
+  font-size: 17px;
+}
+html.handover-readable .text-\[10px\] {
+  font-size: 0.8rem !important;
+}
+html.handover-readable .text-xs {
+  font-size: 0.875rem !important;
+}
+html.handover-readable .text-slate-500,
+html.handover-readable .text-slate-600 {
+  color: rgb(203 213 225) !important;
+}
+html.handover-readable .border-slate-800 {
+  border-color: rgb(100 116 139) !important;
+}

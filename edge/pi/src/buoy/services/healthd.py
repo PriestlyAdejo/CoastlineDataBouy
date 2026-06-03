@@ -39,6 +39,48 @@ def _backend_reachable(host: str, port: int) -> bool:
         return False
 
 
+def _internet_online() -> bool:
+    try:
+        subprocess.check_call(
+            ["ping", "-c", "1", "-W", "2", "8.8.8.8"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+
+
+def _tailscale_ip() -> str | None:
+    try:
+        out = subprocess.check_output(["tailscale", "ip", "-4"], text=True, timeout=5).strip()
+        return out or None
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+
+
+def _latest_serial_battery(data_dir: Path) -> dict:
+    path = data_dir / "telemetry" / "serial_telemetry.jsonl"
+    if not path.exists():
+        return {"battery_source": "not_available"}
+    try:
+        lines = path.read_text(encoding="utf-8").strip().splitlines()
+        if not lines:
+            return {"battery_source": "not_available"}
+        row = json.loads(lines[-1])
+        pack_v = row.get("pack_v")
+        soc = row.get("soc_pct")
+        if pack_v is not None or soc is not None:
+            return {
+                "pack_v": pack_v,
+                "soc_pct": soc,
+                "battery_source": "measured",
+            }
+    except (json.JSONDecodeError, OSError):
+        pass
+    return {"battery_source": "not_available"}
+
+
 def main() -> None:
     """Collect Pi health snapshots and queue uploads."""
     settings = load_settings()
@@ -53,6 +95,11 @@ def main() -> None:
 
     while True:
         disk = shutil.disk_usage(settings.paths.data_dir)
+        battery = _latest_serial_battery(settings.paths.data_dir)
+        ts_ip = _tailscale_ip()
+        online = _internet_online()
+        backend_ok = _backend_reachable(host, port)
+
         payload = {
             "schema_version": "v1",
             "node_id": settings.node_id,
@@ -80,10 +127,11 @@ def main() -> None:
                 "buoy-uploader": _service_state("buoy-uploader"),
             },
             "network": {
-                "online": True,
-                "backend_reachable": _backend_reachable(host, port),
-                "tailscale": "unknown",
+                "online": online,
+                "backend_reachable": backend_ok,
+                "tailscale": ts_ip or "offline",
             },
+            **battery,
         }
         line = json.dumps(payload, separators=(",", ":"))
         with telemetry_path.open("a", encoding="utf-8") as f:
@@ -97,7 +145,13 @@ def main() -> None:
             ts_end=payload["ts"],
             meta_json=line,
         )
-        logger.info("health_sample_written backend_reachable=%s", payload["network"]["backend_reachable"])
+        logger.info(
+            "health_sample_written online=%s backend_reachable=%s tailscale=%s battery_source=%s",
+            online,
+            backend_ok,
+            ts_ip or "offline",
+            battery.get("battery_source"),
+        )
         time.sleep(max(5, settings.health_interval_s))
 
 

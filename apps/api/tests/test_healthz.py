@@ -15,6 +15,19 @@ def test_healthz():
     assert body["ok"] is True
 
 
+def test_cors_allows_local_dashboard_origin():
+    c = TestClient(app)
+    r = c.options(
+        "/v1/healthz",
+        headers={
+            "Origin": "http://127.0.0.1:5173",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert r.status_code == 200
+    assert r.headers.get("access-control-allow-origin") == "http://127.0.0.1:5173"
+
+
 def test_ingest_health_updates_latest_snapshot(tmp_path):
     db_path = tmp_path / "api_test.sqlite3"
     engine = create_engine(f"sqlite:///{db_path}")

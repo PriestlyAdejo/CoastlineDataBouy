@@ -23,6 +23,8 @@ interface FileEntry {
   sampleRate?: string;
   records?: string;
   provenance?: string;
+  status?: string;
+  available?: boolean;
 }
 
 const clydeFiles: FileEntry[] = [
@@ -64,6 +66,8 @@ export function Files() {
         category: f.type.toLowerCase().includes("wav") ? "audio" : "system",
         date: f.timestamp ?? "—",
         records: f.status,
+        status: f.status,
+        available: f.available,
         provenance: f.source,
       }));
     }
@@ -168,12 +172,20 @@ export function Files() {
                 <span>Date</span><span className="text-slate-200">{selectedFile.date}</span>
                 {selectedFile.provenance && (<><span>Provenance</span><span className="text-slate-200">{selectedFile.provenance}</span></>)}
               </div>
-              <StatusBadge status="info">Indexed — download when artifact on server</StatusBadge>
+              {selectedFile.status === "file_on_pi_not_synced" ? (
+                <StatusBadge status="warning">file_on_pi_not_synced — WAV on Pi SSD only</StatusBadge>
+              ) : selectedFile.available ? (
+                <StatusBadge status="success">Available on laptop backend</StatusBadge>
+              ) : (
+                <StatusBadge status="info">Indexed — metadata only</StatusBadge>
+              )}
               {selectedFile.file_id && (
                 <div className="flex gap-2 mt-2">
-                  <a className="text-xs text-cyan-400 hover:underline" href={`${live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files/${selectedFile.file_id}/download`} target="_blank" rel="noreferrer">
-                    Download
-                  </a>
+                  {selectedFile.available && (
+                    <a className="text-xs text-cyan-400 hover:underline" href={`${live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files/${selectedFile.file_id}/download`} target="_blank" rel="noreferrer">
+                      Download
+                    </a>
+                  )}
                   <a className="text-xs text-slate-400 hover:underline" href={`${live?.apiBase ?? "http://127.0.0.1:8000/v1"}/files/${selectedFile.file_id}`} target="_blank" rel="noreferrer">
                     API JSON
                   </a>

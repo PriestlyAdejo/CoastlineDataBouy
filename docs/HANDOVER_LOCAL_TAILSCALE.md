@@ -19,10 +19,20 @@ Expected:
 - Health endpoint returns `{ "ok": true, ... }`.
 - Snapshot endpoint returns object with telemetry/env/health/acoustics/wave_stats keys.
 
+## Known handover IPs (update in `/etc/buoy/buoy.env` if changed)
+
+| Role | Tailscale IP |
+|------|----------------|
+| Laptop backend | 100.97.101.91 |
+| Pi (ucl-buoy) | 100.89.114.62 |
+
+Handover API base: `http://100.97.101.91:8000/v1`
+
 ## Pi commands
 
 ```bash
-curl http://<laptop-tailscale-host-or-ip>:8000/v1/healthz
+curl http://100.97.101.91:8000/v1/healthz
+edge/pi/scripts/pi_handover_acceptance.sh
 sudo systemctl status buoy-seriald buoy-ds18b20d buoy-gnssd buoy-audio-capture buoy-healthd buoy-uploader
 edge/pi/scripts/pi_live_status.sh
 ```

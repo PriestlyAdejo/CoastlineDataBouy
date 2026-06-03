@@ -36,6 +36,20 @@ const brightonNodes: DashboardNode[] = [
   },
 ];
 
+/** Single live handover node — no Clyde demo fleet in LIVE API mode. */
+const liveHandoverNodes: DashboardNode[] = [
+  {
+    id: "ucl-buoy",
+    displayName: "UCL Buoy",
+    pos: [54.0, -2.0],
+    status: "Active",
+    main: true,
+    depth: "—",
+    battery: "—",
+    temp: "—",
+  },
+];
+
 export function getDemoMode(): string | null {
   if (typeof window === "undefined") return null;
   return window.localStorage.getItem("nereus.demoMode");
@@ -46,21 +60,20 @@ export function isBrightonDemo(): boolean {
 }
 
 export function getDashboardNodes(): DashboardNode[] {
-  return isBrightonDemo() ? brightonNodes : clydeNodes;
+  if (isBrightonDemo()) return brightonNodes;
+  return liveHandoverNodes;
 }
 
 export function getDefaultNodeId(): string {
-  return isBrightonDemo() ? "ucl-buoy" : "BY-04-A";
+  return "ucl-buoy";
 }
 
 export function getActiveNodeLabel(): string {
-  if (isBrightonDemo()) return "ucl-buoy";
-  return "BY-04-A";
+  return "ucl-buoy";
 }
 
 export function getActiveNodeDisplayName(): string {
-  if (isBrightonDemo()) return getDeploymentMeta().displayName;
-  return "BY-04-A";
+  return getDeploymentMeta().displayName;
 }
 
 export type DeploymentMeta = {
@@ -80,10 +93,10 @@ export function getDeploymentMeta(): DeploymentMeta {
     };
   }
   return {
-    nodeId: "BY-04-A",
-    displayName: "BY-04-A",
-    siteName: "Firth of Clyde",
-    hydrophoneLabel: "BY-04-A Hydrophone Station",
+    nodeId: "ucl-buoy",
+    displayName: "UCL Buoy",
+    siteName: "Field deployment",
+    hydrophoneLabel: "Hydrophone station",
   };
 }
 
@@ -93,7 +106,7 @@ export function getReplayBannerText(): string | null {
 
 export function getSiteDescription(): string {
   if (isBrightonDemo()) return "Field test site — 1 May 2026";
-  return "Firth of Clyde — Test Area Alpha";
+  return "Live field deployment — GNSS when available";
 }
 
 export function getSitePositionLabel(): string {
@@ -101,11 +114,11 @@ export function getSitePositionLabel(): string {
     const [lat, lon] = BRIGHTON_TEST_POINT;
     return `${lat.toFixed(5)}°N, ${Math.abs(lon).toFixed(5)}°W`;
   }
-  return "55.6500°N, 5.1500°W";
+  return "Awaiting live GNSS fix";
 }
 
 export function shouldShowClydeOverlays(): boolean {
-  return !isBrightonDemo();
+  return false;
 }
 
 export function getMapConfig(): MapConfig {
@@ -113,7 +126,7 @@ export function getMapConfig(): MapConfig {
 }
 
 export function getHydrophoneStationLabel(): string {
-  return isBrightonDemo() ? getDeploymentMeta().hydrophoneLabel : "BY-04-A Hydrophone Station";
+  return getDeploymentMeta().hydrophoneLabel;
 }
 
 export function getPageNodeSubtitle(suffix: string): string {

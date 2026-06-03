@@ -2,6 +2,18 @@ export type ApiClientOptions = {
   baseUrl: string;
 };
 
+export type LocationSnapshot = {
+  lat?: number;
+  lon?: number;
+  source?: string;
+  quality?: string;
+  fix_status?: string;
+  satellites?: number;
+  hdop?: number;
+  reason?: string;
+  timestamp?: string;
+};
+
 export type LatestSnapshots = {
   node_id: string;
   telemetry: unknown | null;
@@ -9,6 +21,7 @@ export type LatestSnapshots = {
   health: unknown | null;
   acoustics: unknown | null;
   wave_stats?: unknown | null;
+  location?: LocationSnapshot | null;
   ts: string;
 };
 

@@ -13,3 +13,10 @@ Live mode behavior:
 - Map shows real GNSS where present.
 - If fallback location is used, it is marked approximate.
 - Brighton replay is preserved and only enabled by demo mode.
+
+Location labels (live only):
+- **Live GNSS fix** — `location.quality == fix`
+- **Approximate IP fallback** — `source == ip_fallback` or `quality == approximate`
+- **No live GNSS fix yet** — no coordinates or `quality == no_fix`
+
+Never show Brighton marina coordinates unless `nereus.demoMode` is Brighton replay.

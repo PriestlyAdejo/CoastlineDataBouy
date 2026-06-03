@@ -36,3 +36,25 @@ def test_files_and_exports_endpoints(tmp_path):
         assert c.get("/v1/exports/wave_stats.csv").status_code == 200
     finally:
         db_module.SessionLocal = original
+
+
+def test_files_pi_only_download_returns_409(tmp_path):
+    c, original = _client(tmp_path)
+    try:
+        c.post(
+            "/v1/ingest/acoustic_meta",
+            headers=TOKEN,
+            json={
+                "node_id": "ucl-buoy",
+                "ts": "2026-06-03T12:00:00Z",
+                "filename": "ucl-buoy_hydrophone.wav",
+                "path": "/mnt/ssd/buoy/raw/audio/chunk.wav",
+                "size_bytes": 12345,
+            },
+        )
+        items = c.get("/v1/files").json()["items"]
+        assert items[0]["status"] == "file_on_pi_not_synced"
+        dl = c.get(f"/v1/files/{items[0]['file_id']}/download")
+        assert dl.status_code == 409
+    finally:
+        db_module.SessionLocal = original

@@ -98,6 +98,8 @@ def write_sidecar_meta(
         },
         "capture": {"alsa_device": device.hw_id, "alsa_card": device.card_name, "alsa_pcm": device.device_name},
         "artifact": {"path": str(wav_path), "size_bytes": wav_path.stat().st_size, "sha256": sha256},
+        "calibration_status": "uncalibrated",
+        "file_path": str(wav_path),
     }
     return meta
 

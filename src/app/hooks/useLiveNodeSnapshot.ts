@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createApiClient, getApiBaseUrl, type LatestSnapshots } from "../api/client";
 import { isBrightonDemo } from "../lib/demoMode";
+import { resolveLiveLocation, type LiveLocationView } from "../lib/liveLocation";
 
 export type LiveModeLabel =
   | "LIVE API"
@@ -51,6 +52,16 @@ export function useLiveNodeSnapshot(nodeId = "ucl-buoy") {
           ? "LIVE API"
           : "MOCK FALLBACK";
 
+  const locationView: LiveLocationView = useMemo(
+    () =>
+      resolveLiveLocation(
+        isBrightonDemo(),
+        snapshot?.location,
+        snapshot?.telemetry,
+      ),
+    [snapshot?.location, snapshot?.telemetry],
+  );
+
   return useMemo(
     () => ({
       snapshot,
@@ -64,11 +75,14 @@ export function useLiveNodeSnapshot(nodeId = "ucl-buoy") {
       health: snapshot?.health ?? null,
       acoustics: snapshot?.acoustics ?? null,
       wave_stats: snapshot?.wave_stats ?? null,
+      location: snapshot?.location ?? null,
+      locationView,
       gps:
-        (snapshot?.telemetry as any)?.gps ??
-        (snapshot?.env as any)?.gps ??
+        locationView.location ??
+        (snapshot?.telemetry as { gps?: unknown })?.gps ??
+        (snapshot?.env as { gps?: unknown })?.gps ??
         null,
     }),
-    [snapshot, error, stale, modeLabel, lastUpdateMs],
+    [snapshot, error, stale, modeLabel, lastUpdateMs, locationView],
   );
 }

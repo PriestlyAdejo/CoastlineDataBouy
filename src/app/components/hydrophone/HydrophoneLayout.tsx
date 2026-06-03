@@ -1,5 +1,7 @@
 import { NavLink, Outlet } from "react-router";
 import { clsx } from "clsx";
+import { useLiveNode } from "../LiveNodeProvider";
+import { isBrightonDemo } from "../../lib/demoMode";
 import {
   Radio, BarChart3, Waves, Activity, Layers, AudioLines, Clock, HardDrive,
 } from "lucide-react";
@@ -14,9 +16,26 @@ const hydrophoneTabs = [
   { name: "Recording Effort", path: "/hydrophone/effort", icon: Clock },
 ];
 
+function acousticsRecent(acoustics: unknown): boolean {
+  if (!acoustics || typeof acoustics !== "object") return false;
+  const a = acoustics as Record<string, unknown>;
+  const ts = (a.ts_end ?? a.ts_start ?? a.ts) as string | undefined;
+  if (!ts) return false;
+  const ms = Date.parse(ts);
+  return Number.isFinite(ms) && Date.now() - ms < 5 * 60 * 1000;
+}
+
 export function HydrophoneLayout() {
+  const live = useLiveNode();
+  const showSsdBanner = !isBrightonDemo() && acousticsRecent(live?.acoustics);
+
   return (
     <div className="flex flex-col gap-6">
+      {showSsdBanner && (
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-200">
+          Audio is being recorded locally to SSD (metadata synced to backend). SPL metrics are uncalibrated unless calibrated.
+        </div>
+      )}
       {/* Section header */}
       <div className="flex items-center justify-between">
         <div>
@@ -28,7 +47,7 @@ export function HydrophoneLayout() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             Recording
           </span>
-          <span className="text-[10px] font-mono text-slate-600">Fs: 48kHz | 24-bit | H1-Omni</span>
+          <span className="text-xs font-mono text-slate-400">Uncalibrated · local SSD WAV chunks</span>
         </div>
       </div>
 

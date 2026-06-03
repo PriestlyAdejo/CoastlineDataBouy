@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 from buoy.config import load_settings
@@ -43,7 +44,6 @@ def _post_artifact(settings, artifact: dict) -> tuple[bool, str]:
     url = settings.backend_api_base.rstrip("/") + endpoint
     headers = {"X-Buoy-Token": settings.buoy_upload_token}
 
-    # For audio_wav, we upload metadata (stored in meta_json) only for v1 scaffolding.
     if kind == "audio_wav":
         meta_json = artifact.get("meta_json")
         if not meta_json:
@@ -75,13 +75,19 @@ def main() -> None:
 
     kinds = list(KIND_TO_ENDPOINT.keys())
     backoff_s = 2.0
+    idle_s = max(2, settings.upload_interval_s)
     cursor_path = settings.paths.base_dir / "run" / "uploader_cursor.json"
     cursor_state = _load_cursor_state(cursor_path)
+    consecutive_failures = 0
+    spooling_logged = False
 
     while True:
         pending = get_pending_upload_artifacts(con, node_id=settings.node_id, kinds=kinds, limit=25)
         if not pending:
-            time.sleep(5.0)
+            if spooling_logged:
+                logger.info("upload_mode=idle_local_queue_empty")
+                spooling_logged = False
+            time.sleep(idle_s)
             continue
 
         for a in pending:
@@ -91,11 +97,24 @@ def main() -> None:
             if ok:
                 set_upload_status(con, artifact_id=artifact_id, status="done", remote_ref=detail)
                 cursor_state[a["kind"]] = artifact_id
+                cursor_state["last_upload_ok_iso"] = datetime.now(timezone.utc).isoformat()
+                cursor_state.pop("last_upload_error", None)
                 _save_cursor_state(cursor_path, cursor_state)
-                logger.info("upload_ok id=%s kind=%s endpoint=%s", artifact_id, a["kind"], KIND_TO_ENDPOINT.get(a["kind"]))
+                logger.info(
+                    "upload_ok id=%s kind=%s endpoint=%s",
+                    artifact_id,
+                    a["kind"],
+                    KIND_TO_ENDPOINT.get(a["kind"]),
+                )
                 backoff_s = 2.0
+                consecutive_failures = 0
+                spooling_logged = False
             else:
                 set_upload_status(con, artifact_id=artifact_id, status="failed", last_error=detail)
+                consecutive_failures += 1
+                cursor_state["last_upload_error"] = detail
+                cursor_state["last_upload_fail_iso"] = datetime.now(timezone.utc).isoformat()
+                _save_cursor_state(cursor_path, cursor_state)
                 logger.warning(
                     "upload_failed id=%s kind=%s endpoint=%s err=%s",
                     artifact_id,
@@ -103,10 +122,16 @@ def main() -> None:
                     KIND_TO_ENDPOINT.get(a["kind"]),
                     detail,
                 )
+                if not spooling_logged or consecutive_failures == 1:
+                    logger.info(
+                        "upload_mode=spooling_local_only backend_unreachable=true "
+                        "data_stored_on_ssd=true pending_count=%s",
+                        len(pending),
+                    )
+                    spooling_logged = True
                 time.sleep(min(backoff_s, 60.0))
                 backoff_s = min(backoff_s * 2.0, 60.0)
 
 
 if __name__ == "__main__":
     main()
-

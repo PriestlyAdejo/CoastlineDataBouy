@@ -5,8 +5,11 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 SYSTEMD_DIR="${REPO_ROOT}/edge/pi/systemd"
 
 sudo mkdir -p /etc/buoy
-if [[ -f "${REPO_ROOT}/edge/pi/.env.example" && ! -f /etc/buoy/buoy.env ]]; then
-  sudo cp "${REPO_ROOT}/edge/pi/.env.example" /etc/buoy/buoy.env
+ENV_EXAMPLE="${REPO_ROOT}/edge/pi/config/buoy.env.example"
+[[ -f "$ENV_EXAMPLE" ]] || ENV_EXAMPLE="${REPO_ROOT}/edge/pi/.env.example"
+if [[ -f "$ENV_EXAMPLE" && ! -f /etc/buoy/buoy.env ]]; then
+  sudo cp "$ENV_EXAMPLE" /etc/buoy/buoy.env
+  echo "Seeded /etc/buoy/buoy.env from $(basename "$ENV_EXAMPLE")"
 fi
 
 for unit in \

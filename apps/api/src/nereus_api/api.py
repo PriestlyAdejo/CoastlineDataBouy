@@ -45,6 +45,73 @@ def _payload_ts(payload: dict | None) -> str | None:
     return None
 
 
+def _build_location(telemetry: dict | None) -> dict | None:
+    """Normalize latest telemetry GPS into a handover-friendly location object."""
+    if not isinstance(telemetry, dict):
+        return None
+    gps = telemetry.get("gps")
+    if not isinstance(gps, dict):
+        return None
+
+    ts = telemetry.get("ts")
+    source = str(gps.get("source") or telemetry.get("source") or "gnss")
+    quality = str(gps.get("quality") or "")
+    fix_status = str(gps.get("fix_status") or gps.get("status") or "")
+    reason = gps.get("reason")
+
+    lat = gps.get("lat")
+    lon = gps.get("lon")
+    try:
+        lat_f = float(lat) if lat is not None else None
+        lon_f = float(lon) if lon is not None else None
+    except (TypeError, ValueError):
+        lat_f, lon_f = None, None
+
+    if source == "ip_fallback" or quality == "approximate":
+        if lat_f is None or lon_f is None:
+            return {
+                "source": "ip_fallback",
+                "quality": "approximate",
+                "fix_status": fix_status or "approximate",
+                "timestamp": ts,
+            }
+        return {
+            "lat": lat_f,
+            "lon": lon_f,
+            "source": "ip_fallback",
+            "quality": "approximate",
+            "fix_status": fix_status or "approximate",
+            "timestamp": ts,
+        }
+
+    if quality == "no_fix" or (lat_f is None or lon_f is None):
+        out: dict = {
+            "source": "gnss",
+            "quality": "no_fix",
+            "fix_status": fix_status or "no_fix",
+            "timestamp": ts,
+        }
+        if reason:
+            out["reason"] = reason
+        return out
+
+    fix_q = int(gps.get("fix_quality") or 0) if gps.get("fix_quality") is not None else None
+    fix_out = "3d" if fix_q and fix_q > 0 else (fix_status or "fix")
+    loc: dict = {
+        "lat": lat_f,
+        "lon": lon_f,
+        "source": "gnss",
+        "quality": "fix",
+        "fix_status": fix_out,
+        "timestamp": ts,
+    }
+    if gps.get("satellites") is not None:
+        loc["satellites"] = gps.get("satellites")
+    if gps.get("hdop") is not None:
+        loc["hdop"] = gps.get("hdop")
+    return loc
+
+
 def _acoustic_ts(payload: dict | None) -> str | None:
     if not isinstance(payload, dict):
         return None
@@ -158,6 +225,8 @@ def latest_snapshots(node_id: str):
     ]
     latest_ts = max(valid_timestamps) if valid_timestamps else datetime.now(timezone.utc).isoformat()
 
+    location = _build_location(telemetry)
+
     return {
         "node_id": node_id,
         "telemetry": telemetry,
@@ -165,6 +234,7 @@ def latest_snapshots(node_id: str):
         "health": health,
         "acoustics": acoustics,
         "wave_stats": wave_stats,
+        "location": location,
         "ts": latest_ts,
     }
 

@@ -54,6 +54,7 @@ class GnssConfig(BaseModel):
     read_timeout_s: float = 1.0
     auto_detect: bool = True
     interval_s: int = 5
+    location_heartbeat_interval_s: int = 60
     enable_ip_fallback: bool = False
 
 
@@ -122,6 +123,12 @@ def load_settings() -> EdgeSettings:
             ),
             interval_s=int(
                 os.getenv("BUOY_GNSS_INTERVAL_S", str(GnssConfig.model_fields["interval_s"].default))
+            ),
+            location_heartbeat_interval_s=int(
+                os.getenv(
+                    "BUOY_LOCATION_HEARTBEAT_INTERVAL_S",
+                    str(GnssConfig.model_fields["location_heartbeat_interval_s"].default),
+                )
             ),
             enable_ip_fallback=_bool_env(
                 "BUOY_ENABLE_LOCATION_IP_FALLBACK",

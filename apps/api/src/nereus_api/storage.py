@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 _MINIO_BOTO_CONFIG = Config(
     signature_version="s3v4",
     s3={"addressing_style": "path"},
+    connect_timeout=3,
+    read_timeout=5,
+    retries={"max_attempts": 2},
 )
 
 

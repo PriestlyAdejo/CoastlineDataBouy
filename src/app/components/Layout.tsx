@@ -5,7 +5,7 @@ import {
   ChevronDown, ChevronRight,
 } from "lucide-react";
 import { clsx } from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getActiveNodeDisplayName,
   getActiveNodeLabel,
@@ -117,10 +117,22 @@ function NavSection({ group }: { group: NavGroup }) {
   );
 }
 
+const HANDOVER_READABLE_KEY = "nereus.handoverReadable";
+
 export function Layout() {
   const location = useLocation();
   const isDashboard = location.pathname === "/";
   const isFullScreen = isDashboard || location.pathname === "/map";
+  const [handoverReadable, setHandoverReadable] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(HANDOVER_READABLE_KEY) === "1";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("handover-readable", handoverReadable);
+    window.localStorage.setItem(HANDOVER_READABLE_KEY, handoverReadable ? "1" : "0");
+  }, [handoverReadable]);
+
   const activeNode = getActiveNodeLabel();
   const activeDisplay = getActiveNodeDisplayName();
   const vm = useDeploymentView();
@@ -167,7 +179,15 @@ export function Layout() {
           <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
             <span>BATT: {sidebar?.battery ?? "87%"}</span>
             <span>{isBrightonDemo() ? `PHASE: ${sidebar?.phase ?? "—"}` : "LoRa: OK"}</span>
-            <span>GPS: FIX</span>
+            <span>
+              {isBrightonDemo()
+                ? "GPS: REPLAY"
+                : live?.locationView?.kind === "live_gnss_fix"
+                  ? "GPS: LIVE FIX"
+                  : live?.locationView?.kind === "approximate_ip_fallback"
+                    ? "GPS: APPROX"
+                    : "GPS: NO FIX"}
+            </span>
           </div>
         </div>
       </aside>
@@ -182,11 +202,22 @@ export function Layout() {
             </div>
             {isBrightonDemo() && <ReplayControlPanel compact />}
             {isBrightonDemo() && <DataQualityIndicator />}
-            <div className="flex items-center gap-1.5 ml-2">
-              <div className={`h-1.5 w-1.5 rounded-full ${(vm?.sync.source === "api" || live?.modeLabel === "LIVE API") ? "bg-emerald-500" : "bg-amber-500"}`}></div>
-              <span className="text-[10px] font-mono text-slate-500">
-                {isBrightonDemo() ? (vm?.sync.label ?? "Replay data") : (live?.modeLabel ?? "LIVE API")}
+            <div className="flex items-center gap-2 ml-2">
+              <span
+                className={clsx(
+                  "px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide border",
+                  isBrightonDemo() && "bg-amber-500/20 text-amber-200 border-amber-500/50",
+                  !isBrightonDemo() && live?.modeLabel === "LIVE API" && "bg-emerald-500/20 text-emerald-200 border-emerald-500/50",
+                  !isBrightonDemo() && live?.modeLabel === "BRIGHTON REPLAY" && "bg-amber-500/20 text-amber-200 border-amber-500/50",
+                  !isBrightonDemo() && (live?.modeLabel === "API OFFLINE" || live?.modeLabel === "STALE LIVE DATA") && "bg-rose-500/20 text-rose-200 border-rose-500/50",
+                  !isBrightonDemo() && live?.modeLabel === "MOCK FALLBACK" && "bg-slate-600/40 text-slate-200 border-slate-500",
+                )}
+              >
+                {isBrightonDemo() ? "BRIGHTON REPLAY" : (live?.modeLabel ?? "LIVE API")}
               </span>
+              {!isBrightonDemo() && live?.locationView && (
+                <span className="text-xs text-slate-300">{live.locationView.label}</span>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-3 text-slate-400">
@@ -195,6 +226,19 @@ export function Layout() {
               <Bell size={16} />
               <span className="absolute -top-1 -right-1 flex h-2 w-2 rounded-full bg-cyan-500 ring-2 ring-slate-950"></span>
             </NavLink>
+            <button
+              type="button"
+              onClick={() => setHandoverReadable((v) => !v)}
+              className={clsx(
+                "text-xs px-2 py-0.5 rounded border transition-colors",
+                handoverReadable
+                  ? "border-cyan-500/50 text-cyan-300 bg-cyan-500/10"
+                  : "border-slate-700 text-slate-400 hover:text-slate-200",
+              )}
+              title="Larger text and higher contrast for projector handover"
+            >
+              Readable
+            </button>
             <NavLink to="/settings" className="hover:text-slate-200 transition-colors">
               <Settings size={16} />
             </NavLink>

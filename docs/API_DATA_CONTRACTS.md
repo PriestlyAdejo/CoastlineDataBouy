@@ -26,3 +26,50 @@ Header:
 If file binary is unavailable on backend:
 - `available=false`
 - `status=file_on_pi_not_synced`
+
+## Latest snapshot `location` object
+
+`GET /v1/nodes/ucl-buoy/snapshots/latest` includes top-level `location` derived from latest telemetry GPS:
+
+Fix example:
+```json
+{
+  "location": {
+    "lat": 50.82,
+    "lon": -0.13,
+    "source": "gnss",
+    "quality": "fix",
+    "fix_status": "3d",
+    "satellites": 9,
+    "hdop": 1.1,
+    "timestamp": "2026-06-03T12:00:00Z"
+  }
+}
+```
+
+No-fix example:
+```json
+{
+  "location": {
+    "source": "gnss",
+    "quality": "no_fix",
+    "fix_status": "no_fix",
+    "reason": "indoor_no_fix",
+    "timestamp": "2026-06-03T12:00:00Z"
+  }
+}
+```
+
+Approximate IP fallback:
+```json
+{
+  "location": {
+    "lat": 51.5,
+    "lon": -0.1,
+    "source": "ip_fallback",
+    "quality": "approximate",
+    "fix_status": "approximate",
+    "timestamp": "..."
+  }
+}
+```

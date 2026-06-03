@@ -14,6 +14,7 @@ import { PinToOverviewButton } from "../components/OverviewContext";
 import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
 import { selectChartSeries } from "../lib/replaySelectors";
+import { useLiveNode } from "../components/LiveNodeProvider";
 
 const cpuData = Array.from({ length: 60 }, (_, i) => ({
   t: `${60 - i}s`,
@@ -39,6 +40,9 @@ const processes = [
 
 export function SystemHealth() {
   const vm = useDeploymentView();
+  const live = useLiveNode();
+  const liveHealth = (live?.health ?? null) as Record<string, unknown> | null;
+  const batterySource = (liveHealth?.battery_source as string) ?? "not_available";
   const health = vm?.health;
   const tel = vm?.telemetry;
   const storage = vm?.storage;
@@ -225,8 +229,22 @@ export function SystemHealth() {
               </div>
             ))}
           </div>
-          <div className="mt-3 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-600">
-            Est. runtime on 100Wh battery: ~27 hours continuous
+          <div className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400">
+            {isBrightonDemo() ? (
+              <span>Replay power budget — illustrative only.</span>
+            ) : batterySource === "measured" ? (
+              <span>
+                Live pack voltage / SOC from serial telemetry when available.
+                {liveHealth?.pack_v != null ? ` Pack: ${liveHealth.pack_v} V.` : ""}
+                {liveHealth?.soc_pct != null ? ` SOC: ${liveHealth.soc_pct}%.` : ""}
+              </span>
+            ) : batterySource === "estimated" ? (
+              <span className="text-amber-300/90">
+                Estimated battery state, not calibrated live measurement. See docs/BATTERY_RUNTIME_AND_POWER_NOTES.md.
+              </span>
+            ) : (
+              <span>No calibrated battery sensor on Pi — do not treat dashboard SOC as measured.</span>
+            )}
           </div>
         </Card>
       </div>
