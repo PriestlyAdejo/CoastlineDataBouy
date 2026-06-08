@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-ENV_FILE="/etc/buoy/buoy.env"
-if [[ -f "$ENV_FILE" ]]; then
-  # shellcheck disable=SC1090
-  source "$ENV_FILE"
-fi
-
-DATA_DIR="${BUOY_DATA_DIR:-/mnt/ssd/buoy}"
-API_BASE="${BUOY_BACKEND_API_BASE:-http://127.0.0.1:8000/v1}"
-NODE_ID="${BUOY_NODE_ID:-ucl-buoy}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/handover_common.sh
+source "${SCRIPT_DIR}/lib/handover_common.sh"
+handover_load_env
 
 echo "time: $(date -Is)"
 echo "node_id: ${NODE_ID}"
@@ -17,6 +11,7 @@ echo "hostname: $(hostname)"
 echo "tailscale: $(tailscale status --json 2>/dev/null | jq -r '.Self.TailscaleIPs[0] // "unknown"' 2>/dev/null || echo unknown)"
 echo "backend_api_base: ${API_BASE}"
 echo "backend_health: $(curl -sS --max-time 5 "${API_BASE}/healthz" || echo failed)"
+handover_report_data_dirs
 echo "ssd_mount_ok: $(mount | grep -q "${DATA_DIR}" && echo true || echo false)"
 df -h "${DATA_DIR}" 2>/dev/null || true
 echo "serial_port_selected: ${BUOY_SERIAL_PORT:-auto}"

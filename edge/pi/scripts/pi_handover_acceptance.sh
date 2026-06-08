@@ -6,6 +6,8 @@ source "${SCRIPT_DIR}/lib/handover_common.sh"
 handover_load_env
 
 echo "========== PI HANDOVER ACCEPTANCE =========="
+handover_report_data_dirs
+handover_warn_data_dir_mismatch
 
 if handover_ping_inet; then handover_pass "internet available"; else handover_fail "internet unavailable"; fi
 
@@ -18,11 +20,12 @@ else
   handover_fail "backend unreachable (${API_BASE})"
 fi
 
-if [[ -d "${DATA_DIR}" ]] && touch "${DATA_DIR}/.accept_test" 2>/dev/null; then
-  rm -f "${DATA_DIR}/.accept_test"
-  handover_pass "SSD mounted and writable"
+if handover_dir_writable "${DATA_DIR}"; then
+  handover_pass "SSD mounted and writable at ${DATA_DIR}"
+elif handover_dir_writable "${HANDOVER_ALT_DATA_DIR}" || handover_dir_writable "${HANDOVER_ALT_MOUNT}"; then
+  handover_warn "DATA_DIR=${DATA_DIR} not writable but alternate SSD mount found. Set BUOY_DATA_DIR in /etc/buoy/buoy.env (try ${HANDOVER_ALT_DATA_DIR} or ${HANDOVER_ALT_MOUNT})."
 else
-  handover_fail "SSD not writable at ${DATA_DIR}"
+  handover_fail "SSD not writable at ${DATA_DIR} (checked preferred ${HANDOVER_PREFERRED_DATA_DIR} and alternates ${HANDOVER_ALT_DATA_DIR}, ${HANDOVER_ALT_MOUNT})"
 fi
 
 SERIAL="${DATA_DIR}/telemetry/serial_telemetry.jsonl"

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import serial
+try:
+    import serial
+except ModuleNotFoundError:
+    serial = None  # type: ignore[assignment,misc]
 
 from buoy.parsing.nmea import parse_nmea_sentence
 
@@ -17,6 +20,8 @@ def _candidate_ports() -> list[str]:
 
 def detect_gnss_port(explicit_port: str | None, baud: int, timeout_s: float = 1.0) -> str:
     """Detect GNSS port by receiving parseable NMEA lines."""
+    if serial is None:
+        raise RuntimeError("pyserial not installed")
     ports = [explicit_port] if explicit_port else []
     ports.extend([p for p in _candidate_ports() if p not in ports])
     for port in ports:

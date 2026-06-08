@@ -5,11 +5,14 @@ import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
+from typing import Any
 
-import serial
+try:
+    import serial
+except ModuleNotFoundError:
+    serial = None  # type: ignore[assignment,misc]
 
 from buoy.config import load_settings
-from buoy.hardware.gnss_detect import detect_gnss_port
 from buoy.index.sqlite_index import add_artifact, init_db, open_db
 from buoy.logging import setup_logging
 from buoy.parsing.nmea import parse_nmea_sentence
@@ -123,18 +126,34 @@ def main() -> None:
     con = open_db(settings.paths.data_dir / "index" / "buoy.sqlite")
     init_db(con)
 
-    port: str | None = None
-    if settings.gnss.auto_detect:
-        port = detect_gnss_port(
-            settings.gnss.port, settings.gnss.baud, settings.gnss.read_timeout_s
-        )
-    else:
-        port = settings.gnss.port
-
     last_heartbeat = 0.0
     last_state: str = "unknown"
     heartbeat_s = max(1, settings.gnss.location_heartbeat_interval_s)
     read_interval_s = max(1, settings.gnss.interval_s)
+
+    if serial is None:
+        logger.error("gnss_pyserial_missing install pyserial on the Pi")
+        while True:
+            now = time.time()
+            if now - last_heartbeat >= heartbeat_s:
+                payload = _no_fix_payload(settings, reason="no_pyserial")
+                _persist(settings, con, telemetry_path, payload, logger)
+                last_heartbeat = now
+            time.sleep(read_interval_s)
+        return
+
+    from buoy.hardware.gnss_detect import detect_gnss_port
+
+    port: str | None = None
+    if settings.gnss.auto_detect:
+        try:
+            port = detect_gnss_port(
+                settings.gnss.port, settings.gnss.baud, settings.gnss.read_timeout_s
+            )
+        except RuntimeError:
+            port = None
+    else:
+        port = settings.gnss.port
 
     if not port:
         logger.warning("gnss_no_device port_not_found")
@@ -158,12 +177,12 @@ def main() -> None:
         return
 
     logger.info("gnss_port_selected=%s baud=%s", port, settings.gnss.baud)
-    ser: serial.Serial | None = None
+    ser: Any = None
     try:
         ser = serial.Serial(
             port=port, baudrate=settings.gnss.baud, timeout=settings.gnss.read_timeout_s
         )
-    except serial.SerialException as exc:
+    except serial.SerialException as exc:  # type: ignore[union-attr]
         logger.error("gnss_open_failed port=%s err=%s", port, exc)
         while True:
             now = time.time()

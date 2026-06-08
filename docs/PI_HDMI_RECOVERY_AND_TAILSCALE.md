@@ -5,7 +5,7 @@ Use when the Pi is not reachable over Tailscale (4G/Wi-Fi/Tailscale issues).
 ## HDMI console kit
 
 - micro-HDMI cable/adapter, monitor, USB keyboard
-- Pi power supply, SSD mounted at `/mnt/ssd/buoy`
+- Pi power supply, SSD mounted at `/mnt/ssd/buoy` (preferred) or `/mnt/harddrive` / `/mnt/harddrive/buoy` — set `BUOY_DATA_DIR` in `/etc/buoy/buoy.env` to match
 
 ## Quick recovery steps
 

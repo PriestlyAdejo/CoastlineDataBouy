@@ -26,10 +26,12 @@ tailscale status
 tailscale ip -4
 curl http://100.97.101.91:8000/v1/healthz
 edge/pi/scripts/pi_handover_acceptance.sh
-ls -lh /mnt/ssd/buoy/raw/audio
-ls -lh /mnt/ssd/buoy/raw/audio_meta
-tail -n 5 /mnt/ssd/buoy/telemetry/gnss.jsonl
-tail -n 5 /mnt/ssd/buoy/telemetry/health.jsonl
+# Preferred SSD path is /mnt/ssd/buoy; this Pi may use /mnt/harddrive or /mnt/harddrive/buoy — set BUOY_DATA_DIR in /etc/buoy/buoy.env
+DATA="${BUOY_DATA_DIR:-/mnt/ssd/buoy}"
+ls -lh "${DATA}/raw/audio"
+ls -lh "${DATA}/raw/audio_meta"
+tail -n 5 "${DATA}/telemetry/gnss.jsonl"
+tail -n 5 "${DATA}/telemetry/health.jsonl"
 sudo journalctl -u buoy-uploader -n 100 --no-pager
 ```
 

@@ -14,22 +14,22 @@ if not exist "%REPO_ROOT%\apps\api\pyproject.toml" (
   exit /b 1
 )
 
+set "IN_BUOY_DEV=0"
+if /i "%CONDA_DEFAULT_ENV%"=="buoy-dev" set "IN_BUOY_DEV=1"
+if "%IN_BUOY_DEV%"=="0" (
+  where python 2>nul | findstr /i "envs\\buoy-dev" >nul 2>nul
+  if not errorlevel 1 set "IN_BUOY_DEV=1"
+)
+if "%IN_BUOY_DEV%"=="0" (
+  echo WARNING: Active Python does not appear to be from buoy-dev.
+  echo Activate buoy-dev first: conda activate buoy-dev
+  echo.
+)
+
 where docker >nul 2>nul
 if errorlevel 1 (
   echo ERROR: docker not found on PATH.
   exit /b 2
-)
-
-where conda >nul 2>nul
-if errorlevel 1 (
-  echo ERROR: conda not found. Open Anaconda Prompt or add Conda to PATH.
-  exit /b 3
-)
-
-conda env list | findstr "buoy-dev" >nul 2>nul
-if errorlevel 1 (
-  echo ERROR: Conda env "buoy-dev" not found. Run scripts\setup_env_windows.bat first.
-  exit /b 4
 )
 
 echo Bringing up backend infrastructure containers...
@@ -39,9 +39,15 @@ if errorlevel 1 (
   exit /b 5
 )
 
+echo.
+echo Python environment:
+where python
+python --version
+echo.
+
 echo Running API migrations...
 cd /d "%REPO_ROOT%\apps\api"
-call conda run -n buoy-dev python -m alembic -c alembic.ini upgrade head
+python -m alembic -c alembic.ini upgrade head
 if errorlevel 1 (
   echo ERROR: migration failed.
   exit /b 6
@@ -67,4 +73,4 @@ echo.
 echo If the Pi cannot reach this API over Tailscale, allow Python/Uvicorn through Windows Firewall on private/Tailscale networks.
 echo.
 
-call conda run -n buoy-dev python -m uvicorn nereus_api.main:app --reload --host %HOST% --port %PORT%
+python -m uvicorn nereus_api.main:app --reload --host %HOST% --port %PORT%

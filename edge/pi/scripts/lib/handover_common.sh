@@ -5,6 +5,73 @@ HANDOVER_PASS=0
 HANDOVER_WARN=0
 HANDOVER_FAIL=0
 
+HANDOVER_PREFERRED_DATA_DIR="/mnt/ssd/buoy"
+HANDOVER_ALT_DATA_DIR="/mnt/harddrive/buoy"
+HANDOVER_ALT_MOUNT="/mnt/harddrive"
+
+handover_dir_writable() {
+  local dir="$1"
+  [[ -n "$dir" && -d "$dir" ]] || return 1
+  touch "${dir}/.handover_write_test" 2>/dev/null || return 1
+  rm -f "${dir}/.handover_write_test"
+}
+
+handover_resolve_data_dir() {
+  if [[ -n "${BUOY_DATA_DIR:-}" ]]; then
+    printf '%s' "$BUOY_DATA_DIR"
+    return
+  fi
+  if handover_dir_writable "$HANDOVER_PREFERRED_DATA_DIR"; then
+    printf '%s' "$HANDOVER_PREFERRED_DATA_DIR"
+    return
+  fi
+  if handover_dir_writable "$HANDOVER_ALT_DATA_DIR"; then
+    printf '%s' "$HANDOVER_ALT_DATA_DIR"
+    return
+  fi
+  if handover_dir_writable "$HANDOVER_ALT_MOUNT"; then
+    printf '%s' "$HANDOVER_ALT_MOUNT"
+    return
+  fi
+  printf '%s' "$HANDOVER_PREFERRED_DATA_DIR"
+}
+
+handover_data_dir_probe() {
+  local dir="$1"
+  if handover_dir_writable "$dir"; then
+    echo "writable"
+  elif [[ -d "$dir" ]]; then
+    echo "present_not_writable"
+  elif [[ -e "$dir" ]]; then
+    echo "exists_not_dir"
+  else
+    echo "missing"
+  fi
+}
+
+handover_report_data_dirs() {
+  echo "data_dir_active: ${DATA_DIR}"
+  echo "data_dir_preferred (${HANDOVER_PREFERRED_DATA_DIR}): $(handover_data_dir_probe "$HANDOVER_PREFERRED_DATA_DIR")"
+  echo "data_dir_alt (${HANDOVER_ALT_DATA_DIR}): $(handover_data_dir_probe "$HANDOVER_ALT_DATA_DIR")"
+  echo "data_dir_alt_mount (${HANDOVER_ALT_MOUNT}): $(handover_data_dir_probe "$HANDOVER_ALT_MOUNT")"
+  if [[ -n "${BUOY_DATA_DIR:-}" ]]; then
+    echo "buoy_data_dir_env: ${BUOY_DATA_DIR}"
+  else
+    echo "buoy_data_dir_env: (unset — auto-detect used)"
+  fi
+}
+
+handover_warn_data_dir_mismatch() {
+  if [[ "$DATA_DIR" == "$HANDOVER_PREFERRED_DATA_DIR" ]]; then
+    return
+  fi
+  if [[ -n "${BUOY_DATA_DIR:-}" ]]; then
+    handover_warn "BUOY_DATA_DIR=${BUOY_DATA_DIR} differs from preferred ${HANDOVER_PREFERRED_DATA_DIR}. OK if the Pi SSD is mounted elsewhere; ensure services use the same path."
+    return
+  fi
+  handover_warn "Using ${DATA_DIR} because ${HANDOVER_PREFERRED_DATA_DIR} is unavailable. Set BUOY_DATA_DIR in /etc/buoy/buoy.env (e.g. ${HANDOVER_ALT_DATA_DIR} or ${HANDOVER_ALT_MOUNT})."
+}
+
 handover_load_env() {
   ENV_FILE="${ENV_FILE:-/etc/buoy/buoy.env}"
   if [[ -f "$ENV_FILE" ]]; then
@@ -13,7 +80,7 @@ handover_load_env() {
     source "$ENV_FILE"
     set +a
   fi
-  export DATA_DIR="${BUOY_DATA_DIR:-/mnt/ssd/buoy}"
+  export DATA_DIR="$(handover_resolve_data_dir)"
   export API_BASE="${BUOY_BACKEND_API_BASE:-http://127.0.0.1:8000/v1}"
   export NODE_ID="${BUOY_NODE_ID:-ucl-buoy}"
   export EXPECTED_PI_TS_IP="${EXPECTED_PI_TS_IP:-100.89.114.62}"

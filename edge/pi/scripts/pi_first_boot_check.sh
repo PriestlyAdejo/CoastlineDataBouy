@@ -6,6 +6,7 @@ source "${SCRIPT_DIR}/lib/handover_common.sh"
 handover_load_env
 
 echo "========== PI FIRST BOOT CHECK =========="
+handover_report_data_dirs
 echo "date/time: $(date -Is)"
 echo "hostname: $(hostname)"
 echo "user: $(whoami)"
@@ -30,11 +31,15 @@ if mount | grep -q "${DATA_DIR}"; then
   echo "ssd_mount: ok (${DATA_DIR})"
 else
   echo "ssd_mount: not mounted (${DATA_DIR})"
+  if mount | grep -q "${HANDOVER_ALT_MOUNT}"; then
+    echo "ssd_mount_note: alternate mount ${HANDOVER_ALT_MOUNT} detected — set BUOY_DATA_DIR if services use a different path"
+  fi
 fi
 
-if [[ -d "${DATA_DIR}" ]] && touch "${DATA_DIR}/.write_test" 2>/dev/null; then
-  rm -f "${DATA_DIR}/.write_test"
-  echo "ssd_writable: yes"
+if handover_dir_writable "${DATA_DIR}"; then
+  echo "ssd_writable: yes (${DATA_DIR})"
+elif handover_dir_writable "${HANDOVER_ALT_DATA_DIR}" || handover_dir_writable "${HANDOVER_ALT_MOUNT}"; then
+  echo "ssd_writable: alternate path available (preferred ${HANDOVER_PREFERRED_DATA_DIR} missing); set BUOY_DATA_DIR"
 else
   echo "ssd_writable: no"
 fi

@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import csv
 import io
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
@@ -257,14 +258,23 @@ def _csv_from_dicts(rows: list[dict], include_fields: list[str]) -> str:
     return buf.getvalue()
 
 
+def _file_availability(path: str | None) -> tuple[bool, str, str | None]:
+    if not path:
+        return False, "metadata_only", "metadata_only"
+    if Path(path).is_file():
+        return True, "available", None
+    return False, "file_on_pi_not_synced", "file_on_pi_not_synced"
+
+
 @router.get("/files", summary="List handover file metadata")
 def list_files():
     with session_scope() as session:
         acoustics = _latest_rows(session, AcousticMetaSnapshot, limit=200)
     out: list[dict] = []
     for idx, row in enumerate(acoustics, start=1):
-        path = row.get("path") or row.get("file_path") or ""
-        available = bool(path and str(path).startswith("/"))
+        path_raw = row.get("path") or row.get("file_path") or ""
+        path = str(path_raw).strip() if path_raw else ""
+        available, status, reason = _file_availability(path or None)
         out.append(
             {
                 "file_id": f"acoustic-{idx}",
@@ -274,8 +284,8 @@ def list_files():
                 "size_bytes": row.get("size_bytes"),
                 "timestamp": row.get("ts") or row.get("ts_end") or row.get("ts_start"),
                 "available": available,
-                "status": "available" if available else "file_on_pi_not_synced",
-                "reason": None if available else "file_on_pi_not_synced",
+                "status": status,
+                "reason": reason,
                 "path": path or None,
                 "payload": row,
             }
@@ -296,7 +306,7 @@ def get_file(file_id: str):
 def download_file(file_id: str):
     item = get_file(file_id)
     if not item.get("available") or not item.get("path"):
-        raise HTTPException(status_code=409, detail="file_on_pi_not_synced")
+        raise HTTPException(status_code=409, detail=item.get("reason") or item.get("status"))
     return FileResponse(item["path"], filename=item["filename"])
 
 
