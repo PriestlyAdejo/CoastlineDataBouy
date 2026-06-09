@@ -33,7 +33,9 @@ export function getStorageMountOk(snap: LatestSnapshots | null): boolean | null 
 }
 
 export function getWaterTempC(snap: LatestSnapshots | null): number | null {
-  return num(asRecord(snap?.env)?.water_temp_c);
+  const env = asRecord(snap?.env);
+  if (env?.status === "no_live_environment_sensor") return null;
+  return num(env?.water_temp_c);
 }
 
 export function getBatteryPackV(snap: LatestSnapshots | null): number | null {
@@ -53,6 +55,12 @@ export function getDisplayMetrics(snap: LatestSnapshots | null): Record<string, 
 
 export function getLeqDb(snap: LatestSnapshots | null): number | null {
   return num(getDisplayMetrics(snap)?.leq_db);
+}
+
+export function getWaveHsM(snap: LatestSnapshots | null): number | null {
+  const wave = asRecord(snap?.wave_stats);
+  if (wave?.status === "no_live_wave_sensor") return null;
+  return num(wave?.hs_m);
 }
 
 export function getPeakDb(snap: LatestSnapshots | null): number | null {

@@ -3,17 +3,20 @@ import { clsx } from "clsx";
 import { useLiveNode } from "../LiveNodeProvider";
 import { isBrightonDemo } from "../../lib/demoMode";
 import {
-  Radio, BarChart3, Waves, Activity, Layers, AudioLines, Clock, HardDrive,
+  Radio, BarChart3, Waves, Activity, Layers, AudioLines, Clock,
 } from "lucide-react";
 
-const hydrophoneTabs = [
+const primaryTabs = [
   { name: "Summary", path: "/hydrophone", icon: Radio, end: true },
-  { name: "Daily Events", path: "/hydrophone/daily-events", icon: BarChart3 },
-  { name: "Acoustic Events", path: "/hydrophone/acoustic-events", icon: Waves },
-  { name: "Soundscape", path: "/hydrophone/soundscape", icon: Layers },
-  { name: "Spectral Density", path: "/hydrophone/spectral", icon: Activity },
-  { name: "Sound Levels", path: "/hydrophone/levels", icon: AudioLines },
-  { name: "Recording Effort", path: "/hydrophone/effort", icon: Clock },
+];
+
+const futureTabs = [
+  { name: "Daily Events", path: "/hydrophone/daily-events", icon: BarChart3, suffix: "placeholder" },
+  { name: "Acoustic Events", path: "/hydrophone/acoustic-events", icon: Waves, suffix: "placeholder" },
+  { name: "Soundscape", path: "/hydrophone/soundscape", icon: Layers, suffix: "placeholder" },
+  { name: "Spectral Density", path: "/hydrophone/spectral", icon: Activity, suffix: "placeholder" },
+  { name: "Sound Levels", path: "/hydrophone/levels", icon: AudioLines, suffix: "placeholder" },
+  { name: "Recording Effort", path: "/hydrophone/effort", icon: Clock, suffix: "placeholder" },
 ];
 
 function acousticsRecent(acoustics: unknown): boolean {
@@ -25,45 +28,61 @@ function acousticsRecent(acoustics: unknown): boolean {
   return Number.isFinite(ms) && Date.now() - ms < 5 * 60 * 1000;
 }
 
+function ssdMounted(health: unknown): boolean {
+  if (!health || typeof health !== "object") return false;
+  const storage = (health as Record<string, unknown>).storage;
+  if (!storage || typeof storage !== "object") return false;
+  return (storage as Record<string, unknown>).mount_ok === true;
+}
+
 export function HydrophoneLayout() {
   const live = useLiveNode();
-  const showSsdBanner = !isBrightonDemo() && acousticsRecent(live?.acoustics);
+  const brighton = isBrightonDemo();
+  const recording = !brighton && (acousticsRecent(live?.acoustics) || ssdMounted(live?.health));
+  const tabs = brighton ? [...primaryTabs, ...futureTabs.map(({ suffix: _, ...t }) => t)] : primaryTabs;
+  const showFutureGroup = !brighton;
 
   return (
     <div className="flex flex-col gap-6">
-      {showSsdBanner && (
-        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-200">
+      {!brighton && acousticsRecent(live?.acoustics) && (
+        <div className="rounded-lg border px-4 py-2 text-sm" style={{ borderColor: "var(--dash-success)", backgroundColor: "var(--dash-success-bg)", color: "var(--dash-success)" }}>
           Audio is being recorded locally to SSD (metadata synced to backend). SPL metrics are uncalibrated unless calibrated.
         </div>
       )}
-      {/* Section header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Acoustic Analysis</h1>
-          <p className="text-slate-500 text-sm mt-1">Coastal hydrophone monitoring & acoustic analytics suite</p>
+          <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Hydrophone recording and file metadata</h1>
+          <p className="dash-text-secondary text-sm mt-1">
+            Local SSD WAV chunks · backend metadata sync · uncalibrated acoustic levels
+          </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-widest border text-emerald-400 bg-emerald-500/10 border-emerald-500/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            Recording
+          <span
+            className={clsx(
+              "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-widest border",
+              recording ? "text-[var(--dash-success)] border-[var(--dash-success)]" : "dash-text-faint",
+            )}
+            style={recording ? { backgroundColor: "var(--dash-success-bg)" } : { borderColor: "var(--dash-panel-border)" }}
+          >
+            {recording && <span className="h-1.5 w-1.5 rounded-full bg-[var(--dash-success)] animate-pulse" />}
+            {recording ? "Recording" : "Idle / awaiting chunk"}
           </span>
-          <span className="text-xs font-mono text-slate-400">Uncalibrated · local SSD WAV chunks</span>
+          <span className="text-xs font-mono dash-text-faint">Uncalibrated · local SSD WAV chunks</span>
         </div>
       </div>
 
-      {/* Sub-navigation tabs */}
-      <div className="flex gap-1 border-b border-slate-800 -mb-2 overflow-x-auto">
-        {hydrophoneTabs.map((tab) => (
+      <div className="flex gap-1 border-b -mb-2 overflow-x-auto" style={{ borderColor: "var(--dash-panel-border)" }}>
+        {tabs.map((tab) => (
           <NavLink
             key={tab.name}
             to={tab.path}
-            end={tab.end}
+            end={"end" in tab ? tab.end : undefined}
             className={({ isActive }) =>
               clsx(
                 "flex items-center gap-1.5 px-3 py-2 text-xs font-medium whitespace-nowrap border-b-2 transition-colors -mb-px",
                 isActive
-                  ? "border-cyan-400 text-cyan-400"
-                  : "border-transparent text-slate-500 hover:text-slate-300 hover:border-slate-600"
+                  ? "border-[var(--dash-accent)] text-[var(--dash-accent)]"
+                  : "border-transparent dash-text-faint hover:dash-text-primary",
               )
             }
           >
@@ -71,9 +90,27 @@ export function HydrophoneLayout() {
             {tab.name}
           </NavLink>
         ))}
+        {showFutureGroup &&
+          futureTabs.map((tab) => (
+            <NavLink
+              key={tab.name}
+              to={tab.path}
+              className={({ isActive }) =>
+                clsx(
+                  "flex items-center gap-1.5 px-3 py-2 text-xs font-medium whitespace-nowrap border-b-2 transition-colors -mb-px opacity-80",
+                  isActive
+                    ? "border-[var(--dash-warning)] text-[var(--dash-warning)]"
+                    : "border-transparent dash-text-faint",
+                )
+              }
+            >
+              <tab.icon size={13} />
+              {tab.name}
+              <span className="text-[9px] uppercase">(future)</span>
+            </NavLink>
+          ))}
       </div>
 
-      {/* Page content */}
       <Outlet />
     </div>
   );

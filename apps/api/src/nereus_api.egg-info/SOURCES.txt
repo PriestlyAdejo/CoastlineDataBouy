@@ -13,4 +13,9 @@ src/nereus_api.egg-info/SOURCES.txt
 src/nereus_api.egg-info/dependency_links.txt
 src/nereus_api.egg-info/requires.txt
 src/nereus_api.egg-info/top_level.txt
+tests/test_brighton_seed_engine.py
+tests/test_files_exports_smoke.py
 tests/test_healthz.py
+tests/test_ingest_roundtrip.py
+tests/test_live_handover_snapshot.py
+tests/test_location_snapshot.py

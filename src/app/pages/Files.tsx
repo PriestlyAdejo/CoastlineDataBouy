@@ -6,7 +6,7 @@ import {
 import { clsx } from "clsx";
 import { useState, useMemo, useEffect } from "react";
 import { storageLabel } from "../lib/deploymentDisplay";
-import { getPageNodeSubtitle, getDemoMode } from "../lib/demoMode";
+import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
 import { createApiClient, type FileItem } from "../api/client";
 import { useLiveNode } from "../components/LiveNodeProvider";
@@ -71,7 +71,8 @@ export function Files() {
         provenance: f.source,
       }));
     }
-    if (!getDemoMode() || !vm) return clydeFiles;
+    if (!isBrightonDemo()) return [];
+    if (!vm) return clydeFiles;
     return vm.files.map((f) => ({
       name: f.name,
       size: f.size,
@@ -82,7 +83,7 @@ export function Files() {
       provenance: f.provenance,
       records: f.uploadStatus,
     }));
-  }, [vm, vm?.replayTimeMs]);
+  }, [apiFiles, vm, vm?.replayTimeMs]);
 
   const [category, setCategory] = useState<FileCategory>("all");
   const [search, setSearch] = useState("");
@@ -136,6 +137,11 @@ export function Files() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card title={`Indexed Files (${filtered.length})`} className="lg:col-span-2">
           <div className="space-y-1 mt-2 max-h-[480px] overflow-y-auto">
+            {filtered.length === 0 && (
+              <p className="text-sm dash-text-secondary py-8 text-center">
+                {isBrightonDemo() ? "No files indexed yet." : "No files indexed yet. Hydrophone metadata will appear here after Pi upload."}
+              </p>
+            )}
             {filtered.map(file => {
               const cfg = categoryConfig[file.category];
               const Icon = cfg.icon;

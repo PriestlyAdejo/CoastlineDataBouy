@@ -125,7 +125,10 @@ export function Layout() {
   const isFullScreen = isDashboard || location.pathname === "/map";
   const [handoverReadable, setHandoverReadable] = useState(() => {
     if (typeof window === "undefined") return false;
-    return window.localStorage.getItem(HANDOVER_READABLE_KEY) === "1";
+    return (
+      window.localStorage.getItem("nereus.handover") === "1" ||
+      window.localStorage.getItem(HANDOVER_READABLE_KEY) === "1"
+    );
   });
 
   useEffect(() => {
@@ -144,11 +147,25 @@ export function Layout() {
     ? (vm?.display.testTimeBst ?? "1 May 2026")
     : "17 Mar 2026 14:32 GMT";
 
+  const modeBadgeStyle = isBrightonDemo()
+    ? { backgroundColor: "var(--dash-badge-replay-bg)", color: "var(--dash-badge-replay-text)", borderColor: "var(--dash-warning)" }
+    : live?.modeLabel === "LIVE API"
+      ? { backgroundColor: "var(--dash-badge-live-bg)", color: "var(--dash-badge-live-text)", borderColor: "var(--dash-success)" }
+      : live?.modeLabel === "API OFFLINE" || live?.modeLabel === "STALE LIVE DATA"
+        ? { backgroundColor: "var(--dash-badge-offline-bg)", color: "var(--dash-badge-offline-text)", borderColor: "var(--dash-error)" }
+        : { backgroundColor: "var(--dash-badge-neutral-bg)", color: "var(--dash-badge-neutral-text)", borderColor: "var(--dash-panel-border)" };
+
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30">
+    <div
+      className="dash-shell flex h-screen font-sans selection:bg-cyan-500/30 dash-text-secondary"
+      style={{ backgroundColor: "var(--dash-bg)", color: "var(--dash-text-secondary)" }}
+    >
       {/* Sidebar */}
-      <aside className="w-60 flex flex-col border-r border-slate-800 bg-slate-900/50 backdrop-blur-sm shrink-0">
-        <div className="flex h-14 shrink-0 items-center gap-2.5 px-4 border-b border-slate-800">
+      <aside
+        className="w-60 flex flex-col border-r shrink-0 dash-sidebar-bg"
+        style={{ backgroundColor: "var(--dash-sidebar-bg)", borderColor: "var(--dash-panel-border)" }}
+      >
+        <div className="flex h-14 shrink-0 items-center gap-2.5 px-4 border-b" style={{ borderColor: "var(--dash-panel-border)" }}>
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
             <Radio size={15} />
           </div>
@@ -165,7 +182,7 @@ export function Layout() {
         </nav>
 
         {/* System status footer */}
-        <div className="p-3 border-t border-slate-800 space-y-2">
+        <div className="p-3 border-t space-y-2" style={{ borderColor: "var(--dash-panel-border)" }}>
           <div className="flex items-center gap-2.5">
             <div className="relative">
               <div className="h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
@@ -194,7 +211,10 @@ export function Layout() {
 
       {/* Main Content */}
       <main className="flex min-h-0 min-w-0 flex-1 flex-col">
-        <header className="flex h-12 shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900/30 px-6 backdrop-blur-sm">
+        <header
+          className="flex h-12 shrink-0 items-center justify-between border-b px-6"
+          style={{ backgroundColor: "var(--dash-header-bg)", borderColor: "var(--dash-panel-border)" }}
+        >
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-slate-500">Active Node:</span>
             <div className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
@@ -204,14 +224,8 @@ export function Layout() {
             {isBrightonDemo() && <DataQualityIndicator />}
             <div className="flex items-center gap-2 ml-2">
               <span
-                className={clsx(
-                  "px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide border",
-                  isBrightonDemo() && "bg-amber-500/20 text-amber-200 border-amber-500/50",
-                  !isBrightonDemo() && live?.modeLabel === "LIVE API" && "bg-emerald-500/20 text-emerald-200 border-emerald-500/50",
-                  !isBrightonDemo() && live?.modeLabel === "BRIGHTON REPLAY" && "bg-amber-500/20 text-amber-200 border-amber-500/50",
-                  !isBrightonDemo() && (live?.modeLabel === "API OFFLINE" || live?.modeLabel === "STALE LIVE DATA") && "bg-rose-500/20 text-rose-200 border-rose-500/50",
-                  !isBrightonDemo() && live?.modeLabel === "MOCK FALLBACK" && "bg-slate-600/40 text-slate-200 border-slate-500",
-                )}
+                className="px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide border"
+                style={modeBadgeStyle}
               >
                 {isBrightonDemo() ? "BRIGHTON REPLAY" : (live?.modeLabel ?? "LIVE API")}
               </span>

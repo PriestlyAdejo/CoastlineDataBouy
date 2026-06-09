@@ -35,6 +35,8 @@ export type FileItem = {
   available: boolean;
   status: string;
   reason?: string | null;
+  path?: string | null;
+  payload?: unknown;
 };
 
 async function httpGet<T>(url: string): Promise<T> {

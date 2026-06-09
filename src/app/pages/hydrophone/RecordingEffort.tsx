@@ -6,10 +6,13 @@ import { useState, useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, ReferenceLine, Cell } from "recharts";
 import { Clock, HardDrive, AlertTriangle, CheckCircle, Download } from "lucide-react";
 import { clsx } from "clsx";
+import { isBrightonDemo } from "../../lib/demoMode";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const data = generateRecordingEffortData(60);
 
 export function RecordingEffort() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Recording effort" />;
   const [threshold, setThreshold] = useState("80");
   const [showThreshold, setShowThreshold] = useState(true);
   const [period, setPeriod] = useState("60");

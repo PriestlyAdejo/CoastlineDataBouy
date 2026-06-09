@@ -1,0 +1,120 @@
+/* Explicit dashboard theme — OS/browser colour scheme independent */
+html,
+body,
+#root {
+  background-color: var(--dash-bg, #020617);
+  color: var(--dash-text-secondary, #cbd5e1);
+}
+
+:root {
+  --dash-bg: #020617;
+  --dash-sidebar-bg: #0f172a;
+  --dash-header-bg: #0f172a;
+  --dash-panel-bg: #1e293b;
+  --dash-panel-border: #475569;
+  --dash-text-primary: #f1f5f9;
+  --dash-text-secondary: #cbd5e1;
+  --dash-text-faint: #94a3b8;
+  --dash-success: #34d399;
+  --dash-success-bg: #064e3b;
+  --dash-warning: #fbbf24;
+  --dash-warning-bg: #78350f;
+  --dash-error: #fb7185;
+  --dash-error-bg: #881337;
+  --dash-accent: #22d3ee;
+  --dash-accent-bg: #164e63;
+  --dash-chart-grid: #334155;
+  --dash-chart-axis: #64748b;
+  --dash-chart-label: #cbd5e1;
+  --dash-chart-tooltip-bg: #1e293b;
+  --dash-chart-tooltip-border: #475569;
+  --dash-badge-live-bg: #065f46;
+  --dash-badge-live-text: #a7f3d0;
+  --dash-badge-replay-bg: #78350f;
+  --dash-badge-replay-text: #fde68a;
+  --dash-badge-offline-bg: #881337;
+  --dash-badge-offline-text: #fecdd3;
+  --dash-badge-neutral-bg: #334155;
+  --dash-badge-neutral-text: #e2e8f0;
+}
+
+/* Projector / handover readable — high contrast, opaque surfaces */
+html.handover-readable {
+  font-size: 17px;
+  --dash-panel-bg: #1e293b;
+  --dash-panel-border: #94a3b8;
+  --dash-text-secondary: #e2e8f0;
+  --dash-text-faint: #cbd5e1;
+  --dash-chart-axis: #94a3b8;
+  --dash-chart-label: #f1f5f9;
+  --dash-badge-live-bg: #047857;
+  --dash-badge-live-text: #ecfdf5;
+  --dash-badge-replay-bg: #b45309;
+  --dash-badge-replay-text: #fffbeb;
+  --dash-badge-offline-bg: #be123c;
+  --dash-badge-offline-text: #fff1f2;
+}
+
+html.handover-readable .text-\[10px\] {
+  font-size: 0.8rem !important;
+}
+
+html.handover-readable .text-xs {
+  font-size: 0.875rem !important;
+}
+
+/* Token utility classes */
+.dash-bg {
+  background-color: var(--dash-bg);
+}
+.dash-sidebar-bg {
+  background-color: var(--dash-sidebar-bg);
+}
+.dash-panel-bg {
+  background-color: var(--dash-panel-bg);
+}
+.dash-text-primary {
+  color: var(--dash-text-primary);
+}
+.dash-text-secondary {
+  color: var(--dash-text-secondary);
+}
+.dash-text-faint {
+  color: var(--dash-text-faint);
+}
+.dash-border {
+  border-color: var(--dash-panel-border);
+}
+
+/* Override low-contrast slate utilities inside dashboard shell */
+.dash-shell .text-slate-500,
+.dash-shell .text-slate-600 {
+  color: var(--dash-text-faint);
+}
+.dash-shell .text-slate-400 {
+  color: var(--dash-text-secondary);
+}
+.dash-shell .text-slate-300 {
+  color: var(--dash-text-primary);
+}
+.dash-shell .text-slate-100 {
+  color: var(--dash-text-primary);
+}
+
+html.handover-readable .dash-shell .text-slate-500,
+html.handover-readable .dash-shell .text-slate-600,
+html.handover-readable .dash-shell .text-slate-400 {
+  color: var(--dash-text-secondary) !important;
+}
+
+html.handover-readable .border-slate-800,
+html.handover-readable .border-slate-700 {
+  border-color: var(--dash-panel-border) !important;
+}
+
+html.handover-readable .bg-slate-900\/40,
+html.handover-readable .bg-slate-900\/30,
+html.handover-readable .bg-slate-900\/50 {
+  background-color: var(--dash-panel-bg) !important;
+  backdrop-filter: none !important;
+}

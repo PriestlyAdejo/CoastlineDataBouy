@@ -3,6 +3,8 @@ import { generateHourlySpectrogramData } from "../../components/hydrophone/share
 import { SettingsRail, SettingsGroup, SettingsToggle, SettingsSelect } from "../../components/hydrophone/SettingsRail";
 import { useState, useMemo, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Download } from "lucide-react";
+import { isBrightonDemo } from "../../lib/demoMode";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const spectrogramData = generateHourlySpectrogramData();
 
@@ -27,6 +29,7 @@ function intensityToColor(val: number, min: number, max: number): string {
 const freqLabels = ["24k", "20k", "16k", "12k", "10k", "8k", "6k", "4k", "3k", "2k", "1.5k", "1k", "800", "600", "400", "300", "200", "150", "100", "80", "60", "50", "40", "30", "25", "20", "16", "12", "10", "8", "6", "4"];
 
 export function DailySoundscape() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Daily soundscape" />;
   const [dayOffset, setDayOffset] = useState(0);
   const [colorMap, setColorMap] = useState("viridis");
   const [showEvents, setShowEvents] = useState(true);

@@ -4,6 +4,8 @@ import { SettingsRail, SettingsGroup, SettingsToggle, SettingsSelect } from "../
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, ReferenceArea } from "recharts";
 import { Download } from "lucide-react";
+import { isBrightonDemo } from "../../lib/demoMode";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const data = generateSoundLevelData(30);
 
@@ -16,6 +18,7 @@ const bandColors: Record<string, string> = {
 };
 
 export function SoundLevels() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Sound levels by band" />;
   const [enabledBands, setEnabledBands] = useState<Record<string, boolean>>({
     vlf: true, lf: true, mf: true, hf: false, broadband: true,
   });

@@ -48,17 +48,28 @@ const clydeMapNodes: MapNode[] = [
   { id: "BY-03-D", displayName: "BY-03-D", pos: [55.72, -5.30], status: "Active", main: false, depth: "29.2m", battery: "78%", temp: "14.5°C", satellites: 9, hdop: 0.7, drift: "<0.3m/24h", anchor: "Deployed", lastSync: "8s ago" },
 ];
 
-function getMapNodes(): MapNode[] {
+function getMapNodes(live?: { locationView?: { kind?: string; location?: { satellites?: number; hdop?: number } } }): MapNode[] {
   const base = getDashboardNodes();
   if (shouldShowClydeOverlays()) {
     return clydeMapNodes;
   }
+  if (isBrightonDemo()) {
+    return base.map((n) => ({
+      ...n,
+      satellites: 8,
+      hdop: 0.9,
+      drift: "<0.5m/24h",
+      anchor: "Deployed",
+      lastSync: "live",
+    }));
+  }
+  const loc = live?.locationView;
   return base.map((n) => ({
     ...n,
-    satellites: 8,
-    hdop: 0.9,
-    drift: "<0.5m/24h",
-    anchor: "Deployed",
+    satellites: loc?.location?.satellites,
+    hdop: loc?.location?.hdop,
+    drift: "—",
+    anchor: loc?.kind === "approximate_ip_fallback" ? "Approximate IP fallback" : loc?.kind === "live_gnss_fix" ? "GNSS fix" : "No fix",
     lastSync: "live",
   }));
 }
@@ -178,25 +189,40 @@ export function LocationMap() {
     driftM24h: null,
     uncertaintyRadiusM: null,
   } : replay?.getLocationMetrics());
-  const wave = vm?.wave ?? replay?.getWaveMetrics();
-  const env = vm?.environment ?? replay?.getEnvironmentMetrics();
+  const wave = isBrightonDemo() ? (vm?.wave ?? replay?.getWaveMetrics()) : null;
+  const env = isBrightonDemo() ? (vm?.environment ?? replay?.getEnvironmentMetrics()) : null;
   const nodes = useMemo(() => {
-    const base = getMapNodes();
-    if (!isBrightonDemo() || locMetrics?.lat == null || locMetrics.lon == null) return base;
-    return base.map((n) =>
-      n.id === "ucl-buoy"
-        ? {
-            ...n,
-            pos: [locMetrics.lat!, locMetrics.lon!] as [number, number],
-            drift: locMetrics.driftM24h != null ? `${locMetrics.driftM24h}m/24h` : n.drift,
-            anchor: locMetrics.anchorState ?? n.anchor,
-            lastSync: "live",
-            battery: replay?.getTelemetryMetrics().socPct ?? n.battery,
-            temp: env?.waterTempC ? `${env.waterTempC}°C` : n.temp,
-          }
-        : n,
-    );
-  }, [locMetrics?.lat, locMetrics?.lon, locMetrics?.driftM24h, replay?.snapshots?.ts]);
+    const base = getMapNodes(live ?? undefined);
+    if (isBrightonDemo()) {
+      if (locMetrics?.lat == null || locMetrics.lon == null) return base;
+      return base.map((n) =>
+        n.id === "ucl-buoy"
+          ? {
+              ...n,
+              pos: [locMetrics.lat!, locMetrics.lon!] as [number, number],
+              drift: locMetrics.driftM24h != null ? `${locMetrics.driftM24h}m/24h` : n.drift,
+              anchor: locMetrics.anchorState ?? n.anchor,
+              lastSync: "live",
+              battery: replay?.getTelemetryMetrics().socPct ?? n.battery,
+              temp: env?.waterTempC ? `${env.waterTempC}°C` : n.temp,
+            }
+          : n,
+      );
+    }
+    if (locView?.hasCoordinates && liveLoc?.lat != null && liveLoc?.lon != null) {
+      return base.map((n) =>
+        n.id === "ucl-buoy"
+          ? {
+              ...n,
+              pos: [liveLoc.lat!, liveLoc.lon!] as [number, number],
+              anchor: locView.kind === "approximate_ip_fallback" ? "Approximate (IP)" : "GNSS fix",
+              lastSync: live?.lastUpdateIso ?? "live",
+            }
+          : n,
+      );
+    }
+    return base;
+  }, [locMetrics?.lat, locMetrics?.lon, locMetrics?.driftM24h, replay?.snapshots?.ts, locView, liveLoc, live?.lastUpdateIso, env?.waterTempC]);
   const mapConfig = getMapConfig();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -802,9 +828,11 @@ export function LocationMap() {
 
 function BuoyPanel({ node }: { node: MapNode }) {
   const replay = useReplayData();
+  const live = useLiveNode();
   const wave = replay?.getWaveMetrics();
   const env = replay?.getEnvironmentMetrics();
   const loc = replay?.getLocationMetrics();
+  const liveLoc = live?.locationView;
   const brighton = isBrightonDemo();
   return (
     <>
@@ -828,8 +856,8 @@ function BuoyPanel({ node }: { node: MapNode }) {
           {[
             { label: "DEPTH", value: node.depth },
             { label: "BATTERY", value: node.battery },
-            { label: "GPS FIX", value: `3D — ${node.satellites} Satellites` },
-            { label: "HDOP", value: `${node.hdop} ${node.hdop < 1 ? "(Excellent)" : node.hdop < 1.5 ? "(Good)" : "(Fair)"}` },
+            { label: "GPS FIX", value: node.satellites != null ? `3D — ${node.satellites} Satellites` : (brighton ? "Replay" : "No live GNSS fix yet") },
+            { label: "HDOP", value: node.hdop != null ? `${node.hdop} ${node.hdop < 1 ? "(Excellent)" : node.hdop < 1.5 ? "(Good)" : "(Fair)"}` : "—" },
             { label: "DRIFT", value: node.drift },
             { label: "ANCHOR", value: node.anchor },
             { label: "LAST SYNC", value: node.lastSync },
@@ -859,13 +887,9 @@ function BuoyPanel({ node }: { node: MapNode }) {
                 { label: "UNCERTAINTY", value: `${loc?.uncertaintyRadiusM ?? 50} m` },
               ]
             : [
-            { label: "WAVE HEIGHT", value: `${envConditions.waveHeight} (${envConditions.waveDir})` },
-            { label: "WAVE PERIOD", value: envConditions.wavePeriod },
-            { label: "CURRENT", value: `${envConditions.currentSpeed} ${envConditions.currentDir}` },
-            { label: "WIND", value: `${envConditions.windSpeed} ${envConditions.windDir} (Gusts ${envConditions.windGust})` },
-            { label: "SEA STATE", value: envConditions.seaState },
-            { label: "SST", value: envConditions.sst },
-            { label: "VISIBILITY", value: envConditions.visibility },
+            { label: "ENV SENSORS", value: "No live environment sensor data yet" },
+            { label: "WAVE / IMU", value: "No live wave/IMU data yet" },
+            { label: "LOCATION", value: liveLoc?.label ?? "Awaiting fix" },
           ]).map((item) => (
             <div key={item.label} className="flex justify-between items-center">
               <span className="text-slate-500">{item.label}</span>

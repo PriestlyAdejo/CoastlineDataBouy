@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import csv
 import io
 from pathlib import Path
@@ -21,6 +21,10 @@ from .models import (
 
 router = APIRouter()
 
+LIVE_HANDOVER_WINDOW = timedelta(minutes=30)
+NO_LIVE_ENV = {"status": "no_live_environment_sensor", "source": "not_available"}
+NO_LIVE_WAVE = {"status": "no_live_wave_sensor", "source": "not_available"}
+
 
 def _payload_node_ts(payload: dict) -> tuple[str, str]:
     node_id = str(payload.get("node_id", "unknown-node"))
@@ -38,12 +42,122 @@ def _latest_payload(session, model, node_id: str) -> dict | None:
     return None if row is None else row.payload
 
 
+def _is_replay_payload(payload: dict | None) -> bool:
+    if not isinstance(payload, dict):
+        return False
+    source = str(payload.get("source") or "").lower()
+    if source == "replay":
+        return True
+    if "brighton_marina" in source or "replay" in source:
+        return True
+    if payload.get("replay"):
+        return True
+    provenance = payload.get("provenance")
+    if isinstance(provenance, dict):
+        if provenance.get("demo_mode") is True:
+            return True
+        prov_source = str(provenance.get("source") or "").lower()
+        if "brighton_marina" in prov_source or "replay" in prov_source:
+            return True
+    return False
+
+
+def _parse_ts(ts: str | None) -> datetime | None:
+    if not isinstance(ts, str) or not ts.strip():
+        return None
+    normalized = ts.strip()
+    if normalized.endswith("Z"):
+        normalized = f"{normalized[:-1]}+00:00"
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 def _payload_ts(payload: dict | None) -> str | None:
     if isinstance(payload, dict):
         ts = payload.get("ts")
         if isinstance(ts, str) and ts.strip():
             return ts
     return None
+
+
+def _acoustic_ts(payload: dict | None) -> str | None:
+    if not isinstance(payload, dict):
+        return None
+    for key in ("ts", "ts_end", "ts_start"):
+        value = payload.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return None
+
+
+def _payload_datetime(payload: dict | None) -> datetime | None:
+    if not isinstance(payload, dict):
+        return None
+    return _parse_ts(_payload_ts(payload) or _acoustic_ts(payload))
+
+
+def _is_recent_payload(payload: dict | None, *, window: timedelta = LIVE_HANDOVER_WINDOW) -> bool:
+    ts = _payload_datetime(payload)
+    if ts is None:
+        return False
+    return datetime.now(timezone.utc) - ts <= window
+
+
+def _latest_non_replay_payload(session, model, node_id: str, *, limit: int = 100) -> dict | None:
+    rows = (
+        session.execute(
+            select(model)
+            .where(model.node_id == node_id)
+            .order_by(desc(model.ts), desc(model.id))
+            .limit(limit)
+        )
+        .scalars()
+        .all()
+    )
+    for row in rows:
+        payload = row.payload
+        if isinstance(payload, dict) and not _is_replay_payload(payload):
+            return payload
+    return None
+
+
+def _has_recent_live_handover(session, node_id: str) -> bool:
+    for model in (HealthSnapshot, TelemetrySample, AcousticMetaSnapshot):
+        rows = (
+            session.execute(
+                select(model)
+                .where(model.node_id == node_id)
+                .order_by(desc(model.ts), desc(model.id))
+                .limit(50)
+            )
+            .scalars()
+            .all()
+        )
+        for row in rows:
+            payload = row.payload
+            if not isinstance(payload, dict) or _is_replay_payload(payload):
+                continue
+            if _is_recent_payload(payload):
+                return True
+    return False
+
+
+def _live_or_placeholder(
+    payload: dict | None,
+    *,
+    placeholder: dict,
+    require_recent: bool,
+) -> dict | None:
+    if payload is None or _is_replay_payload(payload):
+        return dict(placeholder)
+    if require_recent and not _is_recent_payload(payload):
+        return dict(placeholder)
+    return payload
 
 
 def _build_location(telemetry: dict | None) -> dict | None:
@@ -111,16 +225,6 @@ def _build_location(telemetry: dict | None) -> dict | None:
     if gps.get("hdop") is not None:
         loc["hdop"] = gps.get("hdop")
     return loc
-
-
-def _acoustic_ts(payload: dict | None) -> str | None:
-    if not isinstance(payload, dict):
-        return None
-    for key in ("ts", "ts_end", "ts_start"):
-        value = payload.get(key)
-        if isinstance(value, str) and value.strip():
-            return value
-    return None
 
 
 @router.get("/healthz")
@@ -207,26 +311,46 @@ def list_nodes():
 @router.get("/nodes/{node_id}/snapshots/latest")
 def latest_snapshots(node_id: str):
     with session_scope() as session:
-        telemetry = _latest_payload(session, TelemetrySample, node_id)
-        env = _latest_payload(session, EnvSnapshot, node_id)
-        health = _latest_payload(session, HealthSnapshot, node_id)
-        acoustics = _latest_payload(session, AcousticMetaSnapshot, node_id)
-        wave_stats = _latest_payload(session, WaveStatsSnapshot, node_id)
+        live_handover = _has_recent_live_handover(session, node_id)
+        if live_handover:
+            telemetry = _latest_non_replay_payload(session, TelemetrySample, node_id)
+            health = _latest_non_replay_payload(session, HealthSnapshot, node_id)
+            acoustics = _latest_non_replay_payload(session, AcousticMetaSnapshot, node_id)
+            env = _live_or_placeholder(
+                _latest_non_replay_payload(session, EnvSnapshot, node_id),
+                placeholder=NO_LIVE_ENV,
+                require_recent=True,
+            )
+            wave_stats = _live_or_placeholder(
+                _latest_non_replay_payload(session, WaveStatsSnapshot, node_id),
+                placeholder=NO_LIVE_WAVE,
+                require_recent=True,
+            )
+        else:
+            telemetry = _latest_payload(session, TelemetrySample, node_id)
+            env = _latest_payload(session, EnvSnapshot, node_id)
+            health = _latest_payload(session, HealthSnapshot, node_id)
+            acoustics = _latest_payload(session, AcousticMetaSnapshot, node_id)
+            wave_stats = _latest_payload(session, WaveStatsSnapshot, node_id)
+
+    included = [telemetry, health, acoustics]
+    if live_handover:
+        if isinstance(env, dict) and env.get("status") != NO_LIVE_ENV["status"]:
+            included.append(env)
+        if isinstance(wave_stats, dict) and wave_stats.get("status") != NO_LIVE_WAVE["status"]:
+            included.append(wave_stats)
+    else:
+        included.extend([env, wave_stats])
 
     valid_timestamps = [
         ts
-        for ts in (
-            _payload_ts(telemetry),
-            _payload_ts(env),
-            _payload_ts(health),
-            _acoustic_ts(acoustics),
-            _payload_ts(wave_stats),
-        )
+        for payload in included
+        for ts in [_payload_ts(payload) if isinstance(payload, dict) else None, _acoustic_ts(payload) if isinstance(payload, dict) else None]
         if ts
     ]
     latest_ts = max(valid_timestamps) if valid_timestamps else datetime.now(timezone.utc).isoformat()
 
-    location = _build_location(telemetry)
+    location = _build_location(telemetry if not _is_replay_payload(telemetry) else None)
 
     return {
         "node_id": node_id,
@@ -266,10 +390,36 @@ def _file_availability(path: str | None) -> tuple[bool, str, str | None]:
     return False, "file_on_pi_not_synced", "file_on_pi_not_synced"
 
 
+def _list_acoustic_file_rows(session, node_id: str = "ucl-buoy", *, limit: int = 200) -> list[dict]:
+    live_handover = _has_recent_live_handover(session, node_id)
+    fetch_limit = limit * 5 if live_handover else limit
+    rows = (
+        session.execute(
+            select(AcousticMetaSnapshot)
+            .where(AcousticMetaSnapshot.node_id == node_id)
+            .order_by(desc(AcousticMetaSnapshot.ts), desc(AcousticMetaSnapshot.id))
+            .limit(fetch_limit)
+        )
+        .scalars()
+        .all()
+    )
+    out: list[dict] = []
+    for row in rows:
+        payload = row.payload
+        if not isinstance(payload, dict):
+            continue
+        if live_handover and _is_replay_payload(payload):
+            continue
+        out.append(payload)
+        if len(out) >= limit:
+            break
+    return out
+
+
 @router.get("/files", summary="List handover file metadata")
 def list_files():
     with session_scope() as session:
-        acoustics = _latest_rows(session, AcousticMetaSnapshot, limit=200)
+        acoustics = _list_acoustic_file_rows(session, "ucl-buoy", limit=200)
     out: list[dict] = []
     for idx, row in enumerate(acoustics, start=1):
         path_raw = row.get("path") or row.get("file_path") or ""

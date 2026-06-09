@@ -15,6 +15,9 @@ import { lastUpdateLabel } from "../lib/deploymentDisplay";
 import { getPageNodeSubtitle, isBrightonDemo } from "../lib/demoMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
 import { selectChartSeries } from "../lib/replaySelectors";
+import { useLiveNode } from "../components/LiveNodeProvider";
+import { isNoLiveEnv, liveWaterTempC } from "../lib/liveSensorStatus";
+import { cartesianGridProps, xAxisProps, yAxisProps, chartTooltipStyle } from "../lib/chartTheme";
 
 const waterTempData = Array.from({ length: 48 }, (_, i) => ({
   time: `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
@@ -60,9 +63,20 @@ const statusConfig: Record<SensorStatus, { label: string; badge: "success" | "in
 
 export function Environment() {
   const vm = useDeploymentView();
+  const live = useLiveNode();
   const env = vm?.environment;
-  const waterChart = isBrightonDemo() ? selectChartSeries(vm, "water").map((p) => ({ time: p.label, temp: p.value })) : waterTempData;
-  const pressChart = isBrightonDemo() ? selectChartSeries(vm, "pressure").map((p) => ({ time: p.label, pressure: p.value })) : pressureData;
+  const noLiveEnv = !isBrightonDemo() && isNoLiveEnv(live?.env);
+  const liveWater = !isBrightonDemo() ? liveWaterTempC(live?.env) : null;
+  const waterChart = isBrightonDemo()
+    ? selectChartSeries(vm, "water").map((p) => ({ time: p.label, temp: p.value }))
+    : noLiveEnv
+      ? []
+      : waterTempData;
+  const pressChart = isBrightonDemo()
+    ? selectChartSeries(vm, "pressure").map((p) => ({ time: p.label, pressure: p.value }))
+    : noLiveEnv
+      ? []
+      : pressureData;
   const [filter, setFilter] = useState<SensorStatus | "all">("all");
   const [liveTime, setLiveTime] = useState(new Date());
 
@@ -83,7 +97,20 @@ export function Environment() {
                 ? { ...s, value: env.pressureHpa, lastUpdate: lastUpdateLabel() }
                 : s,
       )
-    : sensorModules;
+    : noLiveEnv
+      ? sensorModules.map((s) => ({
+          ...s,
+          status: "optional" as SensorStatus,
+          value: "—",
+          lastUpdate: undefined,
+        }))
+      : liveWater != null
+        ? sensorModules.map((s) =>
+            s.name === "Water Temperature"
+              ? { ...s, value: String(liveWater), lastUpdate: live?.lastUpdateIso ?? undefined }
+              : s,
+          )
+        : sensorModules;
   const filtered = filter === "all" ? modules : modules.filter(s => s.status === filter);
 
   return (
@@ -94,17 +121,33 @@ export function Environment() {
           <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Active, installed, and available sensor modules")}</p>
         </div>
         <div className="flex items-center gap-3">
-          <StatusBadge status="success">4 Active Sensors</StatusBadge>
+          <StatusBadge status={noLiveEnv ? "warning" : "success"}>
+            {noLiveEnv ? "No live environment sensor data yet" : "Live sensor data"}
+          </StatusBadge>
           <PinToOverviewButton widget={{ id: "env-water-temp", source: "Environment", label: "Water Temperature (24h)", type: "chart" }} />
         </div>
       </div>
 
+      {noLiveEnv && (
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+          No live environment sensor data yet. Old replay/demo water temperature values are hidden in LIVE API mode.
+        </div>
+      )}
+
       {/* Active metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <MetricCard title="Water Temp" value={env?.waterTempC ?? "14.3"} unit="°C" trend="up" trendValue="Live" icon={Thermometer} status="normal" />
-        <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
-        <MetricCard title="Humidity" value="38" unit="%RH" trend="down" trendValue="-2% (1h)" icon={Droplets} status="success" />
-        <MetricCard title="Pressure" value="1013.2" unit="hPa" trend="neutral" trendValue="Stable" icon={Gauge} status="normal" />
+        <MetricCard
+          title="Water Temp"
+          value={noLiveEnv ? "—" : (isBrightonDemo() ? (env?.waterTempC ?? "—") : (liveWater != null ? String(liveWater) : "—"))}
+          unit="°C"
+          trend="neutral"
+          trendValue={noLiveEnv ? "Not available" : "Live"}
+          icon={Thermometer}
+          status={noLiveEnv ? "warning" : "normal"}
+        />
+        <MetricCard title="Internal Temp" value={noLiveEnv ? "—" : "—"} unit="°C" trend="neutral" trendValue={noLiveEnv ? "No live sensor" : "Not connected"} icon={Thermometer} status={noLiveEnv ? "warning" : "normal"} />
+        <MetricCard title="Humidity" value={noLiveEnv ? "—" : "—"} unit="%RH" trend="neutral" trendValue={noLiveEnv ? "No live sensor" : "Not connected"} icon={Droplets} status={noLiveEnv ? "warning" : "normal"} />
+        <MetricCard title="Pressure" value={noLiveEnv ? "—" : "—"} unit="hPa" trend="neutral" trendValue={noLiveEnv ? "No live sensor" : "Not connected"} icon={Gauge} status={noLiveEnv ? "warning" : "normal"} />
       </div>
 
       {/* Trend charts */}
@@ -124,10 +167,10 @@ export function Environment() {
                     <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="time" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis domain={[13, 15]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} unit="°C" />
-                <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: 8, fontSize: 11 }} />
+                <CartesianGrid {...cartesianGridProps()} />
+                <XAxis dataKey="time" {...xAxisProps()} />
+                <YAxis domain={[13, 15]} {...yAxisProps({ unit: "°C" })} />
+                <Tooltip {...chartTooltipStyle()} />
                 <Area type="monotone" dataKey="temp" stroke="#06b6d4" strokeWidth={1.5} fill="url(#tempGrad)" name="Water Temp" />
               </AreaChart>
             </ResponsiveContainer>
@@ -147,10 +190,10 @@ export function Environment() {
           <div className="h-48 w-full mt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={pressChart} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="time" stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis domain={[1005, 1020]} stroke="#475569" tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: 8, fontSize: 11 }} />
+                <CartesianGrid {...cartesianGridProps()} />
+                <XAxis dataKey="time" {...xAxisProps()} />
+                <YAxis domain={[1005, 1020]} {...yAxisProps()} />
+                <Tooltip {...chartTooltipStyle()} />
                 <Line type="monotone" dataKey="pressure" stroke="#a78bfa" strokeWidth={2} dot={false} name="hPa" />
               </LineChart>
             </ResponsiveContainer>
@@ -194,7 +237,7 @@ export function Environment() {
                 sensor.status === "active" ? "border-slate-800 bg-slate-900/40 hover:bg-slate-800/30" :
                 sensor.status === "installed" ? "border-slate-800 bg-slate-900/30 hover:bg-slate-800/20" :
                 sensor.status === "optional" ? "border-slate-800/60 bg-slate-900/20" :
-                "border-dashed border-slate-800/40 bg-slate-900/10 opacity-70"
+                "border-dashed dash-border"
               )}
             >
               <div className="flex items-start justify-between">

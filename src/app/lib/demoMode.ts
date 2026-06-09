@@ -56,6 +56,9 @@ export function getDemoMode(): string | null {
 }
 
 export function isBrightonDemo(): boolean {
+  if (typeof window !== "undefined" && window.localStorage.getItem("nereus.handover") === "1") {
+    return false;
+  }
   return getDemoMode() === BRIGHTON_DEMO;
 }
 

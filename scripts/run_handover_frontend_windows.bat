@@ -42,6 +42,9 @@ if "%VITE_API_BASE%"=="" set VITE_API_BASE=http://127.0.0.1:8000/v1
 
 echo Starting dashboard on http://%HOST%:%PORT%
 echo Dashboard API base in this shell: %VITE_API_BASE%
+echo Handover URL:
+echo http://%HOST%:%PORT%/?handover=1^&apiBase=http%%3A%%2F%%2F127.0.0.1%%3A8000%%2Fv1^&readable=1
+echo Or run: scripts\open_handover_dashboard_windows.bat
 echo.
 cd /d "%REPO_ROOT%"
 npm run dev -- --host %HOST% --port %PORT%

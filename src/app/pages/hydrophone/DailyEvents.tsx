@@ -6,10 +6,12 @@ import { clsx } from "clsx";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, Area, AreaChart } from "recharts";
 import { Download } from "lucide-react";
 import { isBrightonDemo } from "../../lib/demoMode";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const allData = generateDailyEventData(30);
 
 export function DailyEvents() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Daily event detections" />;
   const [smoothing, setSmoothing] = useState("none");
   const [showGaps, setShowGaps] = useState(true);
   const [chartType, setChartType] = useState("stacked");

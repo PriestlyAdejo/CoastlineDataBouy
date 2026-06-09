@@ -35,7 +35,10 @@ import {
   getHealthStatus,
   getLeqDb,
   getWaterTempC,
+  getWaveHsM,
 } from "../lib/snapshotMetrics";
+import { useLiveNode } from "../components/LiveNodeProvider";
+import { isNoLiveEnv, isNoLiveWave, liveWaterTempC, liveWaveHeightM } from "../lib/liveSensorStatus";
 import { nereusLeafletMapOptions } from "../lib/leafletMapOptions";
 import {
   deploymentFitInputFromConfig,
@@ -107,23 +110,37 @@ export function Dashboard() {
   const navigate = useNavigate();
   const { pinnedWidgets, unpinWidget } = useOverview();
   const brighton = isBrightonDemo();
+  const live = useLiveNode();
   const mapConfig = useMemo(() => getMapConfig(), []);
   const vm = useDeploymentView();
+  const liveSnapshot = brighton ? null : live?.snapshot ?? null;
   const nodes = useMemo(() => {
     const base = getDashboardNodes();
-    if (!brighton || !vm) return base;
-    return base.map((n) =>
-      n.id === "ucl-buoy"
-        ? { ...n, pos: [vm.position.lat, vm.position.lon] as [number, number] }
-        : n,
-    );
-  }, [brighton, vm?.position.lat, vm?.position.lon]);
+    if (brighton && vm) {
+      return base.map((n) =>
+        n.id === "ucl-buoy"
+          ? { ...n, pos: [vm.position.lat, vm.position.lon] as [number, number] }
+          : n,
+      );
+    }
+    if (!brighton && live?.locationView?.hasCoordinates && live.locationView.location) {
+      const { lat, lon } = live.locationView.location;
+      if (lat != null && lon != null) {
+        return base.map((n) =>
+          n.id === "ucl-buoy" ? { ...n, pos: [lat, lon] as [number, number] } : n,
+        );
+      }
+    }
+    return base;
+  }, [brighton, vm?.position.lat, vm?.position.lon, live?.locationView]);
   const [panelOpen, setPanelOpen] = useState(true);
   const [selectedNode, setSelectedNode] = useState<string>(getDefaultNodeId());
   const replay = useReplayData();
   const snapshots = brighton ? replay?.snapshots ?? null : null;
-  const chartEnv = brighton ? selectChartSeries(vm, "overview") : envData;
-  const chartWave = brighton ? selectChartSeries(vm, "overview").map((p, i) => ({ time: p.label, height: p.value })) : waveData;
+  const chartEnv = brighton ? selectChartSeries(vm, "overview") : isNoLiveEnv(live?.env) ? [] : envData;
+  const chartWave = brighton
+    ? selectChartSeries(vm, "overview").map((p) => ({ time: p.label, height: p.value }))
+    : isNoLiveWave(live?.wave_stats) ? [] : waveData;
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<globalThis.Map<string, L.Marker>>(new globalThis.Map());
@@ -262,10 +279,25 @@ export function Dashboard() {
 
   const currentNode = useMemo(() => nodes.find(n => n.id === selectedNode) || nodes[0], [selectedNode, nodes]);
 
-  const waterTemp = brighton ? formatMetric(getWaterTempC(snapshots)) : "14.3";
-  const batteryPct = brighton ? formatMetric(getBatterySocPct(snapshots), 0) : "87";
-  const noiseDb = brighton ? formatMetric(getLeqDb(snapshots), 1) : "62";
-  const healthStatus = brighton ? (getHealthStatus(snapshots) ?? "—") : "ok";
+  const waterTemp = brighton
+    ? formatMetric(getWaterTempC(snapshots))
+    : isNoLiveEnv(live?.env)
+      ? "—"
+      : formatMetric(liveWaterTempC(live?.env));
+  const waveHeight = brighton
+    ? "0.2"
+    : isNoLiveWave(live?.wave_stats)
+      ? "—"
+      : formatMetric(liveWaveHeightM(live?.wave_stats) ?? getWaveHsM(liveSnapshot));
+  const batteryPct = brighton
+    ? formatMetric(getBatterySocPct(snapshots), 0)
+    : formatMetric(getBatterySocPct(liveSnapshot), 0, "—");
+  const noiseDb = brighton
+    ? formatMetric(getLeqDb(snapshots), 1)
+    : formatMetric(getLeqDb(liveSnapshot), 1, "—");
+  const healthStatus = brighton
+    ? (getHealthStatus(snapshots) ?? "—")
+    : (getHealthStatus(liveSnapshot) ?? "—");
 
   return (
     <div className="relative h-full min-h-0 w-full overflow-hidden">
@@ -285,10 +317,14 @@ export function Dashboard() {
             <span className="text-xs font-mono text-emerald-400">LIVE</span>
           </div>
           <div className="w-px h-5 bg-slate-700"></div>
-          <StatusBadge status="success">{brighton ? healthStatus : "Transmitting"}</StatusBadge>
+          <StatusBadge status="success">{brighton ? healthStatus : (healthStatus !== "—" ? healthStatus : "Awaiting health")}</StatusBadge>
           <div className="w-px h-5 bg-slate-700"></div>
           <span className="text-xs font-mono text-slate-500">
-            {brighton ? (vm?.sync.label ?? "Replay data") : "Last Sync: 12s ago"}
+            {brighton
+              ? (vm?.sync.label ?? "Replay data")
+              : live?.lastUpdateIso
+                ? `Last sync: ${live.lastUpdateIso}`
+                : "Awaiting live API"}
           </span>
         </div>
       </div>
@@ -385,10 +421,10 @@ export function Dashboard() {
 
               {/* Environmental Quick Metrics - always shown */}
               <div className="grid grid-cols-2 gap-3">
-                <MetricCard title="Water Temp" value={waterTemp} unit="°C" trend="up" trendValue={brighton ? "Live" : "+0.2°C"} icon={Thermometer} status="normal" className="!p-3" />
-                <MetricCard title="Wave Height" value={brighton ? "0.2" : "1.4"} unit="m" trend="down" trendValue={brighton ? "Replay" : "-0.2m"} icon={Waves} status="info" className="!p-3" />
-                <MetricCard title="Battery" value={batteryPct} unit="%" trend="down" trendValue={brighton ? "Live" : "-1.2W"} icon={Battery} status="success" className="!p-3" />
-                <MetricCard title="Noise Floor" value={noiseDb} unit="dB" trend="neutral" trendValue="Ambient" icon={Activity} status="warning" className="!p-3" />
+                <MetricCard title="Water Temp" value={waterTemp} unit="°C" trend="neutral" trendValue={brighton ? "Live" : isNoLiveEnv(live?.env) ? "No live sensor" : "Live"} icon={Thermometer} status="normal" className="!p-3" />
+                <MetricCard title="Wave Height" value={waveHeight} unit="m" trend="neutral" trendValue={brighton ? "Replay" : isNoLiveWave(live?.wave_stats) ? "No live sensor" : "Live"} icon={Waves} status="info" className="!p-3" />
+                <MetricCard title="Battery" value={batteryPct} unit="%" trend="neutral" trendValue={brighton ? "Live" : "From telemetry"} icon={Battery} status="success" className="!p-3" />
+                <MetricCard title="Noise Floor" value={noiseDb} unit="dB" trend="neutral" trendValue={brighton ? "Replay" : "Live acoustic meta"} icon={Activity} status="warning" className="!p-3" />
               </div>
 
               {/* Pinned Widgets */}

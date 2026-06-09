@@ -15,17 +15,27 @@ export function Card({
   return (
     <div
       className={clsx(
-        "rounded-xl border border-slate-800 bg-slate-900/40 backdrop-blur-xl shadow-lg relative overflow-hidden flex flex-col",
-        className
+        "rounded-xl border dash-panel-bg dash-border shadow-lg relative overflow-hidden flex flex-col",
+        className,
       )}
+      style={{
+        backgroundColor: "var(--dash-panel-bg)",
+        borderColor: "var(--dash-panel-border)",
+      }}
     >
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
+      <div
+        className="absolute top-0 left-0 w-full h-px"
+        style={{ background: "linear-gradient(to right, transparent, color-mix(in srgb, var(--dash-accent) 30%, transparent), transparent)" }}
+      />
       {title && (
-        <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4 shrink-0">
-          <h3 className="text-sm font-semibold tracking-wide text-slate-100 uppercase flex items-center gap-2">
+        <div
+          className="flex items-center justify-between border-b px-5 py-4 shrink-0"
+          style={{ borderColor: "var(--dash-panel-border)" }}
+        >
+          <h3 className="text-sm font-semibold tracking-wide dash-text-primary uppercase flex items-center gap-2">
             {title}
           </h3>
-          {action && <div className="text-slate-400 text-sm">{action}</div>}
+          {action && <div className="dash-text-secondary text-sm">{action}</div>}
         </div>
       )}
       <div className="p-5 flex-1 flex flex-col">{children}</div>

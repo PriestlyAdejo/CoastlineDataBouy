@@ -21,17 +21,17 @@ export function MetricCard({
   className?: string;
 }) {
   const statusColors = {
-    normal: "text-slate-400 bg-slate-800",
-    success: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    warning: "text-amber-400 bg-amber-500/10 border-amber-500/20",
-    error: "text-rose-400 bg-rose-500/10 border-rose-500/20",
-    info: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
+    normal: "dash-text-secondary",
+    success: "text-[var(--dash-success)] border-[var(--dash-success)]",
+    warning: "text-[var(--dash-warning)] border-[var(--dash-warning)]",
+    error: "text-[var(--dash-error)] border-[var(--dash-error)]",
+    info: "text-[var(--dash-accent)] border-[var(--dash-accent)]",
   };
 
   const trendColors = {
-    up: "text-emerald-400",
-    down: "text-rose-400",
-    neutral: "text-slate-500",
+    up: "text-[var(--dash-success)]",
+    down: "text-[var(--dash-error)]",
+    neutral: "dash-text-faint",
   };
 
   const trendSymbols = {
@@ -43,30 +43,29 @@ export function MetricCard({
   return (
     <div
       className={clsx(
-        "rounded-lg border border-slate-800 bg-slate-900/40 p-5 shadow-md flex flex-col justify-between hover:bg-slate-800/40 transition-colors cursor-default",
+        "rounded-lg border p-5 shadow-md flex flex-col justify-between transition-colors cursor-default",
         status !== "normal" && "border" && statusColors[status],
-        className
+        className,
       )}
+      style={{
+        backgroundColor: "var(--dash-panel-bg)",
+        borderColor: status === "normal" ? "var(--dash-panel-border)" : undefined,
+      }}
     >
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-1">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+          <span className="text-xs font-semibold dash-text-secondary uppercase tracking-widest">
             {title}
           </span>
           <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-mono font-medium text-slate-100 tracking-tight">
+            <span className="text-3xl font-mono font-medium dash-text-primary tracking-tight">
               {value}
             </span>
-            {unit && <span className="text-sm font-mono text-slate-500">{unit}</span>}
+            {unit && <span className="text-sm font-mono dash-text-faint">{unit}</span>}
           </div>
         </div>
         {Icon && (
-          <div
-            className={clsx(
-              "p-2 rounded-md border",
-              statusColors[status]
-            )}
-          >
+          <div className={clsx("p-2 rounded-md border", statusColors[status])}>
             <Icon size={16} strokeWidth={2.5} />
           </div>
         )}
@@ -79,9 +78,7 @@ export function MetricCard({
               {trendSymbols[trend]}
             </span>
           )}
-          {trendValue && (
-            <span className="text-slate-400">{trendValue}</span>
-          )}
+          {trendValue && <span className="dash-text-secondary">{trendValue}</span>}
         </div>
       )}
     </div>
@@ -98,11 +95,11 @@ export function StatusBadge({
   className?: string;
 }) {
   const styles = {
-    success: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    warning: "text-amber-400 bg-amber-500/10 border-amber-500/20",
-    error: "text-rose-400 bg-rose-500/10 border-rose-500/20",
-    info: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-    neutral: "text-slate-400 bg-slate-800 border-slate-700",
+    success: "text-[var(--dash-success)] bg-[var(--dash-success-bg)] border-[var(--dash-success)]",
+    warning: "text-[var(--dash-warning)] bg-[var(--dash-warning-bg)] border-[var(--dash-warning)]",
+    error: "text-[var(--dash-error)] bg-[var(--dash-error-bg)] border-[var(--dash-error)]",
+    info: "text-[var(--dash-accent)] bg-[var(--dash-accent-bg)] border-[var(--dash-accent)]",
+    neutral: "text-[var(--dash-badge-neutral-text)] bg-[var(--dash-badge-neutral-bg)] border-[var(--dash-panel-border)]",
   };
 
   return (
@@ -110,19 +107,19 @@ export function StatusBadge({
       className={clsx(
         "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-widest border",
         styles[status],
-        className
+        className,
       )}
     >
       {status !== "neutral" && (
         <span
           className={clsx(
             "h-1.5 w-1.5 rounded-full",
-            status === "success" && "bg-emerald-400 animate-pulse",
-            status === "warning" && "bg-amber-400",
-            status === "error" && "bg-rose-400 animate-pulse",
-            status === "info" && "bg-cyan-400"
+            status === "success" && "bg-[var(--dash-success)] animate-pulse",
+            status === "warning" && "bg-[var(--dash-warning)]",
+            status === "error" && "bg-[var(--dash-error)] animate-pulse",
+            status === "info" && "bg-[var(--dash-accent)]",
           )}
-        ></span>
+        />
       )}
       {children}
     </span>

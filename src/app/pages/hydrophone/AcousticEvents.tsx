@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import { clsx } from "clsx";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, ZAxis } from "recharts";
 import { X, Download, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const clydeEvents = generateAcousticEvents(80);
 
@@ -128,6 +129,7 @@ function EventDetailPanel({ event, onClose }: { event: AcousticEvent; onClose: (
 }
 
 export function AcousticEvents() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Acoustic events log" />;
   const vm = useDeploymentView();
   const allEvents = useMemo<AcousticEvent[]>(() => {
     if (!isBrightonDemo() || !vm) return clydeEvents;

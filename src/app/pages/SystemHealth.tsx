@@ -79,11 +79,63 @@ export function SystemHealth() {
           </>
         ) : (
           <>
-            <MetricCard title="CPU" value="32" unit="%" trend="neutral" trendValue="Raspberry Pi 4" icon={Cpu} status="success" />
-            <MetricCard title="Memory" value="48" unit="%" trend="neutral" trendValue="1.9 / 4 GB" icon={MemoryStick} status="success" />
-            <MetricCard title="Storage" value="17" unit="%" trend="up" trendValue="45 / 256 GB" icon={HardDrive} status="normal" />
-            <MetricCard title="Battery" value="12.4" unit="V" trend="down" trendValue="-0.02V/h" icon={Battery} status="success" />
-            <MetricCard title="Internal Temp" value="22.4" unit="°C" trend="neutral" trendValue="Nominal" icon={Thermometer} status="success" />
+            <MetricCard
+              title="CPU"
+              value={liveHealth?.pi && typeof liveHealth.pi === "object" ? String((liveHealth.pi as Record<string, unknown>).cpu_pct ?? "—") : "—"}
+              unit="%"
+              trend="neutral"
+              trendValue={liveHealth ? "From Pi health" : "Awaiting live data"}
+              icon={Cpu}
+              status={liveHealth ? "success" : "warning"}
+            />
+            <MetricCard
+              title="Memory"
+              value={liveHealth?.pi && typeof liveHealth.pi === "object" ? String((liveHealth.pi as Record<string, unknown>).mem_pct ?? "—") : "—"}
+              unit="%"
+              trend="neutral"
+              trendValue={liveHealth ? "From Pi health" : "Awaiting live data"}
+              icon={MemoryStick}
+              status={liveHealth ? "success" : "warning"}
+            />
+            <MetricCard
+              title="Storage"
+              value={
+                liveHealth?.storage && typeof liveHealth.storage === "object" && (liveHealth.storage as Record<string, unknown>).free_bytes != null
+                  ? `${((Number((liveHealth.storage as Record<string, unknown>).free_bytes) / (1024 ** 3))).toFixed(1)}`
+                  : "—"
+              }
+              unit="GB free"
+              trend="neutral"
+              trendValue={
+                liveHealth?.storage && typeof liveHealth.storage === "object"
+                  ? String((liveHealth.storage as Record<string, unknown>).mountpoint ?? "SSD")
+                  : "Awaiting live data"
+              }
+              icon={HardDrive}
+              status={liveHealth ? "normal" : "warning"}
+            />
+            <MetricCard
+              title="Battery"
+              value={batterySource === "not_available" ? "—" : "—"}
+              unit=""
+              trend="neutral"
+              trendValue={batterySource === "not_available" ? "Not connected" : batterySource}
+              icon={Battery}
+              status="warning"
+            />
+            <MetricCard
+              title="Pi CPU temp"
+              value={
+                liveHealth?.pi && typeof liveHealth.pi === "object" && (liveHealth.pi as Record<string, unknown>).cpu_temp_c != null
+                  ? String((liveHealth.pi as Record<string, unknown>).cpu_temp_c)
+                  : "—"
+              }
+              unit="°C"
+              trend="neutral"
+              trendValue={liveHealth ? "Onboard sensor" : "No live sensor"}
+              icon={Thermometer}
+              status={liveHealth ? "success" : "warning"}
+            />
           </>
         )}
       </div>

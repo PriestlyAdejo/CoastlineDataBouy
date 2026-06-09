@@ -4,11 +4,13 @@ import { SettingsRail, SettingsGroup, SettingsToggle, SettingsSelect } from "../
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, Area, AreaChart, ReferenceLine } from "recharts";
 import { Download } from "lucide-react";
-import { getActiveNodeLabel } from "../../lib/demoMode";
+import { getActiveNodeLabel, isBrightonDemo } from "../../lib/demoMode";
+import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
 
 const spectralData = generateSpectralDensityData();
 
 export function SpectralDensities() {
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Spectral density" />;
   const [showL05, setShowL05] = useState(true);
   const [showL50, setShowL50] = useState(true);
   const [showL95, setShowL95] = useState(true);
