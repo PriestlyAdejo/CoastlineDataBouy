@@ -26,7 +26,7 @@ export function Documentation() {
         </p>
       </div>
 
-      <div className="rounded-xl border border-slate-700 bg-slate-900/40 p-5">
+      <div className="rounded-xl border dash-border dash-panel-bg p-5">
         <h2 className="text-base font-semibold text-cyan-400 mb-3">Friday Handover Quick Start</h2>
         <div className="text-sm text-slate-200 space-y-2 font-mono">
           <p><strong>Laptop:</strong></p>
@@ -40,7 +40,7 @@ export function Documentation() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-slate-700 bg-slate-900/40 p-5">
+      <div className="rounded-xl border dash-border dash-panel-bg p-5">
         <h2 className="text-base font-semibold text-cyan-400 mb-3">Repository guides</h2>
         <ul className="space-y-2 text-sm text-slate-200">
           {DOC_LINKS.map((d) => (

@@ -46,5 +46,9 @@ echo Handover URL:
 echo http://%HOST%:%PORT%/?handover=1^&apiBase=http%%3A%%2F%%2F127.0.0.1%%3A8000%%2Fv1^&readable=1
 echo Or run: scripts\open_handover_dashboard_windows.bat
 echo.
+echo Brighton Marina showcase URL:
+echo http://%HOST%:%PORT%/?showcase=1^&mode=brighton^&readable=1
+echo Or run: scripts\open_brighton_showcase_dashboard_windows.bat
+echo.
 cd /d "%REPO_ROOT%"
 npm run dev -- --host %HOST% --port %PORT%

@@ -8,6 +8,7 @@ import { clsx } from "clsx";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, ZAxis } from "recharts";
 import { X, Download, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
+import { ReplayAnalyticsBanner } from "../../components/hydrophone/ReplayAnalyticsBanner";
 
 const clydeEvents = generateAcousticEvents(80);
 
@@ -129,7 +130,7 @@ function EventDetailPanel({ event, onClose }: { event: AcousticEvent; onClose: (
 }
 
 export function AcousticEvents() {
-  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Acoustic events log" />;
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Acoustic event candidates" />;
   const vm = useDeploymentView();
   const allEvents = useMemo<AcousticEvent[]>(() => {
     if (!isBrightonDemo() || !vm) return clydeEvents;
@@ -174,8 +175,8 @@ export function AcousticEvents() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0 flex flex-col gap-6">
-        {/* Scatter plot: events over time vs time-of-day */}
-        <Card title="Event Distribution" action={<span className="text-[10px] font-mono text-slate-500">{filtered.length} events | Day of month vs hour</span>}>
+        <ReplayAnalyticsBanner />
+        <Card title="Acoustic event candidates" action={<span className="text-[10px] font-mono dash-text-faint">{filtered.length} candidates · prototype · not confirmed detections</span>}>
           <div className="h-72 mt-2">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>

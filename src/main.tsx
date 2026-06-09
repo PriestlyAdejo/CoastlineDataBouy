@@ -7,9 +7,15 @@ import {
   applyHandoverUrlParams,
   enforceHandoverSession,
 } from "./app/lib/handoverMode";
+import {
+  applyShowcaseUrlParams,
+  enforceShowcaseSession,
+} from "./app/lib/showcaseMode";
 import "./styles/index.css";
 
+applyShowcaseUrlParams();
 applyHandoverUrlParams();
+enforceShowcaseSession();
 enforceHandoverSession();
 applyHandoverReadableClass();
 

@@ -3,12 +3,15 @@ const API_BASE_KEY = "nereus.apiBaseUrl";
 const READABLE_KEY = "nereus.handoverReadable";
 const HANDOVER_KEY = "nereus.handover";
 
-/** Force high-contrast handover theme on <html> (independent of OS light/dark). */
+const SHOWCASE_KEY = "nereus.showcase";
+
+/** Force high-contrast readable theme on <html> (independent of OS light/dark). */
 export function applyHandoverReadableClass(): void {
   if (typeof window === "undefined") return;
   const params = new URLSearchParams(window.location.search);
   const readable =
     params.get("readable") === "1" ||
+    window.localStorage.getItem(SHOWCASE_KEY) === "1" ||
     (params.get("handover") === "1" && window.localStorage.getItem(READABLE_KEY) !== "0") ||
     window.localStorage.getItem(READABLE_KEY) === "1";
   document.documentElement.classList.toggle("handover-readable", readable);
@@ -18,6 +21,7 @@ export function applyHandoverReadableClass(): void {
 export function applyHandoverUrlParams(): void {
   if (typeof window === "undefined") return;
   const params = new URLSearchParams(window.location.search);
+  if (params.get("showcase") === "1" || params.get("mode") === "brighton") return;
   if (params.get("handover") !== "1") return;
 
   window.localStorage.removeItem(DEMO_MODE_KEY);

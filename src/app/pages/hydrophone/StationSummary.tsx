@@ -174,6 +174,9 @@ export function StationSummary() {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="rounded-lg border px-4 py-2 text-sm dash-text-secondary" style={{ borderColor: "var(--dash-warning)", backgroundColor: "var(--dash-warning-bg)", color: "var(--dash-badge-replay-text)" }}>
+        Brighton Marina replay overview · latest replay chunk · recording effort · calibration/replay status
+      </div>
       <Card className="!p-0">
         <div className="flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-4">

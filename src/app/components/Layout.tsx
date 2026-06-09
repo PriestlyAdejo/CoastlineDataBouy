@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 import {
   getActiveNodeDisplayName,
   getActiveNodeLabel,
+  getReplayModeLabel,
   isBrightonDemo,
 } from "../lib/demoMode";
+import { isShowcaseSession } from "../lib/showcaseMode";
 import { useDeploymentView } from "../hooks/useDeploymentView";
 import { DataQualityIndicator } from "./DataQualityIndicator";
 import { ReplayControlPanel } from "./ReplayControlPanel";
@@ -127,6 +129,7 @@ export function Layout() {
     if (typeof window === "undefined") return false;
     return (
       window.localStorage.getItem("nereus.handover") === "1" ||
+      window.localStorage.getItem("nereus.showcase") === "1" ||
       window.localStorage.getItem(HANDOVER_READABLE_KEY) === "1"
     );
   });
@@ -198,7 +201,7 @@ export function Layout() {
             <span>{isBrightonDemo() ? `PHASE: ${sidebar?.phase ?? "—"}` : "LoRa: OK"}</span>
             <span>
               {isBrightonDemo()
-                ? "GPS: REPLAY"
+                ? "GPS: BRIGHTON REPLAY"
                 : live?.locationView?.kind === "live_gnss_fix"
                   ? "GPS: LIVE FIX"
                   : live?.locationView?.kind === "approximate_ip_fallback"
@@ -231,8 +234,13 @@ export function Layout() {
                 className="px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide border"
                 style={modeBadgeStyle}
               >
-                {isBrightonDemo() ? "BRIGHTON REPLAY" : (live?.modeLabel ?? "LIVE API")}
+                {isBrightonDemo() ? getReplayModeLabel() : (live?.modeLabel ?? "LIVE API")}
               </span>
+              {isShowcaseSession() && (
+                <span className="text-[10px] dash-text-faint hidden sm:inline">
+                  Prototype replay mode — live Pi not required
+                </span>
+              )}
               {!isBrightonDemo() && live?.locationView && (
                 <span className="text-xs dash-text-secondary">{live.locationView.label}</span>
               )}

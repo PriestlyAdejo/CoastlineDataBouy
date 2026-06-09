@@ -308,18 +308,18 @@ export function Dashboard() {
 
       {/* Top-left: Status */}
       <div className="absolute top-4 left-4 z-10 flex items-center gap-3">
-        <div className="bg-slate-900/85 backdrop-blur-md border border-slate-700/60 rounded-lg px-4 py-2.5 flex items-center gap-4 shadow-xl">
+        <div className="dash-map-overlay rounded-lg px-4 py-2.5 flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="relative">
               <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
               <div className="absolute top-0 left-0 h-2 w-2 rounded-full bg-emerald-500 animate-ping"></div>
             </div>
-            <span className="text-xs font-mono text-emerald-400">LIVE</span>
+            <span className="text-xs font-mono text-[var(--dash-success)]">{brighton ? "REPLAY" : "LIVE"}</span>
           </div>
           <div className="w-px h-5 bg-slate-700"></div>
           <StatusBadge status="success">{brighton ? healthStatus : (healthStatus !== "—" ? healthStatus : "Awaiting health")}</StatusBadge>
           <div className="w-px h-5 bg-slate-700"></div>
-          <span className="text-xs font-mono text-slate-500">
+          <span className="text-xs font-mono dash-text-faint">
             {brighton
               ? (vm?.sync.label ?? "Replay data")
               : live?.lastUpdateIso
@@ -333,7 +333,7 @@ export function Dashboard() {
       {shouldShowClydeOverlays() && (
       <div className="absolute top-16 left-4 z-10 flex gap-1.5">
         {["MPA", "Anchor Radius"].map(chip => (
-          <span key={chip} className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-900/85 backdrop-blur-md border border-slate-700/60 text-[10px] font-mono text-cyan-400 shadow-lg">
+          <span key={chip} className="flex items-center gap-1 px-2 py-1 rounded-md dash-map-overlay text-[10px] font-mono text-[var(--dash-accent)]">
             <MapPin size={9} />{chip}
           </span>
         ))}
@@ -342,11 +342,11 @@ export function Dashboard() {
 
       {/* Map Controls */}
       <div className="absolute top-4 z-10 flex flex-col gap-2 transition-all duration-300" style={{ right: panelOpen ? "calc(400px + 1rem)" : "1rem" }}>
-        <div className="bg-slate-900/85 backdrop-blur-md border border-slate-700/60 rounded-lg shadow-xl overflow-hidden">
-          <button onClick={() => mapRef.current?.zoomIn()} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><ZoomIn size={18} /></button>
-          <button onClick={() => mapRef.current?.zoomOut()} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors"><ZoomOut size={18} /></button>
+        <div className="dash-map-overlay rounded-lg overflow-hidden">
+          <button onClick={() => mapRef.current?.zoomIn()} className="flex items-center justify-center w-10 h-10 dash-text-secondary hover:text-[var(--dash-accent)] hover:dash-panel-bg transition-colors border-b dash-border"><ZoomIn size={18} /></button>
+          <button onClick={() => mapRef.current?.zoomOut()} className="flex items-center justify-center w-10 h-10 dash-text-secondary hover:text-[var(--dash-accent)] hover:dash-panel-bg transition-colors"><ZoomOut size={18} /></button>
         </div>
-        <div className="bg-slate-900/85 backdrop-blur-md border border-slate-700/60 rounded-lg shadow-xl overflow-hidden">
+        <div className="dash-map-overlay rounded-lg overflow-hidden">
           <button onClick={() => {
             const map = mapRef.current;
             if (!map) return;
@@ -363,9 +363,9 @@ export function Dashboard() {
               const b = L.latLngBounds(nodes.map((n) => n.pos));
               map.flyToBounds(b.pad(0.3), { duration: 1.2 });
             }
-          }} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><Locate size={18} /></button>
-          <button onClick={() => { if (currentNode) { mapRef.current?.flyTo(currentNode.pos, 13, { duration: 1.2 }); } }} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors border-b border-slate-700/60"><Crosshair size={18} /></button>
-          <button onClick={() => navigate("/map")} className="flex items-center justify-center w-10 h-10 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 transition-colors" title="Open full map"><ExternalLink size={16} /></button>
+          }} className="flex items-center justify-center w-10 h-10 dash-text-secondary hover:text-[var(--dash-accent)] hover:dash-panel-bg transition-colors border-b dash-border"><Locate size={18} /></button>
+          <button onClick={() => { if (currentNode) { mapRef.current?.flyTo(currentNode.pos, 13, { duration: 1.2 }); } }} className="flex items-center justify-center w-10 h-10 dash-text-secondary hover:text-[var(--dash-accent)] hover:dash-panel-bg transition-colors border-b dash-border"><Crosshair size={18} /></button>
+          <button onClick={() => navigate("/map")} className="flex items-center justify-center w-10 h-10 dash-text-secondary hover:text-[var(--dash-accent)] hover:dash-panel-bg transition-colors" title="Open full map"><ExternalLink size={16} /></button>
         </div>
       </div>
 
@@ -375,7 +375,7 @@ export function Dashboard() {
         {nodes.map(node => (
           <button key={node.id} onClick={() => handleNodeClick(node.id)}
             className={clsx("flex items-center gap-2 px-3 py-2 rounded-lg border backdrop-blur-md shadow-lg transition-all text-xs font-mono",
-              selectedNode === node.id ? "bg-cyan-500/15 border-cyan-500/40 text-cyan-400 shadow-cyan-500/10" : "bg-slate-900/85 border-slate-700/60 text-slate-300 hover:border-slate-600 hover:text-slate-100")}>
+              selectedNode === node.id ? "border-[var(--dash-accent)] text-[var(--dash-accent)]" : "dash-map-overlay dash-text-secondary hover:border-[var(--dash-accent)]")} style={selectedNode === node.id ? { backgroundColor: "var(--dash-accent-bg)" } : undefined}>
             <div className={clsx("w-2 h-2 rounded-full", node.status === "Active" ? "bg-emerald-400" : node.status === "Standby" ? "bg-slate-400" : "bg-amber-400")} />
             {node.id}
           </button>

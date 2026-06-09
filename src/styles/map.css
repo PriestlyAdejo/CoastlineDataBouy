@@ -21,9 +21,9 @@
 
 /* Dark theme overrides for Leaflet */
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background-color: #1e293b !important; /* slate-900 */
-  color: #f8fafc !important; /* slate-50 */
-  border: 1px solid #334155; /* slate-700 */
+  background-color: var(--dash-panel-bg, #1e293b) !important;
+  color: var(--dash-text-primary, #f8fafc) !important;
+  border: 1px solid var(--dash-panel-border, #2d4a6f);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
 }
@@ -32,24 +32,24 @@
   border-left: none;
 }
 .leaflet-container .leaflet-control-attribution {
-  background: rgba(15, 23, 42, 0.7) !important;
-  color: #94a3b8 !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: var(--dash-text-faint, #7da8bd) !important;
   font-size: 10px !important;
 }
 .leaflet-container .leaflet-control-attribution a {
-  color: #06b6d4 !important;
+  color: var(--dash-accent, #22d3ee) !important;
 }
 .leaflet-bar a {
-  background-color: #1e293b !important;
-  color: #94a3b8 !important;
-  border-bottom: 1px solid #334155 !important;
+  background-color: var(--dash-panel-bg, #1e293b) !important;
+  color: var(--dash-text-faint, #7da8bd) !important;
+  border-bottom: 1px solid var(--dash-panel-border, #2d4a6f) !important;
 }
 .leaflet-bar a:hover {
-  background-color: #334155 !important;
-  color: #f8fafc !important;
+  background-color: var(--surface-muted, #334155) !important;
+  color: var(--dash-text-primary, #f8fafc) !important;
 }
 .leaflet-bar {
-  border: 1px solid #334155 !important;
+  border: 1px solid var(--dash-panel-border, #2d4a6f) !important;
   border-radius: 6px !important;
   overflow: hidden;
 }
@@ -76,13 +76,13 @@
   height: 100%;
   min-height: 100%;
   z-index: 0 !important;
-  background: #0f172a;
+  background: var(--dash-sidebar-bg, #0f172a);
 }
 
 /* Popup close button styling */
 .leaflet-popup-close-button {
-  color: #94a3b8 !important;
+  color: var(--dash-text-faint, #7da8bd) !important;
 }
 .leaflet-popup-close-button:hover {
-  color: #06b6d4 !important;
+  color: var(--dash-accent, #22d3ee) !important;
 }

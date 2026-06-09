@@ -20,6 +20,11 @@ import { DailySoundscape } from "./pages/hydrophone/DailySoundscape";
 import { SpectralDensities } from "./pages/hydrophone/SpectralDensities";
 import { SoundLevels } from "./pages/hydrophone/SoundLevels";
 import { RecordingEffort } from "./pages/hydrophone/RecordingEffort";
+import { RawChunksPage } from "./pages/hydrophone/RawChunksPage";
+import { WaveformPreview } from "./pages/hydrophone/WaveformPreview";
+import { VesselMechanicalCandidates } from "./pages/hydrophone/VesselMechanicalCandidates";
+import { MlClassifierScores } from "./pages/hydrophone/MlClassifierScores";
+import { AnomalyQualityControl } from "./pages/hydrophone/AnomalyQualityControl";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +38,11 @@ export const router = createBrowserRouter([
         Component: HydrophoneLayout,
         children: [
           { index: true, Component: StationSummary },
+          { path: "chunks", Component: RawChunksPage },
+          { path: "waveform", Component: WaveformPreview },
+          { path: "vessel-mechanical", Component: VesselMechanicalCandidates },
+          { path: "ml-scores", Component: MlClassifierScores },
+          { path: "quality", Component: AnomalyQualityControl },
           { path: "daily-events", Component: DailyEvents },
           { path: "acoustic-events", Component: AcousticEvents },
           { path: "soundscape", Component: DailySoundscape },

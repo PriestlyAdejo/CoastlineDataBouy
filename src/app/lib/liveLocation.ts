@@ -46,7 +46,12 @@ export function resolveLiveLocation(
   telemetry: unknown,
 ): LiveLocationView {
   if (isReplay) {
-    return { kind: "replay", label: "Brighton replay", location: null, hasCoordinates: false };
+    return {
+      kind: "replay",
+      label: "Replay location — Brighton Marina demonstration route",
+      location: null,
+      hasCoordinates: false,
+    };
   }
 
   const loc = asRecord(topLevel);

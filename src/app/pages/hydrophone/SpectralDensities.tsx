@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tool
 import { Download } from "lucide-react";
 import { getActiveNodeLabel, isBrightonDemo } from "../../lib/demoMode";
 import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
+import { ReplayAnalyticsBanner } from "../../components/hydrophone/ReplayAnalyticsBanner";
 
 const spectralData = generateSpectralDensityData();
 
@@ -21,18 +22,17 @@ export function SpectralDensities() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0 flex flex-col gap-6">
-        {/* Header */}
+        <ReplayAnalyticsBanner />
         <div className="flex items-center justify-between text-xs font-mono">
-          <div className="text-slate-500">
-            <span className="text-slate-300">{getActiveNodeLabel()}</span> | Period: <span className="text-slate-300">{period === "month" ? "Feb 17 - Mar 17 2026" : "Mar 10 - Mar 17 2026"}</span> | H1-Omni 48kHz
+          <div className="dash-text-faint">
+            <span className="dash-text-secondary">{getActiveNodeLabel()}</span> | Period: <span className="dash-text-secondary">1 May 2026 replay</span> | 96kHz replay
           </div>
-          <button className="flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors">
+          <button className="flex items-center gap-1.5 dash-text-faint hover:text-[var(--dash-accent)] transition-colors">
             <Download size={13} /> Export
           </button>
         </div>
 
-        {/* Main PSD Chart */}
-        <Card title="Power Spectral Density Distribution" action={<span className="text-[10px] font-mono text-slate-500">dB re 1µPa²/Hz</span>}>
+        <Card title="Power Spectral Density (replay)" action={<span className="text-[10px] font-mono dash-text-faint">dBFS / relative power</span>}>
           <div className="h-96 mt-2">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={spectralData} margin={{ top: 10, right: 15, left: -5, bottom: 5 }}>

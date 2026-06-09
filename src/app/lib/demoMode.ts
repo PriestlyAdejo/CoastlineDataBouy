@@ -107,6 +107,10 @@ export function getReplayBannerText(): string | null {
   return isBrightonDemo() ? "Replay mode" : null;
 }
 
+export function getReplayModeLabel(): string {
+  return "BRIGHTON MARINA REPLAY";
+}
+
 export function getSiteDescription(): string {
   if (isBrightonDemo()) return "Field test site — 1 May 2026";
   return "Live field deployment — GNSS when available";

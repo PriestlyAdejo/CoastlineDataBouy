@@ -180,3 +180,73 @@ export function generateAcousticEvents(count: number = 80): AcousticEvent[] {
   }
   return events.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 }
+
+export function generateWaveformEnvelope(samples = 200) {
+  const data = [];
+  for (let i = 0; i < samples; i++) {
+    const t = i / samples;
+    const carrier = Math.sin(i * 0.15) * 0.4;
+    const burst = (i > 40 && i < 90) || (i > 130 && i < 160) ? seededRandom(i * 3) * 0.6 : 0;
+    const noise = (seededRandom(i * 7) - 0.5) * 0.15;
+    data.push({
+      t: i,
+      time: `${(t * 10).toFixed(2)}s`,
+      amp: Math.max(-1, Math.min(1, carrier + burst + noise)),
+      envelope: Math.abs(carrier + burst) + Math.abs(noise) * 0.3,
+    });
+  }
+  return data;
+}
+
+export type QualityMetric = {
+  label: string;
+  value: string;
+  status: "success" | "warning" | "neutral";
+  detail: string;
+};
+
+export function generateQualityMetrics(): QualityMetric[] {
+  return [
+    { label: "Clipping estimate", value: "0.12%", status: "success", detail: "Replay chunk analysis · prototype QC" },
+    { label: "Noise floor", value: "-72.4 dBFS", status: "neutral", detail: "Relative · uncalibrated" },
+    { label: "Recording gaps", value: "2 gaps", status: "warning", detail: "14 min total · replay metadata" },
+    { label: "File health", value: "98.2%", status: "success", detail: "Indexed chunks without CRC errors" },
+    { label: "Chunk continuity", value: "OK", status: "success", detail: "No missing sequence IDs in replay index" },
+    { label: "Sample rate lock", value: "96000 Hz", status: "success", detail: "Stable across replay session" },
+  ];
+}
+
+export type VesselCandidate = {
+  id: string;
+  timestamp: string;
+  band: string;
+  score: number;
+  confidence: number;
+  prototypeStatus: string;
+  label: string;
+};
+
+export function generateVesselCandidates(count = 12): VesselCandidate[] {
+  const types = [
+    { id: "vessel", label: "Vessel passage candidate" },
+    { id: "port", label: "Port machinery candidate" },
+    { id: "propeller", label: "Propeller / cavitation candidate" },
+  ];
+  const baseDate = mockBaseDate();
+  const out: VesselCandidate[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = types[Math.floor(seededRandom(i * 41) * types.length)];
+    const d = new Date(baseDate);
+    d.setHours(6 + Math.floor(seededRandom(i * 17) * 14), Math.floor(seededRandom(i * 23) * 60));
+    out.push({
+      id: `VC-${String(200 + i)}`,
+      timestamp: d.toISOString(),
+      band: FREQUENCY_BANDS[Math.floor(seededRandom(i * 31) * 3)].label,
+      score: Math.round((0.55 + seededRandom(i * 53) * 0.4) * 100) / 100,
+      confidence: Math.round((0.45 + seededRandom(i * 67) * 0.45) * 100) / 100,
+      prototypeStatus: seededRandom(i * 79) > 0.5 ? "prototype inference" : "replay classifier v0",
+      label: t.label,
+    });
+  }
+  return out.sort((a, b) => b.score - a.score);
+}

@@ -450,12 +450,12 @@ export function LocationMap() {
               <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
               <div className="absolute top-0 left-0 h-2 w-2 rounded-full bg-emerald-500 animate-ping"></div>
             </div>
-            <span className="text-xs font-mono text-emerald-400">LIVE</span>
+            <span className="text-xs font-mono text-[var(--dash-success)]">{isBrightonDemo() ? "REPLAY" : "LIVE"}</span>
           </div>
-          <div className="w-px h-5 bg-slate-700"></div>
-          <span className="text-xs font-mono text-slate-200">
+          <div className="w-px h-5" style={{ backgroundColor: "var(--dash-panel-border)" }} />
+          <span className="text-xs font-mono dash-text-primary">
             {isBrightonDemo()
-              ? `GPS replay — ${current.satellites} sats`
+              ? `Replay location — Brighton Marina · ${current.satellites} sats`
               : locView?.label ?? "GNSS present, waiting for fix"}
           </span>
           {!isBrightonDemo() && locView?.kind === "live_gnss_fix" && (
@@ -835,7 +835,7 @@ function BuoyPanel({ node }: { node: MapNode }) {
   const locView = live?.locationView;
   const brighton = isBrightonDemo();
   const gpsFixLabel = brighton
-    ? (node.satellites != null ? `Replay — ${node.satellites} sats` : "Replay")
+    ? (node.satellites != null ? `Replay location — ${node.satellites} sats` : "Replay location — Brighton Marina")
     : locView?.kind === "live_gnss_fix"
       ? (node.satellites != null ? `3D — ${node.satellites} Satellites` : "Live GNSS fix")
       : (locView?.label ?? "GNSS present, waiting for fix");
@@ -848,9 +848,9 @@ function BuoyPanel({ node }: { node: MapNode }) {
   return (
     <>
       {/* Selected Buoy Card */}
-      <Card className="!bg-slate-900/60 !p-0">
-        <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+      <Card className="!p-0">
+        <div className="px-4 py-3 border-b dash-border flex items-center gap-3">
+          <div className="h-8 w-8 rounded-lg flex items-center justify-center text-[var(--dash-accent)]" style={{ backgroundColor: "var(--dash-accent-bg)", border: "1px solid var(--dash-accent)" }}>
             <Radio size={16} />
           </div>
           <div className="flex-1">

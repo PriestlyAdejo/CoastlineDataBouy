@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tool
 import { Download } from "lucide-react";
 import { isBrightonDemo } from "../../lib/demoMode";
 import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
+import { ReplayAnalyticsBanner } from "../../components/hydrophone/ReplayAnalyticsBanner";
 
 const data = generateSoundLevelData(30);
 
@@ -18,7 +19,7 @@ const bandColors: Record<string, string> = {
 };
 
 export function SoundLevels() {
-  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Sound levels by band" />;
+  if (!isBrightonDemo()) return <FutureAnalysisPlaceholder title="Band energy trends" />;
   const [enabledBands, setEnabledBands] = useState<Record<string, boolean>>({
     vlf: true, lf: true, mf: true, hf: false, broadband: true,
   });
@@ -28,16 +29,17 @@ export function SoundLevels() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0 flex flex-col gap-6">
+        <ReplayAnalyticsBanner />
         <div className="flex items-center justify-between text-xs font-mono">
-          <div className="text-slate-500">
-            Sound Pressure Level | <span className="text-slate-300">RMS daily averages</span> | dB re 1µPa
+          <div className="dash-text-faint">
+            Band energy trends | <span className="dash-text-secondary">Replay daily averages</span> | dBFS / relative
           </div>
-          <button className="flex items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors">
+          <button className="flex items-center gap-1.5 dash-text-faint hover:text-[var(--dash-accent)] transition-colors">
             <Download size={13} /> Export
           </button>
         </div>
 
-        <Card title="Sound Levels Over Time" action={<span className="text-[10px] font-mono text-slate-500">30-day view</span>}>
+        <Card title="Band Energy Over Time (replay)" action={<span className="text-[10px] font-mono dash-text-faint">30-day replay view</span>}>
           <div className="h-80 mt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 10, right: 15, left: -5, bottom: 5 }}>

@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { Card } from "../Card";
 import { StatusBadge } from "../Widgets";
 import { createApiClient, type FileItem } from "../../api/client";
+import type { FileRow } from "../../lib/brightonReplay";
 import { useLiveNode } from "../LiveNodeProvider";
 import { formatSplDisplay } from "../../lib/acousticDisplay";
 import { clsx } from "clsx";
@@ -68,7 +69,30 @@ function isStaleRow(ts: string | undefined, sortTs: number): boolean {
   return !Number.isFinite(ms) || Date.now() - ms > STALE_MS;
 }
 
-export function RawRecordingChunks() {
+type RawRecordingChunksProps = {
+  replayMode?: boolean;
+  replayFiles?: FileRow[];
+};
+
+function replayRowsToFileItems(rows: FileRow[]): FileItem[] {
+  return rows.map((r, i) => ({
+    file_id: `replay-${i}-${r.name}`,
+    filename: r.name,
+    type: r.category.includes("wav") ? "audio/wav" : r.category,
+    source: "brighton_marina_replay",
+    size_bytes: null,
+    timestamp: r.date,
+    available: r.uploadStatus === "indexed" || r.uploadStatus === "available",
+    status: "replay_metadata",
+    payload: {
+      file_path: `/replay/${r.name}`,
+      provenance: r.provenance,
+      source: "brighton_marina_replay",
+    },
+  }));
+}
+
+export function RawRecordingChunks({ replayMode = false, replayFiles = [] }: RawRecordingChunksProps) {
   const live = useLiveNode();
   const [files, setFiles] = useState<FileItem[]>([]);
   const [filter, setFilter] = useState<FilterKind>("recent");
@@ -77,6 +101,10 @@ export function RawRecordingChunks() {
   const [showHistorical, setShowHistorical] = useState(false);
 
   useEffect(() => {
+    if (replayMode) {
+      setFiles(replayRowsToFileItems(replayFiles));
+      return;
+    }
     const load = async () => {
       try {
         const data = await createApiClient().listFiles();
@@ -86,7 +114,7 @@ export function RawRecordingChunks() {
       }
     };
     void load();
-  }, [live?.lastUpdateIso]);
+  }, [live?.lastUpdateIso, replayMode, replayFiles]);
 
   const sorted = useMemo(
     () =>
@@ -125,10 +153,10 @@ export function RawRecordingChunks() {
 
   return (
     <Card
-      title="Raw recording chunks"
+      title={replayMode ? "Raw recording chunks (replay metadata)" : "Raw recording chunks"}
       action={
         <span className="text-xs font-mono dash-text-faint">
-          {files.length} indexed · uncalibrated dBFS only
+          {files.length} indexed · {replayMode ? "Brighton replay" : "uncalibrated dBFS only"}
         </span>
       }
     >
@@ -203,7 +231,9 @@ export function RawRecordingChunks() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-sm dash-text-secondary py-8 text-center">No recording chunks synced yet.</p>
+        <p className="text-sm dash-text-secondary py-8 text-center">
+          {replayMode ? "No replay chunks in index yet." : "No recording chunks synced yet."}
+        </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-xs font-mono">

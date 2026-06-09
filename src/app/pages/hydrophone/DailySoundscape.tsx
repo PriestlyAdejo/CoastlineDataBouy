@@ -5,6 +5,7 @@ import { useState, useMemo, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { isBrightonDemo } from "../../lib/demoMode";
 import { FutureAnalysisPlaceholder } from "../../components/hydrophone/FutureAnalysisPlaceholder";
+import { ReplayAnalyticsBanner } from "../../components/hydrophone/ReplayAnalyticsBanner";
 
 const spectrogramData = generateHourlySpectrogramData();
 
@@ -47,6 +48,7 @@ export function DailySoundscape() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0 flex flex-col gap-6">
+        <ReplayAnalyticsBanner />
         {/* Date browser */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -64,7 +66,7 @@ export function DailySoundscape() {
         </div>
 
         {/* Heatmap */}
-        <Card title="24-Hour Soundscape" action={<span className="text-[10px] font-mono text-slate-500">PSD proxy (dB re 1µPa²/Hz)</span>}>
+        <Card title="Spectrogram / time-frequency (replay)" action={<span className="text-[10px] font-mono dash-text-faint">Relative power · replay post-processing</span>}>
           <div className="mt-3 relative">
             {/* Tooltip */}
             {hoveredCell && (

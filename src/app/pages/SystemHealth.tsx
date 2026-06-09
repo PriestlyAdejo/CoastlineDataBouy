@@ -86,7 +86,7 @@ export function SystemHealth() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">System Health</h1>
-          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Embedded compute, power, storage, and watchdog monitoring")}</p>
+          <p className="dash-text-secondary text-sm mt-1">{getPageNodeSubtitle("Embedded compute, power, storage, and watchdog monitoring")}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge
@@ -103,7 +103,7 @@ export function SystemHealth() {
             }
           >
             {isBrightonDemo()
-              ? "All Systems Nominal"
+              ? "Replay mode — systems nominal"
               : coreConnectivityOk
                 ? liveNetwork?.modem_detected === false
                   ? "Handover OK — 4G not detected"

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { createApiClient, getApiBaseUrl, type LatestSnapshots } from "../api/client";
-import { isBrightonDemo } from "../lib/demoMode";
+import { getReplayModeLabel, isBrightonDemo } from "../lib/demoMode";
 import { resolveLiveLocation, type LiveLocationView } from "../lib/liveLocation";
 
 export type LiveModeLabel =
   | "LIVE API"
-  | "BRIGHTON REPLAY"
+  | "BRIGHTON MARINA REPLAY"
   | "MOCK FALLBACK"
   | "API OFFLINE"
   | "STALE LIVE DATA";
@@ -43,7 +43,7 @@ export function useLiveNodeSnapshot(nodeId = "ucl-buoy") {
 
   const stale = lastUpdateMs != null ? Date.now() - lastUpdateMs > 15_000 : false;
   const modeLabel: LiveModeLabel = isBrightonDemo()
-    ? "BRIGHTON REPLAY"
+    ? getReplayModeLabel()
     : error
       ? "API OFFLINE"
       : stale

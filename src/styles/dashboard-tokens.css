@@ -5,15 +5,15 @@
   --surface: #0f172a;
   --surface-raised: #1e293b;
   --surface-muted: #334155;
-  --border: #475569;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --border: #2d4a6f;
+  --text-primary: #f8fafc;
+  --text-secondary: #a5d8e6;
+  --text-muted: #7da8bd;
   --accent: #22d3ee;
   --success: #34d399;
   --warning: #fbbf24;
   --danger: #fb7185;
-  --chart-axis: #64748b;
+  --chart-axis: #94a3b8;
   --chart-grid: #334155;
   --chart-label: #cbd5e1;
 
@@ -22,6 +22,8 @@
   --dash-header-bg: var(--surface);
   --dash-panel-bg: var(--surface-raised);
   --dash-panel-border: var(--border);
+  --dash-overlay-bg: #0f172a;
+  --dash-overlay-border: #2d4a6f;
   --dash-text-primary: var(--text-primary);
   --dash-text-secondary: var(--text-secondary);
   --dash-text-faint: var(--text-muted);
@@ -53,53 +55,14 @@ body,
 #root {
   background-color: var(--app-bg);
   color: var(--text-secondary);
+  color-scheme: dark only;
 }
 
-/* Handover / projector readable — forced high-contrast dark theme */
+/* Readable / projector mode — font bump + enforce contrast, inherit base palette */
 html.handover-readable {
   font-size: 17px;
   color-scheme: dark only;
   forced-color-adjust: none;
-
-  --app-bg: #060a12;
-  --surface: #0d1524;
-  --surface-raised: #162032;
-  --surface-muted: #243044;
-  --border: #8b9cb3;
-  --text-primary: #ffffff;
-  --text-secondary: #e8edf5;
-  --text-muted: #c5d0e0;
-  --accent: #3de8ff;
-  --success: #4ade80;
-  --warning: #fcd34d;
-  --danger: #fb7185;
-  --chart-axis: #d8e2f0;
-  --chart-grid: #5a6d88;
-  --chart-label: #f0f4fa;
-
-  --dash-success-bg: #14532d;
-  --dash-warning-bg: #92400e;
-  --dash-error-bg: #9f1239;
-  --dash-accent-bg: #155e75;
-  --dash-chart-tooltip-bg: #162032;
-  --dash-chart-tooltip-border: #8b9cb3;
-  --dash-badge-live-bg: #166534;
-  --dash-badge-live-text: #ecfdf5;
-  --dash-badge-replay-bg: #b45309;
-  --dash-badge-replay-text: #fffbeb;
-  --dash-badge-offline-bg: #be123c;
-  --dash-badge-offline-text: #fff1f2;
-  --dash-badge-neutral-bg: #243044;
-  --dash-badge-neutral-text: #f0f4fa;
-
-  background-color: var(--app-bg) !important;
-  color: var(--text-secondary) !important;
-}
-
-html.handover-readable body,
-html.handover-readable #root {
-  background-color: var(--app-bg) !important;
-  color: var(--text-secondary) !important;
 }
 
 html.handover-readable .text-\[9px\] {
@@ -122,11 +85,18 @@ html.handover-readable .text-sm {
 .dash-bg { background-color: var(--app-bg); }
 .dash-sidebar-bg { background-color: var(--surface); }
 .dash-panel-bg { background-color: var(--surface-raised); }
+.dash-overlay-bg { background-color: var(--dash-overlay-bg); }
 .dash-text-primary { color: var(--text-primary); }
 .dash-text-secondary { color: var(--text-secondary); }
 .dash-text-faint { color: var(--text-muted); }
 .dash-text-muted { color: var(--text-muted); }
 .dash-border { border-color: var(--border); }
+
+.dash-map-overlay {
+  background-color: var(--dash-overlay-bg);
+  border: 1px solid var(--dash-overlay-border);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
 
 /* Card and table overflow */
 .dash-shell .rounded-xl,
@@ -148,37 +118,73 @@ html.handover-readable .text-sm {
   white-space: nowrap;
 }
 
-html.handover-readable .dash-shell h1,
-html.handover-readable .dash-shell h2,
-html.handover-readable .dash-shell h3,
-html.handover-readable .dash-shell h4 {
-  color: var(--text-primary) !important;
-}
-
-/* Slate utility overrides inside dashboard shell */
-.dash-shell .text-slate-500,
-.dash-shell .text-slate-600 {
-  color: var(--text-muted);
-}
-.dash-shell .text-slate-400 {
-  color: var(--text-secondary);
-}
-.dash-shell .text-slate-300,
-.dash-shell .text-slate-200,
-.dash-shell .text-slate-100 {
+.dash-shell h1,
+.dash-shell h2,
+.dash-shell h3,
+.dash-shell h4 {
   color: var(--text-primary);
 }
 
-html.handover-readable .dash-shell .text-slate-500,
-html.handover-readable .dash-shell .text-slate-600,
-html.handover-readable .dash-shell .text-slate-400 {
+/* Slate / gray utility overrides inside dashboard shell (base + readable) */
+.dash-shell .text-slate-500,
+.dash-shell .text-slate-600,
+.dash-shell .text-gray-500,
+.dash-shell .text-gray-600 {
   color: var(--text-muted) !important;
 }
-
-html.handover-readable .dash-shell .text-slate-300,
-html.handover-readable .dash-shell .text-slate-200,
-html.handover-readable .dash-shell .text-slate-100 {
+.dash-shell .text-slate-400,
+.dash-shell .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+.dash-shell .text-slate-300,
+.dash-shell .text-slate-200,
+.dash-shell .text-slate-100,
+.dash-shell .text-gray-300,
+.dash-shell .text-gray-200 {
   color: var(--text-primary) !important;
+}
+
+.dash-shell .border-slate-800,
+.dash-shell .border-slate-700,
+.dash-shell .border-slate-600,
+.dash-shell .border-slate-500 {
+  border-color: var(--border) !important;
+}
+
+.dash-shell .bg-slate-950,
+.dash-shell .bg-slate-900,
+.dash-shell .bg-slate-800,
+.dash-shell .bg-slate-700 {
+  background-color: var(--surface-raised) !important;
+}
+
+.dash-shell .bg-white,
+.dash-shell .bg-slate-100,
+.dash-shell .bg-gray-100 {
+  background-color: var(--surface-raised) !important;
+  color: var(--text-primary) !important;
+}
+
+.dash-shell [class*="bg-slate-"][class*="/"],
+.dash-shell [class*="bg-gray-"][class*="/"],
+.dash-shell [class*="bg-white/"] {
+  background-color: var(--surface-raised) !important;
+  backdrop-filter: none !important;
+}
+
+.dash-shell [class*="text-white/"],
+.dash-shell [class*="text-slate-"][class*="/"],
+.dash-shell [class*="text-gray-"][class*="/"] {
+  color: var(--text-secondary) !important;
+}
+
+.dash-shell p,
+.dash-shell span,
+.dash-shell td,
+.dash-shell th,
+.dash-shell li,
+.dash-shell label {
+  opacity: 1;
 }
 
 html.handover-readable .dash-shell p,
@@ -188,77 +194,6 @@ html.handover-readable .dash-shell th,
 html.handover-readable .dash-shell li,
 html.handover-readable .dash-shell label {
   opacity: 1 !important;
-}
-
-/* Kill low-opacity Tailwind text/background in readable mode */
-html.handover-readable .dash-shell [class*="text-white/"],
-html.handover-readable .dash-shell [class*="text-slate-"][class*="/"],
-html.handover-readable .dash-shell [class*="text-gray-"][class*="/"],
-html.handover-readable .dash-shell [class*="text-cyan-"][class*="/"],
-html.handover-readable .dash-shell [class*="text-emerald-"][class*="/"],
-html.handover-readable .dash-shell [class*="text-amber-"][class*="/"],
-html.handover-readable .dash-shell [class*="text-rose-"][class*="/"] {
-  color: var(--text-secondary) !important;
-}
-
-html.handover-readable .dash-shell [class*="bg-slate-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-gray-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-cyan-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-emerald-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-amber-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-rose-"][class*="/"],
-html.handover-readable .dash-shell [class*="bg-white/"] {
-  background-color: var(--surface-raised) !important;
-  backdrop-filter: none !important;
-}
-
-html.handover-readable .border-slate-800,
-html.handover-readable .border-slate-700,
-html.handover-readable .border-slate-600,
-html.handover-readable .border-slate-500 {
-  border-color: var(--border) !important;
-}
-
-html.handover-readable .bg-slate-950,
-html.handover-readable .bg-slate-900,
-html.handover-readable .bg-slate-800,
-html.handover-readable .bg-slate-700,
-html.handover-readable .bg-slate-600 {
-  background-color: var(--surface-raised) !important;
-}
-
-html.handover-readable .bg-slate-900\/20,
-html.handover-readable .bg-slate-900\/30,
-html.handover-readable .bg-slate-900\/40,
-html.handover-readable .bg-slate-900\/50,
-html.handover-readable .bg-slate-900\/60,
-html.handover-readable .bg-slate-900\/95,
-html.handover-readable .bg-slate-800\/50,
-html.handover-readable .bg-emerald-500\/5,
-html.handover-readable .bg-amber-500\/5,
-html.handover-readable .bg-cyan-500\/5,
-html.handover-readable .bg-rose-500\/5,
-html.handover-readable .bg-emerald-500\/10,
-html.handover-readable .bg-amber-500\/10,
-html.handover-readable .bg-cyan-500\/10,
-html.handover-readable .bg-cyan-500\/15 {
-  background-color: var(--surface-raised) !important;
-}
-
-html.handover-readable .dash-shell nav button,
-html.handover-readable .dash-shell nav a {
-  color: var(--text-secondary) !important;
-}
-
-html.handover-readable .dash-shell nav a.bg-slate-800,
-html.handover-readable .dash-shell nav a[class*="bg-slate-800"] {
-  background-color: var(--surface-muted) !important;
-  color: var(--accent) !important;
-}
-
-html.handover-readable .dash-shell header,
-html.handover-readable .dash-shell aside {
-  background-color: var(--surface) !important;
 }
 
 html.handover-readable .dash-shell .recharts-cartesian-axis-tick text {
@@ -280,7 +215,6 @@ html.handover-readable .dash-shell .overflow-y-auto {
   background-image: none !important;
 }
 
-/* Metric cards — prevent value/label overlap */
 html.handover-readable .dash-shell .text-3xl {
   font-size: 1.75rem !important;
   line-height: 1.2 !important;
@@ -294,9 +228,27 @@ html.handover-readable .dash-shell .inline-flex.rounded-full {
   white-space: nowrap;
 }
 
-/* Hydrophone card containment */
 html.handover-readable .dash-shell .hydrophone-card,
 html.handover-readable .dash-shell [class*="hydrophone"] {
   max-width: 100%;
   overflow: hidden;
+}
+
+.dash-shell .recharts-cartesian-axis-tick text {
+  fill: var(--chart-axis);
+}
+
+.dash-shell .recharts-legend-item-text {
+  color: var(--chart-label);
+}
+
+.dash-shell .recharts-default-tooltip {
+  background-color: var(--surface-raised) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Metric row flex containment */
+.dash-shell .min-w-0 {
+  min-width: 0;
 }

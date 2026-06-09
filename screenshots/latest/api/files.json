@@ -1,0 +1,5552 @@
+{
+  "items": [
+    {
+      "file_id": "acoustic-1",
+      "filename": "acoustic_1.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T17:31:12.549905+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T171612Z_173112Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T17:16:12.549905+00:00",
+        "ts_end": "2026-06-09T17:31:12.549905+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T171612Z_173112Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0494147ce5f0b8a47437440e1c9916666db7bb813b2b21ab324cbeec583066d3"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T171612Z_173112Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-2",
+      "filename": "acoustic_2.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T17:16:07.859025+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T170107Z_171607Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T17:01:07.859025+00:00",
+        "ts_end": "2026-06-09T17:16:07.859025+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T170107Z_171607Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "4a345474cfbdb5e3608b32114fa2246faa9737ce87c148dd4ed211f07601894f"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T170107Z_171607Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-3",
+      "filename": "acoustic_3.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T17:01:03.221548+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T164603Z_170103Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T16:46:03.221548+00:00",
+        "ts_end": "2026-06-09T17:01:03.221548+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T164603Z_170103Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3c27d2d1f628d36045dd0e933872c1b5c72c1318ff4b2a89b906fd6af39220a0"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T164603Z_170103Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-4",
+      "filename": "acoustic_4.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T16:45:58.544789+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T163058Z_164558Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T16:30:58.544789+00:00",
+        "ts_end": "2026-06-09T16:45:58.544789+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T163058Z_164558Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "2f1d71a8840346813b986444c74de962c02e1276ac5c03c5fcd27758a8d43fe5"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T163058Z_164558Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-5",
+      "filename": "acoustic_5.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T16:30:53.746899+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T161553Z_163053Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T16:15:53.746899+00:00",
+        "ts_end": "2026-06-09T16:30:53.746899+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T161553Z_163053Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "1d60e31664fdc4de4b9a2ebf98fb3f530f3a8ab06c35ae50b7b5ad5e1b880a6a"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T161553Z_163053Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-6",
+      "filename": "acoustic_6.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T16:15:49.083398+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T160049Z_161549Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T16:00:49.083398+00:00",
+        "ts_end": "2026-06-09T16:15:49.083398+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T160049Z_161549Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "12892d29975ad1ab59dd9b05de2963f099121e547533d73d9c151e0a8078dbeb"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T160049Z_161549Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-7",
+      "filename": "acoustic_7.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-09T16:00:44.448123+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T154544Z_160044Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-09T15:45:44.448123+00:00",
+        "ts_end": "2026-06-09T16:00:44.448123+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T154544Z_160044Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8f6079446c057f122d1dc33606911271b3b5902f5cb8e105a9d12d14a5898106"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260609T154544Z_160044Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-8",
+      "filename": "acoustic_8.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:46.226586+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003946Z_005446Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:46.226586+00:00",
+        "ts_end": "2026-05-01T00:54:46.226586+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003946Z_005446Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7d2a4eaa5fcfa574d97532eb40363f7670c39927961f1f959b3d5e8e8d28e0b6"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003946Z_005446Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-9",
+      "filename": "acoustic_9.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-08T14:42:03.432012+00:00",
+      "available": false,
+      "status": "file_on_pi_not_synced",
+      "reason": "file_on_pi_not_synced",
+      "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260608T142703Z_144203Z.wav",
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-08T14:27:03.432012+00:00",
+        "ts_end": "2026-06-08T14:42:03.432012+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260608T142703Z_144203Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "e0733a486e6d27d27fdc402d1d37426dfb8b0eff980bac01b4b1907bd5dd88f3"
+        },
+        "calibration_status": "uncalibrated",
+        "file_path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260608T142703Z_144203Z.wav"
+      }
+    },
+    {
+      "file_id": "acoustic-10",
+      "filename": "acoustic_10.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-08T13:52:17.181735+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-08T13:37:17.181735+00:00",
+        "ts_end": "2026-06-08T13:52:17.181735+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260608T133717Z_135217Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "2f1f02ae4374cc1af1743b6a1d75bc477e70399a10e9750786e78fa806a49797"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-11",
+      "filename": "acoustic_11.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-06-08T13:37:12.562378+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-06-08T13:22:12.562378+00:00",
+        "ts_end": "2026-06-08T13:37:12.562378+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260608T132212Z_133712Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7cfed0f110fa12d2141bcfcc4956950135fd70016bdec2beea5075a7a09c4265"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-12",
+      "filename": "acoustic_12.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-28T12:39:38.859493+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-28T12:24:38.859493+00:00",
+        "ts_end": "2026-05-28T12:39:38.859493+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260528T122438Z_123938Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6d9f190bfa45ca8929cae4b9182a6ec9efe5fe003305bc7b580f74cbcf13600e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-13",
+      "filename": "acoustic_13.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-28T00:50:52.413890+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-28T00:35:52.413890+00:00",
+        "ts_end": "2026-05-28T00:50:52.413890+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260528T003552Z_005052Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3c72fb9d72a6634f210d1c4d3d38f2a54bda82944039e544832882f7b6fc3c1c"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-14",
+      "filename": "acoustic_14.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-28T00:35:47.910527+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-28T00:20:47.910527+00:00",
+        "ts_end": "2026-05-28T00:35:47.910527+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260528T002047Z_003547Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "72aa33c26e8e8f535b53150067731754e0d80c96c51c635f412151228ffce9fb"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-15",
+      "filename": "acoustic_15.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T23:46:11.710900+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T23:31:11.710900+00:00",
+        "ts_end": "2026-05-27T23:46:11.710900+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T233111Z_234611Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "85b91bcbc59d5c15cf68261cefe9f6b226183c1763e45023a6c0251ad98d3c38"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-16",
+      "filename": "acoustic_16.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T23:31:06.840188+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T23:16:06.840188+00:00",
+        "ts_end": "2026-05-27T23:31:06.840188+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T231606Z_233106Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8ba151b478de67a4a61d5e25451875b6ec8879c5310a4849d32ab2a2b0cf8694"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-17",
+      "filename": "acoustic_17.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T23:16:01.705934+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T23:01:01.705934+00:00",
+        "ts_end": "2026-05-27T23:16:01.705934+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T230101Z_231601Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "97455057fb628a251d32f581e27acbc01575a0eaa01025087e6d73ee2e2e00fa"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-18",
+      "filename": "acoustic_18.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T23:00:56.613687+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T22:45:56.613687+00:00",
+        "ts_end": "2026-05-27T23:00:56.613687+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T224556Z_230056Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "1f25dedb5df74b11de2180c5a7432f6d1ee123385e847f0cd978815ca454a34b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-19",
+      "filename": "acoustic_19.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T22:45:51.439968+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T22:30:51.439968+00:00",
+        "ts_end": "2026-05-27T22:45:51.439968+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T223051Z_224551Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b49dcbd747531708d64f1bba2c04ad10e935e8ea204963cf40ffaff3e304afae"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-20",
+      "filename": "acoustic_20.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T22:30:46.072144+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T22:15:46.072144+00:00",
+        "ts_end": "2026-05-27T22:30:46.072144+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T221546Z_223046Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8638e06d88e990f0a9c5e49dba5e8150442978a5532147d5d783ffb056c4f22c"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-21",
+      "filename": "acoustic_21.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T22:15:41.510416+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T22:00:41.510416+00:00",
+        "ts_end": "2026-05-27T22:15:41.510416+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T220041Z_221541Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "17d5cb6022fc80b108ff67eeaad02bdcebe27d91c4993c6f4a4cdab26d0a993e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-22",
+      "filename": "acoustic_22.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T22:00:36.201411+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T21:45:36.201411+00:00",
+        "ts_end": "2026-05-27T22:00:36.201411+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T214536Z_220036Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "5f6c3d7eebd233a679e0989843f7011d292442227fc0687527992c5cc9e018c1"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-23",
+      "filename": "acoustic_23.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T21:45:31.408980+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T21:30:31.408980+00:00",
+        "ts_end": "2026-05-27T21:45:31.408980+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T213031Z_214531Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "de565efec7ca861ea23ab26e80381391d425779fa1c9af1ae77297e0afa239e0"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-24",
+      "filename": "acoustic_24.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-27T21:30:26.657205+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-27T21:15:26.657205+00:00",
+        "ts_end": "2026-05-27T21:30:26.657205+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260527T211526Z_213026Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b94b9aef6fca1f0e2a09787a27b585c40e82bf12f3139d28b8df24b0d3ad16d9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-25",
+      "filename": "acoustic_25.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T21:16:42.419586+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T21:01:42.419586+00:00",
+        "ts_end": "2026-05-07T21:16:42.419586+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T210142Z_211642Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "aa586120502cb41f5f47daa4af2dd3e8c881312e8df0180e6e8db22c32be03d5"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-26",
+      "filename": "acoustic_26.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T21:01:37.618730+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T20:46:37.618730+00:00",
+        "ts_end": "2026-05-07T21:01:37.618730+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T204637Z_210137Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f214bfb1ee218cf067f0d1f05bf66f1a054b2a9af989599b7c3492d04fedce56"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-27",
+      "filename": "acoustic_27.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T20:46:33.026533+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T20:31:33.026533+00:00",
+        "ts_end": "2026-05-07T20:46:33.026533+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T203133Z_204633Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b0d5393e32950b6f00fa03bf3bc5b5365745fe9d8367344617439cdc19175200"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-28",
+      "filename": "acoustic_28.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T20:31:28.454954+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T20:16:28.454954+00:00",
+        "ts_end": "2026-05-07T20:31:28.454954+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T201628Z_203128Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "1a6eded7ab9123227eef80c451e35b53b5c23c3e7907878a0bb5eaebedec497a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-29",
+      "filename": "acoustic_29.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T20:16:23.903866+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T20:01:23.903866+00:00",
+        "ts_end": "2026-05-07T20:16:23.903866+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T200123Z_201623Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "032c63f2d31fc759b5489ddea51319931985abc607453535133c6c9564db5e04"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-30",
+      "filename": "acoustic_30.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T01:37:57.695094+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T01:22:57.695094+00:00",
+        "ts_end": "2026-05-07T01:37:57.695094+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T012257Z_013757Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7af4ad6f984425ebaf7a7d0d7fd7256fca970a1c11ab509fce6cf0e3dab0f1a3"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-31",
+      "filename": "acoustic_31.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T01:22:53.187807+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T01:07:53.187807+00:00",
+        "ts_end": "2026-05-07T01:22:53.187807+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T010753Z_012253Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "30e425851d675024fdcd6187a4fe4da47c6cd65cbb44464654707348969b15a1"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-32",
+      "filename": "acoustic_32.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T01:07:48.706135+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T00:52:48.706135+00:00",
+        "ts_end": "2026-05-07T01:07:48.706135+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T005248Z_010748Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "57a98b3dd54fd841ce3a8ee2cb28f6578800f449627bed26428db929c7f8f3dc"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-33",
+      "filename": "acoustic_33.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-07T00:52:44.212657+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-07T00:37:44.212657+00:00",
+        "ts_end": "2026-05-07T00:52:44.212657+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260507T003744Z_005244Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "e7df1026f2a85dfd303f80707f675d38af438b9dfbc1acd2268181c1b33ec75d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-34",
+      "filename": "acoustic_34.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T23:43:09.873919+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T23:28:09.873919+00:00",
+        "ts_end": "2026-05-06T23:43:09.873919+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T232809Z_234309Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3cfc42e10de303f0bc8fdc7af6497ec2dac906f139eb9a15dafb5259942c0419"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-35",
+      "filename": "acoustic_35.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T23:28:05.331132+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T23:13:05.331132+00:00",
+        "ts_end": "2026-05-06T23:28:05.331132+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T231305Z_232805Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d93a5d762ad0872d44b21465f588cb937b7bcd8c22b9190dc7f9d68d379db76a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-36",
+      "filename": "acoustic_36.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T23:13:00.793123+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T22:58:00.793123+00:00",
+        "ts_end": "2026-05-06T23:13:00.793123+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T225800Z_231300Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b71d05cfe4eb6a2b5bb74f451fa9774f57d9b389cb55403fbe6c28638f0c6a23"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-37",
+      "filename": "acoustic_37.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T22:57:56.245137+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T22:42:56.245137+00:00",
+        "ts_end": "2026-05-06T22:57:56.245137+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T224256Z_225756Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "fc6fbe45f217d9928f56bb63fe84fbd0f5c714fde59029e415b014f5f9c4d395"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-38",
+      "filename": "acoustic_38.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T22:42:51.700617+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T22:27:51.700617+00:00",
+        "ts_end": "2026-05-06T22:42:51.700617+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T222751Z_224251Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "de518a8e86e6d74f3b47ce1a6089241b9b7b733b682450f80426f99d6421910f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-39",
+      "filename": "acoustic_39.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T22:27:47.163988+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T22:12:47.163988+00:00",
+        "ts_end": "2026-05-06T22:27:47.163988+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T221247Z_222747Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d3113dada85a0ffc654d21defeabe290e8fb8388b5599ed8a79c7962edb9b731"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-40",
+      "filename": "acoustic_40.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T22:12:42.634508+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T21:57:42.634508+00:00",
+        "ts_end": "2026-05-06T22:12:42.634508+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T215742Z_221242Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ce70b37e15b5193670388e0b293bba73f754b9e9c93d31a2ce72b6d1f32bfb66"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-41",
+      "filename": "acoustic_41.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T21:57:38.098552+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T21:42:38.098552+00:00",
+        "ts_end": "2026-05-06T21:57:38.098552+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T214238Z_215738Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "a4687d30cb9df994dc780ceac16b12cfdd74bee1409e22d8baf821e35e84d15d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-42",
+      "filename": "acoustic_42.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T21:42:33.548927+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T21:27:33.548927+00:00",
+        "ts_end": "2026-05-06T21:42:33.548927+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T212733Z_214233Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0fa882afcfb45f55e055768b1a79ad4922ba30264361abc407e9605781f300c0"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-43",
+      "filename": "acoustic_43.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T21:27:28.906203+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T21:12:28.906203+00:00",
+        "ts_end": "2026-05-06T21:27:28.906203+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T211228Z_212728Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "1b9e144ddf83657b13e7a8a36ee4fb9eb1aafd7c29583d448fd987d81b2ea73a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-44",
+      "filename": "acoustic_44.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T21:12:23.828404+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T20:57:23.828404+00:00",
+        "ts_end": "2026-05-06T21:12:23.828404+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T205723Z_211223Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0e60a8b37d78a9293cd91aea12fc2356002405a14fb4c49eeeb81939fc713048"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-45",
+      "filename": "acoustic_45.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T20:57:19.260155+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T20:42:19.260155+00:00",
+        "ts_end": "2026-05-06T20:57:19.260155+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T204219Z_205719Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f42eaff180b67c75f64cfbb1724f884d586b5742c0ca14430c594b4ae7cb7f8a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-46",
+      "filename": "acoustic_46.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T20:42:14.622029+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T20:27:14.622029+00:00",
+        "ts_end": "2026-05-06T20:42:14.622029+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T202714Z_204214Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6b99d9c3267fab6403c3d74f87d183e9b588df13d3b7d06b2d8e738d6a2ec094"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-47",
+      "filename": "acoustic_47.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T20:27:10.081244+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T20:12:10.081244+00:00",
+        "ts_end": "2026-05-06T20:27:10.081244+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T201210Z_202710Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "47eb357849a475cff42d094838d8697dd6b20ba09f31b589834c2923b0bc5511"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-48",
+      "filename": "acoustic_48.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T20:12:05.533783+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T19:57:05.533783+00:00",
+        "ts_end": "2026-05-06T20:12:05.533783+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T195705Z_201205Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6cb6c1d10a53a7126a1f22a6555516eccb87e420c343ccc161ebc24f72accd86"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-49",
+      "filename": "acoustic_49.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T19:57:00.742505+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T19:42:00.742505+00:00",
+        "ts_end": "2026-05-06T19:57:00.742505+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T194200Z_195700Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ab93a1453492d619d0b36b98de84176af29eeb9125e117e77c780d50b730584f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-50",
+      "filename": "acoustic_50.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T19:41:56.212592+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T19:26:56.212592+00:00",
+        "ts_end": "2026-05-06T19:41:56.212592+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T192656Z_194156Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "67e91fc89123b2681c6fc4f7cc9f22a65261d399dbe39e8c72f5f2ed724015ef"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-51",
+      "filename": "acoustic_51.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T19:26:51.658944+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T19:11:51.658944+00:00",
+        "ts_end": "2026-05-06T19:26:51.658944+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T191151Z_192651Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "00e968d06ef423f5fc1eda94d46b26acdf89a706e9c028967c0be14ccbbcedc9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-52",
+      "filename": "acoustic_52.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T19:11:47.110599+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T18:56:47.110599+00:00",
+        "ts_end": "2026-05-06T19:11:47.110599+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T185647Z_191147Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "5fc6330f2490b9c8c04bb161326d5f613567ef4938a43aa7a77d2f965c9d3e79"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-53",
+      "filename": "acoustic_53.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T18:56:42.582649+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T18:41:42.582649+00:00",
+        "ts_end": "2026-05-06T18:56:42.582649+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T184142Z_185642Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7ad00f92e486ef65de7df1659155010c3abfe2247ea16536dd252fe60e2a0398"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-54",
+      "filename": "acoustic_54.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T18:41:36.710354+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T18:26:36.710354+00:00",
+        "ts_end": "2026-05-06T18:41:36.710354+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T182636Z_184136Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f37198d7e4c50c711692624a01be6024402a479347e723c8b1e479620c6c2139"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-55",
+      "filename": "acoustic_55.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T18:26:30.251714+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T18:11:30.251714+00:00",
+        "ts_end": "2026-05-06T18:26:30.251714+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T181130Z_182630Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9f1e04e6e0cf50bf62135a15e4802399efcc4df217a8ea534f2514e2baac18a9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-56",
+      "filename": "acoustic_56.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T18:11:23.584476+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T17:56:23.584476+00:00",
+        "ts_end": "2026-05-06T18:11:23.584476+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T175623Z_181123Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f770e6ff1633fe2e4abea5417355b416c9e22c5802e782e120fa7723359bc5ea"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-57",
+      "filename": "acoustic_57.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T17:56:16.920739+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T17:41:16.920739+00:00",
+        "ts_end": "2026-05-06T17:56:16.920739+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T174116Z_175616Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "727816f25b8f1f4c4ffc1e5d71b56d315ce321133dff9c95dd66453e2fefda2b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-58",
+      "filename": "acoustic_58.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T17:41:10.265110+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T17:26:10.265110+00:00",
+        "ts_end": "2026-05-06T17:41:10.265110+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T172610Z_174110Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "aa25e09f87c39b1a8b66cf6137384f9c57d2e578e84e0c3fabd0734c93f02b40"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-59",
+      "filename": "acoustic_59.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T17:26:03.651287+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T17:11:03.651287+00:00",
+        "ts_end": "2026-05-06T17:26:03.651287+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T171103Z_172603Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "74fb1f5e3e5db99d6cd8f1478e4e3d45876e526a1e14b4da88c9c7ddc1e7669e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-60",
+      "filename": "acoustic_60.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T17:10:57.062030+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T16:55:57.062030+00:00",
+        "ts_end": "2026-05-06T17:10:57.062030+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T165557Z_171057Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "cf6b4ea50b871394b4d9fe345af77885888a48a6cfd994813a910a30d3cb2ef9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-61",
+      "filename": "acoustic_61.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T16:55:51.885240+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T16:40:51.885240+00:00",
+        "ts_end": "2026-05-06T16:55:51.885240+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T164051Z_165551Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c69c337f7b14185062e8d57f73b6e24a5121d5eaeec565e0c8afb4a76e22677e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-62",
+      "filename": "acoustic_62.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T16:40:47.356006+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T16:25:47.356006+00:00",
+        "ts_end": "2026-05-06T16:40:47.356006+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T162547Z_164047Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f458d9d06c4e355f8dc671a94e3cec3f5a0652eafbf7754eb416ad3bb4102316"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-63",
+      "filename": "acoustic_63.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T16:25:40.890071+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T16:10:40.890071+00:00",
+        "ts_end": "2026-05-06T16:25:40.890071+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T161040Z_162540Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "50ecfe8666fe224b03e81b9cc6eb4ab7b439bd5b63b501c0aad8c8e631f5d17a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-64",
+      "filename": "acoustic_64.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T16:10:34.540935+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T15:55:34.540935+00:00",
+        "ts_end": "2026-05-06T16:10:34.540935+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T155534Z_161034Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9fd38c7e941af23cc079a9a5d17dd354770df3197b547dbc0a1e61b556883614"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-65",
+      "filename": "acoustic_65.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T15:55:28.476367+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T15:40:28.476367+00:00",
+        "ts_end": "2026-05-06T15:55:28.476367+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T154028Z_155528Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ff56cc8f88e80377d0fddb9901a876b396062e4087ca817de749fdbe5cc4fc19"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-66",
+      "filename": "acoustic_66.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T15:40:22.266559+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T15:25:22.266559+00:00",
+        "ts_end": "2026-05-06T15:40:22.266559+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T152522Z_154022Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "4c4ea0b736716724add84fa2a0af42108f64c612c27f3a9f0d8930ab278582af"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-67",
+      "filename": "acoustic_67.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T15:25:16.064420+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T15:10:16.064420+00:00",
+        "ts_end": "2026-05-06T15:25:16.064420+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T151016Z_152516Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "be381fd3d4cc816e19709eade0a51cdee38cda1e68feaad3ef755f81dc2281ac"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-68",
+      "filename": "acoustic_68.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T15:10:09.987277+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T14:55:09.987277+00:00",
+        "ts_end": "2026-05-06T15:10:09.987277+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T145509Z_151009Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "81370984b1850885b7a6c9fd6ea14cc19a7a67d04be845f58c1a362c5eb3d63d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-69",
+      "filename": "acoustic_69.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T14:55:03.787714+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T14:40:03.787714+00:00",
+        "ts_end": "2026-05-06T14:55:03.787714+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T144003Z_145503Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "52cc115d1b15a42a9421f880732c53f7a64cabafd6dcb01a36a9d8a4e988b65a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-70",
+      "filename": "acoustic_70.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T14:39:57.536860+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T14:24:57.536860+00:00",
+        "ts_end": "2026-05-06T14:39:57.536860+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T142457Z_143957Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6fbcfcbcc7f296f3ee97d29811de77885822fdac62792bd772eea1b1661f6b61"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-71",
+      "filename": "acoustic_71.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T14:24:51.258859+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T14:09:51.258859+00:00",
+        "ts_end": "2026-05-06T14:24:51.258859+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T140951Z_142451Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "2c85c992a390099e7ba36d3897be65af7331742417208a8332b6cee2aa930b39"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-72",
+      "filename": "acoustic_72.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T14:09:45.003059+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T13:54:45.003059+00:00",
+        "ts_end": "2026-05-06T14:09:45.003059+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T135445Z_140945Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "cf29f31574a4a5207e2d78438acf1d658c93b71a24fd750a16a0493e90f96eb9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-73",
+      "filename": "acoustic_73.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T13:54:38.874824+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T13:39:38.874824+00:00",
+        "ts_end": "2026-05-06T13:54:38.874824+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T133938Z_135438Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "2166a0efec9cbb1c5a3f85ef1d7ef61a202efbbbea7bdee3a711a29b5d45b9a6"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-74",
+      "filename": "acoustic_74.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T13:39:32.737979+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T13:24:32.737979+00:00",
+        "ts_end": "2026-05-06T13:39:32.737979+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T132432Z_133932Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f9e29d9dce58c223b0039fcc51600095284a3191ac2d4d4b8bf0cb4aa422374a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-75",
+      "filename": "acoustic_75.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T13:24:26.312883+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T13:09:26.312883+00:00",
+        "ts_end": "2026-05-06T13:24:26.312883+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T130926Z_132426Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d06599685fe76310476a0f8f172455f98a0b12cc61d32827a885ff1a3ba9581c"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-76",
+      "filename": "acoustic_76.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T13:09:20.273048+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T12:54:20.273048+00:00",
+        "ts_end": "2026-05-06T13:09:20.273048+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T125420Z_130920Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "a7b432329af751f72c160430a5632266d0921cf48de1ab4628c9864b744d0c38"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-77",
+      "filename": "acoustic_77.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T12:54:14.452161+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T12:39:14.452161+00:00",
+        "ts_end": "2026-05-06T12:54:14.452161+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T123914Z_125414Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8c17876b46aed8d69aa2cd55f0db45909e4495c4701256cd77aabed72abd00d2"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-78",
+      "filename": "acoustic_78.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T12:39:07.921870+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T12:24:07.921870+00:00",
+        "ts_end": "2026-05-06T12:39:07.921870+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T122407Z_123907Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8694834490a137b2ce936bc684e0e643f07f24330eccdd25ff7ff68656cab729"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-79",
+      "filename": "acoustic_79.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T12:24:02.753222+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T12:09:02.753222+00:00",
+        "ts_end": "2026-05-06T12:24:02.753222+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T120902Z_122402Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7d00e852f69321d8d1357a5bd719dfcfdc6eb9454fbd8e37de78622311842b6d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-80",
+      "filename": "acoustic_80.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T12:08:58.276141+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T11:53:58.276141+00:00",
+        "ts_end": "2026-05-06T12:08:58.276141+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T115358Z_120858Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c0e580831aef5acb3b7723c000c0574e8134352d486eb4fa11e46dcbfd3eb7f2"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-81",
+      "filename": "acoustic_81.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-06T11:53:53.789434+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-06T11:38:53.789434+00:00",
+        "ts_end": "2026-05-06T11:53:53.789434+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260506T113853Z_115353Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "35520abf56a94e75d4e21d24249d7e35b531ef9ec5e8cc2e74df292459745ca7"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-82",
+      "filename": "acoustic_82.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T21:31:50.842232+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T21:16:50.842232+00:00",
+        "ts_end": "2026-05-04T21:31:50.842232+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T211650Z_213150Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b6294a0dcd83122ea730d8661b446944f055e5d3f99fd041aef9675dee974280"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-83",
+      "filename": "acoustic_83.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T21:16:44.797963+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T21:01:44.797963+00:00",
+        "ts_end": "2026-05-04T21:16:44.797963+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T210144Z_211644Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f109c10763cf821c066c54d71aa1f6fdff1b3d38872a70c31c9710506ddc4040"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-84",
+      "filename": "acoustic_84.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T21:01:38.634370+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T20:46:38.634370+00:00",
+        "ts_end": "2026-05-04T21:01:38.634370+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T204638Z_210138Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9e0faf01b794ad40e8a072c853b6272c4e8ed9d14c6c52fc9e2dafe531d0d8f7"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-85",
+      "filename": "acoustic_85.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T20:46:32.292332+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T20:31:32.292332+00:00",
+        "ts_end": "2026-05-04T20:46:32.292332+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T203132Z_204632Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c57bf2820a58bbfaa0ac19cf94e5c552c1fdbd327963ade1d9dc0aaefda332ec"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-86",
+      "filename": "acoustic_86.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T20:31:26.151811+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T20:16:26.151811+00:00",
+        "ts_end": "2026-05-04T20:31:26.151811+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T201626Z_203126Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "cb2e14f645c436d8926b67ccc48d9278589657434d93a55ae23d123af6b76298"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-87",
+      "filename": "acoustic_87.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T20:16:20.100873+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T20:01:20.100873+00:00",
+        "ts_end": "2026-05-04T20:16:20.100873+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T200120Z_201620Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c338da00d5c6fef781742750f90819fb9af9750fa7e1674a12ccb15b29338951"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-88",
+      "filename": "acoustic_88.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T20:01:13.935762+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T19:46:13.935762+00:00",
+        "ts_end": "2026-05-04T20:01:13.935762+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T194613Z_200113Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f3e6f9959a83d716709c32801599a922ec2d0e12863824fabb40f52525a08841"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-89",
+      "filename": "acoustic_89.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T19:46:08.254819+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T19:31:08.254819+00:00",
+        "ts_end": "2026-05-04T19:46:08.254819+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T193108Z_194608Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "59a51993d43a542e75ede6843a551e85675046c7adc8aa281d143e492ff55557"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-90",
+      "filename": "acoustic_90.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T19:31:03.675880+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T19:16:03.675880+00:00",
+        "ts_end": "2026-05-04T19:31:03.675880+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T191603Z_193103Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d55854e6ac0f410a5c944b11f5738bf844c37c5c4540193dde15184eea69ea70"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-91",
+      "filename": "acoustic_91.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T19:15:57.678003+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T19:00:57.678003+00:00",
+        "ts_end": "2026-05-04T19:15:57.678003+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T190057Z_191557Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "cd258138892d1c77870ada7f7ad4eb366b99ead97db6e98ee0946d40d22da856"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-92",
+      "filename": "acoustic_92.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T19:00:51.497631+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T18:45:51.497631+00:00",
+        "ts_end": "2026-05-04T19:00:51.497631+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T184551Z_190051Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "606928a90e5031ca9a6b3e59da481e3983a86d3f23c298e94c28f6597878179b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-93",
+      "filename": "acoustic_93.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T18:45:45.925385+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T18:30:45.925385+00:00",
+        "ts_end": "2026-05-04T18:45:45.925385+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T183045Z_184545Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "94377a855251cae5d8b6004b08a80dd20a8d09674dc7aa3c6978823959bf598f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-94",
+      "filename": "acoustic_94.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T18:30:41.117148+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T18:15:41.117148+00:00",
+        "ts_end": "2026-05-04T18:30:41.117148+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T181541Z_183041Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0edd093d2766afaf37477cd5f2878bfb479cecb0262ffbbec3cf4de18a819ae8"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-95",
+      "filename": "acoustic_95.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T18:15:34.935290+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T18:00:34.935290+00:00",
+        "ts_end": "2026-05-04T18:15:34.935290+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T180034Z_181534Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9e95b43316603b746b327225b56e004adc20824d05495c3322ddaa4020b5241b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-96",
+      "filename": "acoustic_96.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T18:00:30.312233+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T17:45:30.312233+00:00",
+        "ts_end": "2026-05-04T18:00:30.312233+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T174530Z_180030Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8661eecf3b5c2d0c4bb9326fb122280b6286049706a45f88f3ad84f4fa330c77"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-97",
+      "filename": "acoustic_97.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T17:45:24.300341+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T17:30:24.300341+00:00",
+        "ts_end": "2026-05-04T17:45:24.300341+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T173024Z_174524Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "bf529d153f926639b5423979a93c6404ad8710c9d753ff56701f52b10c27c626"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-98",
+      "filename": "acoustic_98.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T17:30:18.223898+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T17:15:18.223898+00:00",
+        "ts_end": "2026-05-04T17:30:18.223898+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T171518Z_173018Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "5e0ce3aa4a7b226cd4c3ce25c6790a4cb2ef5b6ce410eaa409e63f9e9d282644"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-99",
+      "filename": "acoustic_99.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T17:15:12.539500+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T17:00:12.539500+00:00",
+        "ts_end": "2026-05-04T17:15:12.539500+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T170012Z_171512Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "8f928e0a2a45197263a51ffe9243d23356aa7fe688b07bce2f2054a4573d3227"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-100",
+      "filename": "acoustic_100.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T17:00:07.239421+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T16:45:07.239421+00:00",
+        "ts_end": "2026-05-04T17:00:07.239421+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T164507Z_170007Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "551c0edced635c8c76216317a083f4ab8cb16aab56b56f9954200012e039ac0d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-101",
+      "filename": "acoustic_101.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T16:45:02.270106+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T16:30:02.270106+00:00",
+        "ts_end": "2026-05-04T16:45:02.270106+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T163002Z_164502Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "df2be380b1a30fa054f2e07597faf80fbbcd44c29ba6bcda4a0de1dbdded69c2"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-102",
+      "filename": "acoustic_102.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-04T16:29:57.482701+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-04T16:14:57.482701+00:00",
+        "ts_end": "2026-05-04T16:29:57.482701+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260504T161457Z_162957Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "18bf2e6485f0e256a7f67f79b29212ef0e9f85cd260ae6653d6688dca1196ae2"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-103",
+      "filename": "acoustic_103.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T13:19:10.627134+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T13:04:10.627134+00:00",
+        "ts_end": "2026-05-01T13:19:10.627134+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T130410Z_131910Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b081b605f7a4b2b524433b16f4d3d9c829a3ad433de13eb838ce9b7ae0815af8"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-104",
+      "filename": "acoustic_104.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T13:04:05.344342+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T12:49:05.344342+00:00",
+        "ts_end": "2026-05-01T13:04:05.344342+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T124905Z_130405Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f664c8df4474ebc0bdce061371e3cb37720c5f629366539db213d9f742737fda"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-105",
+      "filename": "acoustic_105.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T12:49:00.272361+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T12:34:00.272361+00:00",
+        "ts_end": "2026-05-01T12:49:00.272361+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T123400Z_124900Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "22cd044c955dd873f71ec2e5afad2f404e788a9cff3b50ca187bd27027366b7b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-106",
+      "filename": "acoustic_106.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T12:33:54.999885+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T12:18:54.999885+00:00",
+        "ts_end": "2026-05-01T12:33:54.999885+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T121854Z_123354Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "b2d09a411f56ad9198651e067b4619744d2eff6f7d586ac9e8cdf7591a5c7936"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-107",
+      "filename": "acoustic_107.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T12:18:49.840285+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T12:03:49.840285+00:00",
+        "ts_end": "2026-05-01T12:18:49.840285+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T120349Z_121849Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "cd2ac49cbb5c4b0131987c0c9105e93b8277403b7ff0ae8a08f539d620338c2f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-108",
+      "filename": "acoustic_108.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T12:03:45.298680+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T11:48:45.298680+00:00",
+        "ts_end": "2026-05-01T12:03:45.298680+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T114845Z_120345Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "75c8eb40f9f22a3092399259517bfc2323c65d3bd8cb7851f3fc0fd05f26dc40"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-109",
+      "filename": "acoustic_109.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T11:48:40.765439+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T11:33:40.765439+00:00",
+        "ts_end": "2026-05-01T11:48:40.765439+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T113340Z_114840Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3715b0c494e633a43e2c5ecd60460cc24accf8fd52370cb5dc223acd0fbb56ac"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-110",
+      "filename": "acoustic_110.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T11:07:32.394807+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T10:52:32.394807+00:00",
+        "ts_end": "2026-05-01T11:07:32.394807+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T105232Z_110732Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "a87e790144a85943ee53fac2f670f6fb67955c34e8a33b4f0d7602e09fd9c9db"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-111",
+      "filename": "acoustic_111.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T10:52:27.887543+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T10:37:27.887543+00:00",
+        "ts_end": "2026-05-01T10:52:27.887543+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T103727Z_105227Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c849fc4316b843e4a852b4dd36ccabfd594a092f30c55fcfdce38d4a0ca6018c"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-112",
+      "filename": "acoustic_112.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T10:37:23.396638+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T10:22:23.396638+00:00",
+        "ts_end": "2026-05-01T10:37:23.396638+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T102223Z_103723Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c442ba13c6d8e707e2d5470acc0f5ee810988ae25c7e778e0983d8a9ba72f862"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-113",
+      "filename": "acoustic_113.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T05:26:07.719375+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T05:11:07.719375+00:00",
+        "ts_end": "2026-05-01T05:26:07.719375+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T051107Z_052607Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "bb11b2faa3910c3b06a177906a94f6212f44c1a04e71c335a9942b28312d4a3f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-114",
+      "filename": "acoustic_114.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T05:11:03.161812+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T04:56:03.161812+00:00",
+        "ts_end": "2026-05-01T05:11:03.161812+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T045603Z_051103Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0fa1754f4347edad33bff000a348f82159d21696e8c1336cbebb2dd0b12973d8"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-115",
+      "filename": "acoustic_115.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T04:55:58.587944+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T04:40:58.587944+00:00",
+        "ts_end": "2026-05-01T04:55:58.587944+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T044058Z_045558Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c7ae5bff970cbaecc90afcd5d1bb3d256071ae0a3045b468f6704ae2e433119b"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-116",
+      "filename": "acoustic_116.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T04:40:54.043641+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T04:25:54.043641+00:00",
+        "ts_end": "2026-05-01T04:40:54.043641+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T042554Z_044054Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c4e009fde5fd7566b9ff0a683a8ef2099c38a50049a1cb908e9aba082d807b18"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-117",
+      "filename": "acoustic_117.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T04:25:49.345265+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T04:10:49.345265+00:00",
+        "ts_end": "2026-05-01T04:25:49.345265+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T041049Z_042549Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ff3ecbc8503e3d23dbf7533c352cf9cc1c2312e072fb05384b64533f4d553c79"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-118",
+      "filename": "acoustic_118.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T04:10:44.761895+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T03:55:44.761895+00:00",
+        "ts_end": "2026-05-01T04:10:44.761895+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T035544Z_041044Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "305349dc9082313cc3548ade22e209d9d5e5ceb3a883093106016ec71a329a0d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-119",
+      "filename": "acoustic_119.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T03:55:40.178476+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T03:40:40.178476+00:00",
+        "ts_end": "2026-05-01T03:55:40.178476+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T034040Z_035540Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9c206705b3c36428e22f58ec5658922e0f9f38d31fd5da78c849aa833f2d6dec"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-120",
+      "filename": "acoustic_120.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T03:40:35.621568+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T03:25:35.621568+00:00",
+        "ts_end": "2026-05-01T03:40:35.621568+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T032535Z_034035Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "00541211bc7fd20a2c6d896868ed839fd70daad7ffb06b5083012b21682a196f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-121",
+      "filename": "acoustic_121.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T03:25:31.038630+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T03:10:31.038630+00:00",
+        "ts_end": "2026-05-01T03:25:31.038630+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T031031Z_032531Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "5f5b6a019b9e94bd664141619261a3914d1399a75a07f1103a6ae17c3a8d407e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-122",
+      "filename": "acoustic_122.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T03:10:26.464371+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:55:26.464371+00:00",
+        "ts_end": "2026-05-01T03:10:26.464371+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T025526Z_031026Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "427beb9244838a8116b2948e453fd1da86845432a2242034233b58060b24bba1"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-123",
+      "filename": "acoustic_123.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:55:21.890193+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:40:21.890193+00:00",
+        "ts_end": "2026-05-01T02:55:21.890193+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T024021Z_025521Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "e89985f8c0a80dcbe346f7499395d1050b7ff2b00c23f03bd1a3b641edc6d1fd"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-124",
+      "filename": "acoustic_124.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:55:21.762068+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:40:21.762068+00:00",
+        "ts_end": "2026-05-01T02:55:21.762068+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T024021Z_025521Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c6ababf684fa15e2d2cd5919421dc719cfc54decb3459e1479763018dab8b1ea"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-125",
+      "filename": "acoustic_125.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:40:17.263000+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:25:17.263000+00:00",
+        "ts_end": "2026-05-01T02:40:17.263000+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T022517Z_024017Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "80b09ec3a8f9d82e23ee6add0505d8403d88b5e1cafc65624049407a9e660179"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-126",
+      "filename": "acoustic_126.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:40:17.218523+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:25:17.218523+00:00",
+        "ts_end": "2026-05-01T02:40:17.218523+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T022517Z_024017Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "173c80a161feeb7af04e9bc498aa1bce74c7ea7c0158e056a001325c0d1e29e8"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-127",
+      "filename": "acoustic_127.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:25:12.681260+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:10:12.681260+00:00",
+        "ts_end": "2026-05-01T02:25:12.681260+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T021012Z_022512Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "0d14de5d9c8ce603e909962ea6798199f7a30f2770be1b3798ea12c77e1c2829"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-128",
+      "filename": "acoustic_128.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:25:12.514156+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:10:12.514156+00:00",
+        "ts_end": "2026-05-01T02:25:12.514156+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T021012Z_022512Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "afaea40a6ae0159d23f7b396712f3a8e21467432990567bc9cdcec733be7b392"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-129",
+      "filename": "acoustic_129.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:25:11.696303+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T02:10:11.696303+00:00",
+        "ts_end": "2026-05-01T02:25:11.696303+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T021011Z_022511Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "f3f327185f24eda573c335b89278209777b1ee09f590ad4f7be92f436711b1b4"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-130",
+      "filename": "acoustic_130.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:10:07.972671+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:55:07.972671+00:00",
+        "ts_end": "2026-05-01T02:10:07.972671+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T015507Z_021007Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "bed6c380d1f83c66dd9b2fcec6946893437c7cda596acb49d081313f58d205e2"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-131",
+      "filename": "acoustic_131.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:10:07.968135+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:55:07.968135+00:00",
+        "ts_end": "2026-05-01T02:10:07.968135+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T015507Z_021007Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "708ea65cd74f06621e7044559ffd48f45152c249ce9bb7742248f5e105f2b82a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-132",
+      "filename": "acoustic_132.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T02:10:07.190601+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:55:07.190601+00:00",
+        "ts_end": "2026-05-01T02:10:07.190601+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T015507Z_021007Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "fe67626fd6bf5c3f4262b311d189afea18017dfe3a2df2b851a24165b0797be5"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-133",
+      "filename": "acoustic_133.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:55:03.465563+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:40:03.465563+00:00",
+        "ts_end": "2026-05-01T01:55:03.465563+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T014003Z_015503Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "79066c94a8736fe674662d0d0f51d0181d36f8f1739d7075590038b72d5e6c8f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-134",
+      "filename": "acoustic_134.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:44.730950+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:44.730950+00:00",
+        "ts_end": "2026-05-01T00:54:44.730950+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003944Z_005444Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "37a5094fe0148152de2f6495ee24bddbb7d4536f2b782b5d7265e89333fc9e3d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-135",
+      "filename": "acoustic_135.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:55:03.428451+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:40:03.428451+00:00",
+        "ts_end": "2026-05-01T01:55:03.428451+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T014003Z_015503Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6268dbced10364099b5da16288ba9ba164898ab6be961a6e55a0fead63ebac0a"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-136",
+      "filename": "acoustic_136.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:55:02.694123+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:40:02.694123+00:00",
+        "ts_end": "2026-05-01T01:55:02.694123+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T014002Z_015502Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "14753e8ae4c6dad56a100caa5eed4c3797fb565e385626257ab6ba2ee65e436f"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-137",
+      "filename": "acoustic_137.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:39:58.941443+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:24:58.941443+00:00",
+        "ts_end": "2026-05-01T01:39:58.941443+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T012458Z_013958Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3c9a5b581e19154803accb7bb2d5555f8663dbf798c3509bc55af62a26cfaaaf"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-138",
+      "filename": "acoustic_138.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:39:58.877782+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:24:58.877782+00:00",
+        "ts_end": "2026-05-01T01:39:58.877782+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T012458Z_013958Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "4746ad3760c749923bf044c555290c835c74955a9d6c734608c59b78c660a6ee"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-139",
+      "filename": "acoustic_139.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:39:58.200553+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:24:58.200553+00:00",
+        "ts_end": "2026-05-01T01:39:58.200553+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T012458Z_013958Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "2fc5efd9213f188d0b54db05ff4968f97f3d44d5a6e0a20ed03f0fc54ecb1acd"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-140",
+      "filename": "acoustic_140.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:24:54.452497+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:09:54.452497+00:00",
+        "ts_end": "2026-05-01T01:24:54.452497+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T010954Z_012454Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "02bd0052fbad8fe39bad25147a0830ab6e47b0b1e3e5d8baf2c127ae378092ea"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-141",
+      "filename": "acoustic_141.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:24:54.361587+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:09:54.361587+00:00",
+        "ts_end": "2026-05-01T01:24:54.361587+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T010954Z_012454Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "4537bb1ecd18d08d253b8f020138f50f0e81c581d193792748ebd3d9b416c411"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-142",
+      "filename": "acoustic_142.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:24:53.715589+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T01:09:53.715589+00:00",
+        "ts_end": "2026-05-01T01:24:53.715589+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T010953Z_012453Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d144c5617399bc783d5cb2444d39f4f54b52db8aa77625cf40dd542f9783c591"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-143",
+      "filename": "acoustic_143.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:09:50.501516+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:54:50.501516+00:00",
+        "ts_end": "2026-05-01T01:09:50.501516+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T005450Z_010950Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "213bc2b3642d8694766876e83d7fc46fabc77b8bdf2100a97476a0cb187e76a9"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-144",
+      "filename": "acoustic_144.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:09:49.960423+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:54:49.960423+00:00",
+        "ts_end": "2026-05-01T01:09:49.960423+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T005449Z_010949Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ec580622a05d6dc9605dfcf4b9f4a48a9d1a4875a9e3ccebec97bd7f3850efc4"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-145",
+      "filename": "acoustic_145.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:09:49.833460+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:54:49.833460+00:00",
+        "ts_end": "2026-05-01T01:09:49.833460+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T005449Z_010949Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "6e2d243e45a25ad03f103a22b9cc68991cbfdc87af19506787c02243d4e166e4"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-146",
+      "filename": "acoustic_146.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T01:09:49.218593+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:54:49.218593+00:00",
+        "ts_end": "2026-05-01T01:09:49.218593+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T005449Z_010949Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "38984946376c80b9abe5199049a3d694d3e4320917aa3337d5c71ea24d94c5af"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-147",
+      "filename": "acoustic_147.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:46.023305+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:46.023305+00:00",
+        "ts_end": "2026-05-01T00:54:46.023305+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003946Z_005446Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7a0ac069dd599a26cf057230dec8653b8224c773c6dd12a87dbfe7d4a828b779"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-148",
+      "filename": "acoustic_148.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.641368+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.641368+00:00",
+        "ts_end": "2026-05-01T00:54:45.641368+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c1567c137c76ebca68d1fb20f3871c2a1bb660a53111ee5a0760799d91fa2e44"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-149",
+      "filename": "acoustic_149.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.475380+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.475380+00:00",
+        "ts_end": "2026-05-01T00:54:45.475380+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "aae87c485c92dfb09d99deadbdeef61a718d12a183361c72665e67fe4ff383fd"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-150",
+      "filename": "acoustic_150.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.347848+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.347848+00:00",
+        "ts_end": "2026-05-01T00:54:45.347848+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "9f0aa930b3faa253854606efe5bfded7471b9a784472a0e62a2ca43c02b36a3d"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-151",
+      "filename": "acoustic_151.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.336667+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.336667+00:00",
+        "ts_end": "2026-05-01T00:54:45.336667+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "331e861c2d8ce3adc1da384c91f1be7532e307e650bcccb1ee08dc07879bc2a4"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-152",
+      "filename": "acoustic_152.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.317852+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.317852+00:00",
+        "ts_end": "2026-05-01T00:54:45.317852+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "d37e7be698d247f694a19b2893757dfb265b6d3f9ff1b34d4f6cc822111b2717"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-153",
+      "filename": "acoustic_153.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.171462+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.171462+00:00",
+        "ts_end": "2026-05-01T00:54:45.171462+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "7f3028f3b283ffdae9420f10723ea242f1afc7d8b8e4a88576ab403d1f08b886"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-154",
+      "filename": "acoustic_154.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.104596+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.104596+00:00",
+        "ts_end": "2026-05-01T00:54:45.104596+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "ef63547b5e141316b3e80e2b2a978d0ec3eef4e3f3120ebd3e437520fa098365"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-155",
+      "filename": "acoustic_155.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.083393+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.083393+00:00",
+        "ts_end": "2026-05-01T00:54:45.083393+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "c0710ebc64293e88deac1e713d934d35162adca93d61183dafbaa7a9c83aef62"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-156",
+      "filename": "acoustic_156.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:45.021770+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:45.021770+00:00",
+        "ts_end": "2026-05-01T00:54:45.021770+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003945Z_005445Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "df41a8d0c1cc9544bc65790d502680f1c7e29e264797f21a78b4c325f53b2d9e"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-157",
+      "filename": "acoustic_157.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:44.989779+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:44.989779+00:00",
+        "ts_end": "2026-05-01T00:54:44.989779+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003944Z_005444Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "415210996fce00acbd5eb8d059627a92520ff5ef1b860042b65b608daa729755"
+        }
+      }
+    },
+    {
+      "file_id": "acoustic-158",
+      "filename": "acoustic_158.wav",
+      "type": "wav",
+      "source": "hydrophone",
+      "size_bytes": null,
+      "timestamp": "2026-05-01T00:54:44.756418+00:00",
+      "available": false,
+      "status": "metadata_only",
+      "reason": "metadata_only",
+      "path": null,
+      "payload": {
+        "schema_version": "v1",
+        "node_id": "ucl-buoy",
+        "ts_start": "2026-05-01T00:39:44.756418+00:00",
+        "ts_end": "2026-05-01T00:54:44.756418+00:00",
+        "format": {
+          "container": "wav",
+          "codec": "pcm_s16le",
+          "sample_rate_hz": 96000,
+          "channels": 2,
+          "bit_depth": 16
+        },
+        "capture": {
+          "alsa_device": "hw:3,0",
+          "alsa_card": "snd_rpi_hifiberry_dacplusadcpro",
+          "alsa_pcm": "HiFiBerry DAC+ADC Pro HiFi multicodec-0"
+        },
+        "artifact": {
+          "path": "/mnt/harddrive/buoy/raw/audio/ucl-buoy_hydrophone_20260501T003944Z_005444Z.wav",
+          "size_bytes": 691200044,
+          "sha256": "3db62daeedf8125ad9da353cad0eb5f45b4c00fd6513ec8b7a50e76b186501cf"
+        }
+      }
+    }
+  ]
+}
