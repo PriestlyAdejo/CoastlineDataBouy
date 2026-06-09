@@ -4,7 +4,8 @@ export type LiveLocationKind =
   | "replay"
   | "live_gnss_fix"
   | "approximate_ip_fallback"
-  | "no_live_gnss_fix";
+  | "gnss_waiting_fix"
+  | "no_gnss_device";
 
 export type LocationSnapshot = {
   lat?: number | null;
@@ -64,10 +65,9 @@ export function resolveLiveLocation(
 
   const source = merged.source ?? "gnss";
   const quality = merged.quality ?? "";
-  const hasCoords =
-    merged.lat != null && merged.lon != null && quality !== "no_fix";
 
   if (source === "ip_fallback" || quality === "approximate") {
+    const hasCoords = merged.lat != null && merged.lon != null;
     return {
       kind: "approximate_ip_fallback",
       label: "Approximate IP fallback",
@@ -75,6 +75,18 @@ export function resolveLiveLocation(
       hasCoordinates: hasCoords,
     };
   }
+
+  if (quality === "no_device" || source === "no_device") {
+    return {
+      kind: "no_gnss_device",
+      label: "No GNSS device detected",
+      location: merged,
+      hasCoordinates: false,
+    };
+  }
+
+  const hasCoords =
+    merged.lat != null && merged.lon != null && quality !== "no_fix";
 
   if (hasCoords && (quality === "fix" || quality === "")) {
     return {
@@ -86,8 +98,8 @@ export function resolveLiveLocation(
   }
 
   return {
-    kind: "no_live_gnss_fix",
-    label: "No live GNSS fix yet",
+    kind: "gnss_waiting_fix",
+    label: "GNSS present, waiting for fix",
     location: merged,
     hasCoordinates: false,
   };

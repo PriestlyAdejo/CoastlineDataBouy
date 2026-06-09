@@ -43,7 +43,7 @@ export function MetricCard({
   return (
     <div
       className={clsx(
-        "rounded-lg border p-5 shadow-md flex flex-col justify-between transition-colors cursor-default",
+        "rounded-lg border p-5 shadow-md flex flex-col justify-between transition-colors cursor-default min-w-0 overflow-hidden",
         status !== "normal" && "border" && statusColors[status],
         className,
       )}
@@ -57,8 +57,8 @@ export function MetricCard({
           <span className="text-xs font-semibold dash-text-secondary uppercase tracking-widest">
             {title}
           </span>
-          <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-mono font-medium dash-text-primary tracking-tight">
+          <div className="flex items-baseline gap-1 mt-1 min-w-0">
+            <span className="text-3xl font-mono font-medium dash-text-primary tracking-tight truncate">
               {value}
             </span>
             {unit && <span className="text-sm font-mono dash-text-faint">{unit}</span>}

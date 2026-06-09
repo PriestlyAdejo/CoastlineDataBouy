@@ -183,25 +183,34 @@ def _build_location(telemetry: dict | None) -> dict | None:
         lat_f, lon_f = None, None
 
     if source == "ip_fallback" or quality == "approximate":
-        if lat_f is None or lon_f is None:
-            return {
-                "source": "ip_fallback",
-                "quality": "approximate",
-                "fix_status": fix_status or "approximate",
-                "timestamp": ts,
-            }
-        return {
-            "lat": lat_f,
-            "lon": lon_f,
+        out_approx: dict = {
             "source": "ip_fallback",
             "quality": "approximate",
             "fix_status": fix_status or "approximate",
+            "reason": reason or "ip_geolocation_fallback",
             "timestamp": ts,
         }
+        if lat_f is not None and lon_f is not None:
+            out_approx["lat"] = lat_f
+            out_approx["lon"] = lon_f
+        return out_approx
+
+    if quality == "no_device" or source == "no_device":
+        out_nodevice: dict = {
+            "source": "no_device",
+            "quality": "no_device",
+            "fix_status": fix_status or "no_device",
+            "timestamp": ts,
+        }
+        if reason:
+            out_nodevice["reason"] = reason
+        return out_nodevice
+
+    gnss_source = "quectel_at" if source == "quectel_at" else "gnss"
 
     if quality == "no_fix" or (lat_f is None or lon_f is None):
         out: dict = {
-            "source": "gnss",
+            "source": gnss_source,
             "quality": "no_fix",
             "fix_status": fix_status or "no_fix",
             "timestamp": ts,
@@ -215,7 +224,7 @@ def _build_location(telemetry: dict | None) -> dict | None:
     loc: dict = {
         "lat": lat_f,
         "lon": lon_f,
-        "source": "gnss",
+        "source": gnss_source,
         "quality": "fix",
         "fix_status": fix_out,
         "timestamp": ts,

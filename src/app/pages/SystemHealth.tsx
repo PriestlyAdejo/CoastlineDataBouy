@@ -140,6 +140,32 @@ export function SystemHealth() {
         )}
       </div>
 
+      {!isBrightonDemo() && liveHealth?.network && typeof liveHealth.network === "object" && (
+        <Card title="Connectivity & 4G">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm font-mono dash-text-secondary">
+            {[
+              ["Internet", (liveHealth.network as Record<string, unknown>).online ? "Online" : "Offline"],
+              ["Backend", (liveHealth.network as Record<string, unknown>).backend_reachable ? "Reachable" : "Unreachable"],
+              ["Tailscale IP", String((liveHealth.network as Record<string, unknown>).tailscale_ip ?? (liveHealth.network as Record<string, unknown>).tailscale ?? "—")],
+              ["Default route", String((liveHealth.network as Record<string, unknown>).default_route_iface ?? "—")],
+              ["Modem detected", (liveHealth.network as Record<string, unknown>).modem_detected ? "Yes" : "No"],
+              ["4G connection", String((liveHealth.network as Record<string, unknown>).connection_name ?? "—")],
+              ["4G state", String((liveHealth.network as Record<string, unknown>).connection_state ?? (liveHealth.network as Record<string, unknown>).modem_manager_state ?? "—")],
+            ].map(([label, value]) => (
+              <div key={label} className="flex justify-between gap-4 border-b dash-border pb-2">
+                <span className="dash-text-muted uppercase text-xs tracking-wider">{label}</span>
+                <span className="dash-text-primary truncate text-right">{value}</span>
+              </div>
+            ))}
+          </div>
+          {Array.isArray((liveHealth.network as Record<string, unknown>).active_interfaces) && (
+            <p className="mt-3 text-xs dash-text-muted">
+              Interfaces: {((liveHealth.network as Record<string, unknown>).active_interfaces as string[]).join(", ")}
+            </p>
+          )}
+        </Card>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card title="CPU & Memory (60s)" action={
           <div className="flex items-center gap-1.5">

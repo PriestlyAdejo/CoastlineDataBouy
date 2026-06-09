@@ -180,12 +180,12 @@ export function LocationMap() {
     anchorState: locView?.kind === "approximate_ip_fallback" ? "approximate" : "gnss_fix",
     phaseLabel: locView?.label ?? live?.modeLabel ?? "LIVE API",
     driftM24h: null,
-    uncertaintyRadiusM: locView?.kind === "approximate_ip_fallback" ? 1000 : 30,
+    uncertaintyRadiusM: locView?.kind === "approximate_ip_fallback" ? 1000 : locView?.kind === "live_gnss_fix" ? 30 : null,
   } : !isBrightonDemo() ? {
     lat: null,
     lon: null,
     anchorState: "no_fix",
-    phaseLabel: locView?.label ?? "No live GNSS fix yet",
+    phaseLabel: locView?.label ?? "GNSS present, waiting for fix",
     driftM24h: null,
     uncertaintyRadiusM: null,
   } : replay?.getLocationMetrics());
@@ -456,7 +456,7 @@ export function LocationMap() {
           <span className="text-xs font-mono text-slate-200">
             {isBrightonDemo()
               ? `GPS replay — ${current.satellites} sats`
-              : locView?.label ?? "No live GNSS fix yet"}
+              : locView?.label ?? "GNSS present, waiting for fix"}
           </span>
           {!isBrightonDemo() && locView?.kind === "live_gnss_fix" && (
             <>
@@ -832,8 +832,19 @@ function BuoyPanel({ node }: { node: MapNode }) {
   const wave = replay?.getWaveMetrics();
   const env = replay?.getEnvironmentMetrics();
   const loc = replay?.getLocationMetrics();
-  const liveLoc = live?.locationView;
+  const locView = live?.locationView;
   const brighton = isBrightonDemo();
+  const gpsFixLabel = brighton
+    ? (node.satellites != null ? `Replay — ${node.satellites} sats` : "Replay")
+    : locView?.kind === "live_gnss_fix"
+      ? (node.satellites != null ? `3D — ${node.satellites} Satellites` : "Live GNSS fix")
+      : (locView?.label ?? "GNSS present, waiting for fix");
+  const hdopLabel =
+    !brighton && locView?.kind !== "live_gnss_fix"
+      ? "—"
+      : node.hdop != null
+        ? `${node.hdop} ${node.hdop < 1 ? "(Excellent)" : node.hdop < 1.5 ? "(Good)" : "(Fair)"}`
+        : "—";
   return (
     <>
       {/* Selected Buoy Card */}
@@ -856,8 +867,8 @@ function BuoyPanel({ node }: { node: MapNode }) {
           {[
             { label: "DEPTH", value: node.depth },
             { label: "BATTERY", value: node.battery },
-            { label: "GPS FIX", value: node.satellites != null ? `3D — ${node.satellites} Satellites` : (brighton ? "Replay" : "No live GNSS fix yet") },
-            { label: "HDOP", value: node.hdop != null ? `${node.hdop} ${node.hdop < 1 ? "(Excellent)" : node.hdop < 1.5 ? "(Good)" : "(Fair)"}` : "—" },
+            { label: "GPS FIX", value: gpsFixLabel },
+            { label: "HDOP", value: hdopLabel },
             { label: "DRIFT", value: node.drift },
             { label: "ANCHOR", value: node.anchor },
             { label: "LAST SYNC", value: node.lastSync },

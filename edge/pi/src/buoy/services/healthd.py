@@ -59,6 +59,82 @@ def _tailscale_ip() -> str | None:
         return None
 
 
+def _active_interfaces() -> list[str]:
+    try:
+        out = subprocess.check_output(["ip", "-o", "link", "show"], text=True, timeout=3)
+        names: list[str] = []
+        for line in out.splitlines():
+            parts = line.split(": ")
+            if len(parts) >= 2:
+                name = parts[1].strip().rstrip(":")
+                if name and name != "lo":
+                    names.append(name)
+        return names
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        return []
+
+
+def _default_route_iface() -> str | None:
+    try:
+        out = subprocess.check_output(["ip", "route", "show", "default"], text=True, timeout=3)
+        for line in out.splitlines():
+            parts = line.split()
+            if "dev" in parts:
+                idx = parts.index("dev")
+                if idx + 1 < len(parts):
+                    return parts[idx + 1]
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return None
+
+
+def _modem_detected() -> bool:
+    try:
+        out = subprocess.check_output(["lsusb"], text=True, timeout=3)
+        if any(k in out.lower() for k in ("quectel", "eg25", "ec25")):
+            return True
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return Path("/dev/ttyUSB0").exists()
+
+
+def _cellular_state() -> dict:
+    state: dict = {"modem_detected": _modem_detected()}
+    if subprocess.run(["which", "nmcli"], capture_output=True).returncode == 0:
+        try:
+            out = subprocess.check_output(
+                ["nmcli", "-t", "-f", "NAME,TYPE,STATE", "con", "show", "--active"],
+                text=True,
+                timeout=3,
+            )
+            for line in out.splitlines():
+                if "gsm" in line.lower() or "cdma" in line.lower():
+                    parts = line.split(":")
+                    if len(parts) >= 3:
+                        state["connection_name"] = parts[0]
+                        state["connection_state"] = parts[2]
+                        break
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            pass
+    if "connection_name" not in state and subprocess.run(["which", "mmcli"], capture_output=True).returncode == 0:
+        try:
+            listing = subprocess.check_output(["mmcli", "-L"], text=True, timeout=3)
+            modem_id = None
+            for line in listing.splitlines():
+                if "/Modem/" in line:
+                    modem_id = line.strip().split("/")[-1].rstrip(")")
+                    break
+            if modem_id:
+                detail = subprocess.check_output(["mmcli", "-m", modem_id], text=True, timeout=3)
+                for line in detail.splitlines():
+                    if line.strip().lower().startswith("state:"):
+                        state["modem_manager_state"] = line.split(":", 1)[1].strip()
+                        break
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            pass
+    return state
+
+
 def _latest_serial_battery(data_dir: Path) -> dict:
     path = data_dir / "telemetry" / "serial_telemetry.jsonl"
     if not path.exists():
@@ -99,6 +175,7 @@ def main() -> None:
         ts_ip = _tailscale_ip()
         online = _internet_online()
         backend_ok = _backend_reachable(host, port)
+        cellular = _cellular_state()
 
         payload = {
             "schema_version": "v1",
@@ -130,6 +207,10 @@ def main() -> None:
                 "online": online,
                 "backend_reachable": backend_ok,
                 "tailscale": ts_ip or "offline",
+                "tailscale_ip": ts_ip,
+                "active_interfaces": _active_interfaces(),
+                "default_route_iface": _default_route_iface(),
+                **cellular,
             },
             **battery,
         }

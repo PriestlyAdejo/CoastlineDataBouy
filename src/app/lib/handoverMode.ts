@@ -3,6 +3,17 @@ const API_BASE_KEY = "nereus.apiBaseUrl";
 const READABLE_KEY = "nereus.handoverReadable";
 const HANDOVER_KEY = "nereus.handover";
 
+/** Force high-contrast handover theme on <html> (independent of OS light/dark). */
+export function applyHandoverReadableClass(): void {
+  if (typeof window === "undefined") return;
+  const params = new URLSearchParams(window.location.search);
+  const readable =
+    params.get("readable") === "1" ||
+    (params.get("handover") === "1" && window.localStorage.getItem(READABLE_KEY) !== "0") ||
+    window.localStorage.getItem(READABLE_KEY) === "1";
+  document.documentElement.classList.toggle("handover-readable", readable);
+}
+
 /** Apply `?handover=1&apiBase=...&readable=1` before the app boots. */
 export function applyHandoverUrlParams(): void {
   if (typeof window === "undefined") return;
@@ -17,7 +28,10 @@ export function applyHandoverUrlParams(): void {
     (import.meta.env.VITE_API_BASE as string | undefined)?.trim() ||
     "http://127.0.0.1:8000/v1";
   window.localStorage.setItem(API_BASE_KEY, apiBase);
-  window.localStorage.setItem(READABLE_KEY, "1");
+  if (params.get("readable") !== "0") {
+    window.localStorage.setItem(READABLE_KEY, "1");
+  }
+  applyHandoverReadableClass();
 }
 
 /** Persisted handover session (survives refresh without query string). */
@@ -33,6 +47,7 @@ export function enforceHandoverSession(): void {
   if (window.localStorage.getItem(READABLE_KEY) !== "0") {
     window.localStorage.setItem(READABLE_KEY, "1");
   }
+  applyHandoverReadableClass();
 }
 
 export function isHandoverUrlActive(): boolean {

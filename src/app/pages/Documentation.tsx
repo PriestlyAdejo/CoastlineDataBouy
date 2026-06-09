@@ -80,7 +80,7 @@ export function Documentation() {
         <div><BookOpen size={14} className="inline mr-2" />LIVE API — real Pi data; never Brighton coordinates unless replay enabled.</div>
         <div><BookOpen size={14} className="inline mr-2" />BRIGHTON REPLAY — deterministic demo only (localStorage demo mode).</div>
         <div className="font-semibold text-cyan-400">GPS Heartbeat</div>
-        <div>Map shows Live GNSS fix, Approximate IP fallback, or No live GNSS fix yet. Location object on latest snapshot.</div>
+        <div>Map shows Live GNSS fix, GNSS present waiting for fix, Approximate IP fallback, or No GNSS device detected. Location object on latest snapshot.</div>
         <div className="font-semibold text-cyan-400">Hydrophone</div>
         <div>Raw WAV on Pi SSD at /mnt/ssd/buoy/raw/audio. Metadata uploads; binary may show file_on_pi_not_synced on Files page.</div>
         <div className="font-semibold text-cyan-400">Known limitations</div>

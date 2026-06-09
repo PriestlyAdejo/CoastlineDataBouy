@@ -1,68 +1,105 @@
 /* Explicit dashboard theme — OS/browser colour scheme independent */
-html,
-body,
-#root {
-  background-color: var(--dash-bg, #020617);
-  color: var(--dash-text-secondary, #cbd5e1);
-}
 
 :root {
-  --dash-bg: #020617;
-  --dash-sidebar-bg: #0f172a;
-  --dash-header-bg: #0f172a;
-  --dash-panel-bg: #1e293b;
-  --dash-panel-border: #475569;
-  --dash-text-primary: #f1f5f9;
-  --dash-text-secondary: #cbd5e1;
-  --dash-text-faint: #94a3b8;
-  --dash-success: #34d399;
+  --app-bg: #020617;
+  --surface: #0f172a;
+  --surface-raised: #1e293b;
+  --surface-muted: #334155;
+  --border: #475569;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --accent: #22d3ee;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #fb7185;
+  --chart-axis: #64748b;
+  --chart-grid: #334155;
+  --chart-label: #cbd5e1;
+
+  --dash-bg: var(--app-bg);
+  --dash-sidebar-bg: var(--surface);
+  --dash-header-bg: var(--surface);
+  --dash-panel-bg: var(--surface-raised);
+  --dash-panel-border: var(--border);
+  --dash-text-primary: var(--text-primary);
+  --dash-text-secondary: var(--text-secondary);
+  --dash-text-faint: var(--text-muted);
+  --dash-success: var(--success);
   --dash-success-bg: #064e3b;
-  --dash-warning: #fbbf24;
+  --dash-warning: var(--warning);
   --dash-warning-bg: #78350f;
-  --dash-error: #fb7185;
+  --dash-error: var(--danger);
   --dash-error-bg: #881337;
-  --dash-accent: #22d3ee;
+  --dash-accent: var(--accent);
   --dash-accent-bg: #164e63;
-  --dash-chart-grid: #334155;
-  --dash-chart-axis: #64748b;
-  --dash-chart-label: #cbd5e1;
-  --dash-chart-tooltip-bg: #1e293b;
-  --dash-chart-tooltip-border: #475569;
+  --dash-chart-grid: var(--chart-grid);
+  --dash-chart-axis: var(--chart-axis);
+  --dash-chart-label: var(--chart-label);
+  --dash-chart-tooltip-bg: var(--surface-raised);
+  --dash-chart-tooltip-border: var(--border);
   --dash-badge-live-bg: #065f46;
   --dash-badge-live-text: #a7f3d0;
   --dash-badge-replay-bg: #78350f;
   --dash-badge-replay-text: #fde68a;
   --dash-badge-offline-bg: #881337;
   --dash-badge-offline-text: #fecdd3;
-  --dash-badge-neutral-bg: #334155;
+  --dash-badge-neutral-bg: var(--surface-muted);
   --dash-badge-neutral-text: #e2e8f0;
 }
 
-/* Projector / handover readable — high contrast, opaque surfaces */
+html,
+body,
+#root {
+  background-color: var(--app-bg);
+  color: var(--text-secondary);
+}
+
+/* Handover / projector readable — forced high-contrast dark theme */
 html.handover-readable {
   font-size: 17px;
-  color-scheme: dark;
-  --dash-bg: #0b1220;
-  --dash-sidebar-bg: #111827;
-  --dash-header-bg: #111827;
-  --dash-panel-bg: #1f2937;
-  --dash-panel-border: #9ca3af;
-  --dash-text-primary: #f9fafb;
-  --dash-text-secondary: #e5e7eb;
-  --dash-text-faint: #d1d5db;
-  --dash-chart-grid: #6b7280;
-  --dash-chart-axis: #d1d5db;
-  --dash-chart-label: #f3f4f6;
-  --dash-chart-tooltip-bg: #1f2937;
-  --dash-chart-tooltip-border: #9ca3af;
-  --dash-badge-live-bg: #047857;
+  color-scheme: dark only;
+  forced-color-adjust: none;
+
+  --app-bg: #060a12;
+  --surface: #0d1524;
+  --surface-raised: #162032;
+  --surface-muted: #243044;
+  --border: #8b9cb3;
+  --text-primary: #ffffff;
+  --text-secondary: #e8edf5;
+  --text-muted: #c5d0e0;
+  --accent: #3de8ff;
+  --success: #4ade80;
+  --warning: #fcd34d;
+  --danger: #fb7185;
+  --chart-axis: #d8e2f0;
+  --chart-grid: #5a6d88;
+  --chart-label: #f0f4fa;
+
+  --dash-success-bg: #14532d;
+  --dash-warning-bg: #92400e;
+  --dash-error-bg: #9f1239;
+  --dash-accent-bg: #155e75;
+  --dash-chart-tooltip-bg: #162032;
+  --dash-chart-tooltip-border: #8b9cb3;
+  --dash-badge-live-bg: #166534;
   --dash-badge-live-text: #ecfdf5;
   --dash-badge-replay-bg: #b45309;
   --dash-badge-replay-text: #fffbeb;
   --dash-badge-offline-bg: #be123c;
   --dash-badge-offline-text: #fff1f2;
-  --dash-badge-neutral-bg: #374151;
-  --dash-badge-neutral-text: #f3f4f6;
+  --dash-badge-neutral-bg: #243044;
+  --dash-badge-neutral-text: #f0f4fa;
+
+  background-color: var(--app-bg) !important;
+  color: var(--text-secondary) !important;
+}
+
+html.handover-readable body,
+html.handover-readable #root {
+  background-color: var(--app-bg) !important;
+  color: var(--text-secondary) !important;
 }
 
 html.handover-readable .text-\[9px\] {
@@ -82,29 +119,16 @@ html.handover-readable .text-sm {
 }
 
 /* Token utility classes */
-.dash-bg {
-  background-color: var(--dash-bg);
-}
-.dash-sidebar-bg {
-  background-color: var(--dash-sidebar-bg);
-}
-.dash-panel-bg {
-  background-color: var(--dash-panel-bg);
-}
-.dash-text-primary {
-  color: var(--dash-text-primary);
-}
-.dash-text-secondary {
-  color: var(--dash-text-secondary);
-}
-.dash-text-faint {
-  color: var(--dash-text-faint);
-}
-.dash-border {
-  border-color: var(--dash-panel-border);
-}
+.dash-bg { background-color: var(--app-bg); }
+.dash-sidebar-bg { background-color: var(--surface); }
+.dash-panel-bg { background-color: var(--surface-raised); }
+.dash-text-primary { color: var(--text-primary); }
+.dash-text-secondary { color: var(--text-secondary); }
+.dash-text-faint { color: var(--text-muted); }
+.dash-text-muted { color: var(--text-muted); }
+.dash-border { border-color: var(--border); }
 
-/* Card and table overflow — readable wrapping */
+/* Card and table overflow */
 .dash-shell .rounded-xl,
 .dash-shell .rounded-lg {
   overflow-wrap: anywhere;
@@ -119,63 +143,97 @@ html.handover-readable .text-sm {
 
 .dash-shell .truncate {
   max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 html.handover-readable .dash-shell h1,
 html.handover-readable .dash-shell h2,
-html.handover-readable .dash-shell h3 {
-  color: var(--dash-text-primary) !important;
+html.handover-readable .dash-shell h3,
+html.handover-readable .dash-shell h4 {
+  color: var(--text-primary) !important;
 }
 
-/* Override low-contrast slate utilities inside dashboard shell */
+/* Slate utility overrides inside dashboard shell */
 .dash-shell .text-slate-500,
 .dash-shell .text-slate-600 {
-  color: var(--dash-text-faint);
+  color: var(--text-muted);
 }
 .dash-shell .text-slate-400 {
-  color: var(--dash-text-secondary);
+  color: var(--text-secondary);
 }
-.dash-shell .text-slate-300 {
-  color: var(--dash-text-primary);
-}
+.dash-shell .text-slate-300,
 .dash-shell .text-slate-200,
 .dash-shell .text-slate-100 {
-  color: var(--dash-text-primary);
+  color: var(--text-primary);
 }
 
 html.handover-readable .dash-shell .text-slate-500,
 html.handover-readable .dash-shell .text-slate-600,
-html.handover-readable .dash-shell .text-slate-400,
+html.handover-readable .dash-shell .text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
 html.handover-readable .dash-shell .text-slate-300,
 html.handover-readable .dash-shell .text-slate-200,
 html.handover-readable .dash-shell .text-slate-100 {
-  color: var(--dash-text-secondary) !important;
+  color: var(--text-primary) !important;
 }
 
-html.handover-readable .dash-shell .text-slate-200,
-html.handover-readable .dash-shell .text-slate-100 {
-  color: var(--dash-text-primary) !important;
+html.handover-readable .dash-shell p,
+html.handover-readable .dash-shell span,
+html.handover-readable .dash-shell td,
+html.handover-readable .dash-shell th,
+html.handover-readable .dash-shell li,
+html.handover-readable .dash-shell label {
+  opacity: 1 !important;
+}
+
+/* Kill low-opacity Tailwind text/background in readable mode */
+html.handover-readable .dash-shell [class*="text-white/"],
+html.handover-readable .dash-shell [class*="text-slate-"][class*="/"],
+html.handover-readable .dash-shell [class*="text-gray-"][class*="/"],
+html.handover-readable .dash-shell [class*="text-cyan-"][class*="/"],
+html.handover-readable .dash-shell [class*="text-emerald-"][class*="/"],
+html.handover-readable .dash-shell [class*="text-amber-"][class*="/"],
+html.handover-readable .dash-shell [class*="text-rose-"][class*="/"] {
+  color: var(--text-secondary) !important;
+}
+
+html.handover-readable .dash-shell [class*="bg-slate-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-gray-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-cyan-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-emerald-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-amber-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-rose-"][class*="/"],
+html.handover-readable .dash-shell [class*="bg-white/"] {
+  background-color: var(--surface-raised) !important;
+  backdrop-filter: none !important;
 }
 
 html.handover-readable .border-slate-800,
 html.handover-readable .border-slate-700,
-html.handover-readable .border-slate-600 {
-  border-color: var(--dash-panel-border) !important;
+html.handover-readable .border-slate-600,
+html.handover-readable .border-slate-500 {
+  border-color: var(--border) !important;
 }
 
-html.handover-readable .bg-slate-800,
+html.handover-readable .bg-slate-950,
 html.handover-readable .bg-slate-900,
+html.handover-readable .bg-slate-800,
+html.handover-readable .bg-slate-700,
+html.handover-readable .bg-slate-600 {
+  background-color: var(--surface-raised) !important;
+}
+
 html.handover-readable .bg-slate-900\/20,
 html.handover-readable .bg-slate-900\/30,
 html.handover-readable .bg-slate-900\/40,
 html.handover-readable .bg-slate-900\/50,
 html.handover-readable .bg-slate-900\/60,
 html.handover-readable .bg-slate-900\/95,
-html.handover-readable .bg-slate-800\/50 {
-  background-color: var(--dash-panel-bg) !important;
-  backdrop-filter: none !important;
-}
-
+html.handover-readable .bg-slate-800\/50,
 html.handover-readable .bg-emerald-500\/5,
 html.handover-readable .bg-amber-500\/5,
 html.handover-readable .bg-cyan-500\/5,
@@ -184,35 +242,61 @@ html.handover-readable .bg-emerald-500\/10,
 html.handover-readable .bg-amber-500\/10,
 html.handover-readable .bg-cyan-500\/10,
 html.handover-readable .bg-cyan-500\/15 {
-  background-color: var(--dash-panel-bg) !important;
+  background-color: var(--surface-raised) !important;
 }
 
 html.handover-readable .dash-shell nav button,
 html.handover-readable .dash-shell nav a {
-  color: var(--dash-text-secondary) !important;
+  color: var(--text-secondary) !important;
 }
 
 html.handover-readable .dash-shell nav a.bg-slate-800,
 html.handover-readable .dash-shell nav a[class*="bg-slate-800"] {
-  background-color: #374151 !important;
-  color: var(--dash-accent) !important;
+  background-color: var(--surface-muted) !important;
+  color: var(--accent) !important;
 }
 
 html.handover-readable .dash-shell header,
 html.handover-readable .dash-shell aside {
-  background-color: var(--dash-sidebar-bg) !important;
+  background-color: var(--surface) !important;
 }
 
 html.handover-readable .dash-shell .recharts-cartesian-axis-tick text {
-  fill: var(--dash-chart-axis) !important;
+  fill: var(--chart-axis) !important;
   font-size: 12px !important;
 }
 
 html.handover-readable .dash-shell .recharts-legend-item-text {
-  color: var(--dash-chart-label) !important;
+  color: var(--chart-label) !important;
 }
 
-/* Disable subtle dot-grid background in readable mode */
+html.handover-readable .dash-shell .recharts-default-tooltip {
+  background-color: var(--surface-raised) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
 html.handover-readable .dash-shell .overflow-y-auto {
   background-image: none !important;
+}
+
+/* Metric cards — prevent value/label overlap */
+html.handover-readable .dash-shell .text-3xl {
+  font-size: 1.75rem !important;
+  line-height: 1.2 !important;
+  overflow-wrap: anywhere;
+}
+
+html.handover-readable .dash-shell .inline-flex.rounded-full {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hydrophone card containment */
+html.handover-readable .dash-shell .hydrophone-card,
+html.handover-readable .dash-shell [class*="hydrophone"] {
+  max-width: 100%;
+  overflow: hidden;
 }

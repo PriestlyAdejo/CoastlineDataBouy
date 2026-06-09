@@ -203,7 +203,11 @@ export function Layout() {
                   ? "GPS: LIVE FIX"
                   : live?.locationView?.kind === "approximate_ip_fallback"
                     ? "GPS: APPROX"
-                    : "GPS: NO FIX"}
+                    : live?.locationView?.kind === "no_gnss_device"
+                      ? "GPS: NO DEVICE"
+                      : live?.locationView?.kind === "gnss_waiting_fix"
+                        ? "GPS: WAIT FIX"
+                        : "GPS: NO FIX"}
             </span>
           </div>
         </div>

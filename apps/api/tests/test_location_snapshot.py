@@ -72,6 +72,58 @@ def test_latest_snapshot_location_no_fix(tmp_path):
         db_module.SessionLocal = original
 
 
+def test_latest_snapshot_location_no_device(tmp_path):
+    client, original = _client_with_db(tmp_path)
+    try:
+        payload = {
+            "schema_version": "v1",
+            "node_id": "ucl-buoy",
+            "ts": "2026-06-03T12:03:00Z",
+            "source": "no_device",
+            "gps": {
+                "quality": "no_device",
+                "fix_status": "no_device",
+                "reason": "no_device",
+                "source": "no_device",
+            },
+        }
+        client.post("/v1/ingest/telemetry", headers=TOKEN, json=payload)
+        latest = client.get("/v1/nodes/ucl-buoy/snapshots/latest").json()
+        loc = latest["location"]
+        assert loc["quality"] == "no_device"
+        assert loc["source"] == "no_device"
+        assert "lat" not in loc or loc.get("lat") is None
+    finally:
+        db_module.SessionLocal = original
+
+
+def test_latest_snapshot_location_quectel_at_fix(tmp_path):
+    client, original = _client_with_db(tmp_path)
+    try:
+        payload = {
+            "schema_version": "v1",
+            "node_id": "ucl-buoy",
+            "ts": "2026-06-03T12:04:00Z",
+            "source": "quectel_at",
+            "gps": {
+                "lat": 50.82,
+                "lon": -0.13,
+                "quality": "fix",
+                "fix_status": "3d",
+                "source": "quectel_at",
+                "satellites": 8,
+            },
+        }
+        client.post("/v1/ingest/telemetry", headers=TOKEN, json=payload)
+        latest = client.get("/v1/nodes/ucl-buoy/snapshots/latest").json()
+        loc = latest["location"]
+        assert loc["source"] == "quectel_at"
+        assert loc["quality"] == "fix"
+        assert loc["lat"] == 50.82
+    finally:
+        db_module.SessionLocal = original
+
+
 def test_latest_snapshot_location_ip_fallback(tmp_path):
     client, original = _client_with_db(tmp_path)
     try:

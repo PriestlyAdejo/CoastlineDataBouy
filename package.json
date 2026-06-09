@@ -9,6 +9,7 @@
     "schema:ts": "node tools/dev/gen_typescript_from_jsonschema.js",
     "capture:evidence": "node scripts/capture_dashboard_evidence.mjs",
     "capture:evidence:headed": "node scripts/capture_dashboard_evidence.mjs --headed",
+    "test": "vitest run",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
@@ -75,7 +76,8 @@
     "@vitejs/plugin-react": "4.7.0",
     "playwright": "^1.49.0",
     "tailwindcss": "4.1.12",
-    "vite": "6.3.5"
+    "vite": "6.3.5",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "react": "18.3.1",

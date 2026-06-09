@@ -8,12 +8,12 @@ function cssVar(name: string, fallback: string): string {
 
 export function chartColors() {
   return {
-    grid: cssVar("--dash-chart-grid", "#334155"),
-    axis: cssVar("--dash-chart-axis", "#64748b"),
-    label: cssVar("--dash-chart-label", "#cbd5e1"),
+    grid: cssVar("--chart-grid", cssVar("--dash-chart-grid", "#334155")),
+    axis: cssVar("--chart-axis", cssVar("--dash-chart-axis", "#64748b")),
+    label: cssVar("--chart-label", cssVar("--dash-chart-label", "#cbd5e1")),
     tooltipBg: cssVar("--dash-chart-tooltip-bg", "#1e293b"),
     tooltipBorder: cssVar("--dash-chart-tooltip-border", "#475569"),
-    accent: cssVar("--dash-accent", "#22d3ee"),
+    accent: cssVar("--accent", cssVar("--dash-accent", "#22d3ee")),
   };
 }
 

@@ -62,6 +62,9 @@ class GnssConfig(BaseModel):
     baud: int = 9600
     read_timeout_s: float = 1.0
     auto_detect: bool = True
+    mode: str = "auto"  # auto | nmea | quectel_at
+    at_port: str = ""
+    at_baud: int = 115200
     interval_s: int = 5
     location_heartbeat_interval_s: int = 60
     enable_ip_fallback: bool = False
@@ -129,6 +132,11 @@ def load_settings() -> EdgeSettings:
             auto_detect=_bool_env(
                 "BUOY_GNSS_AUTO_DETECT",
                 bool(GnssConfig.model_fields["auto_detect"].default),
+            ),
+            mode=os.getenv("BUOY_GNSS_MODE", GnssConfig.model_fields["mode"].default),
+            at_port=os.getenv("BUOY_GNSS_AT_PORT", GnssConfig.model_fields["at_port"].default),
+            at_baud=int(
+                os.getenv("BUOY_GNSS_AT_BAUD", str(GnssConfig.model_fields["at_baud"].default))
             ),
             interval_s=int(
                 os.getenv("BUOY_GNSS_INTERVAL_S", str(GnssConfig.model_fields["interval_s"].default))
