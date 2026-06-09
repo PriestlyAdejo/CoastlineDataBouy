@@ -57,21 +57,9 @@ if [[ ! -d "$EDGE_SRC" ]]; then
 fi
 export PYTHONPATH="${EDGE_SRC}:${PYTHONPATH:-}"
 
-"$PYTHON" - <<'PY'
-import json
-import os
-
-from buoy.hardware.gnss_probe import run_gnss_probe, write_probe_report
-
-data_dir = Path(os.environ["GNSS_PROBE_DATA_DIR"])
-enable = os.environ.get("GNSS_PROBE_ENABLE", "0") == "1"
-nmea_s = float(os.environ.get("GNSS_PROBE_NMEA_SECONDS", "8"))
-
-report = run_gnss_probe(enable_gnss=enable, nmea_seconds=nmea_s)
-out = write_probe_report(data_dir, report)
-print(json.dumps(report, indent=2))
-print(f"\nreport_written: {out}")
-PY
+if ! "$PYTHON" -m buoy.hardware.gnss_probe; then
+  handover_warn "Could not write GNSS probe report to ${REPORT_PATH}"
+fi
 
 echo ""
 echo "========== GNSS PROBE SUMMARY =========="

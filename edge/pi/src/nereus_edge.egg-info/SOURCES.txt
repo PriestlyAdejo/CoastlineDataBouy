@@ -5,6 +5,7 @@ src/buoy/logging.py
 src/buoy/audio/__init__.py
 src/buoy/audio/alsa.py
 src/buoy/audio/record.py
+src/buoy/hardware/connectivity_probe.py
 src/buoy/hardware/gnss_detect.py
 src/buoy/hardware/gnss_probe.py
 src/buoy/hardware/serial_detect.py
@@ -32,6 +33,7 @@ src/nereus_edge.egg-info/entry_points.txt
 src/nereus_edge.egg-info/requires.txt
 src/nereus_edge.egg-info/top_level.txt
 tests/test_config_audio_chunk.py
+tests/test_connectivity_probe.py
 tests/test_gnss_no_fix.py
 tests/test_gnss_probe.py
 tests/test_nmea_parser.py

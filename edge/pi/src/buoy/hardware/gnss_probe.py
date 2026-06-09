@@ -167,3 +167,48 @@ def write_probe_report(data_dir: Path, report: dict[str, Any]) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return out
+
+
+def minimal_no_device_report(*, enable_gnss: bool, error: str | None = None) -> dict[str, Any]:
+    return {
+        "schema_version": "v1",
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "outcome": "gnss_no_device",
+        "ports_probed": candidate_ports(),
+        "port_results": [],
+        "nmea_port": None,
+        "at_port": None,
+        "recommendation": {},
+        "enable_gnss_requested": enable_gnss,
+        "error": error,
+        "note": "No GNSS/Quectel modem ports found; IP fallback remains acceptable if labelled",
+    }
+
+
+def run_probe_and_write_from_env() -> Path:
+    import os
+
+    data_dir = Path(os.environ["GNSS_PROBE_DATA_DIR"])
+    enable = os.environ.get("GNSS_PROBE_ENABLE", "0") == "1"
+    nmea_s = float(os.environ.get("GNSS_PROBE_NMEA_SECONDS", "8"))
+    try:
+        report = run_gnss_probe(enable_gnss=enable, nmea_seconds=nmea_s)
+    except Exception as exc:
+        report = minimal_no_device_report(enable_gnss=enable, error=str(exc))
+    return write_probe_report(data_dir, report)
+
+
+if __name__ == "__main__":
+    import os
+    import sys
+
+    os.environ.setdefault("GNSS_PROBE_ENABLE", "0")
+    os.environ.setdefault("GNSS_PROBE_NMEA_SECONDS", "8")
+    try:
+        out = run_probe_and_write_from_env()
+        report = json.loads(out.read_text(encoding="utf-8"))
+        print(json.dumps(report, indent=2))
+        print(f"\nreport_written: {out}")
+    except Exception as exc:
+        print(f"WARN: GNSS probe report write failed: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc

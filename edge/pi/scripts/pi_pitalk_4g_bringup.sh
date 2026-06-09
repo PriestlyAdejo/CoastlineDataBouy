@@ -78,14 +78,29 @@ ls -la /dev/serial/by-path/ 2>/dev/null || true
 
 MODEM_DETECTED=false
 MODEM_ID=""
+LSUSB_MODEM_SIG=false
+TTYUSB_PORTS=""
+TTYACM_PORTS=""
+MMCLI_MODEMS="[]"
+CONNECT_ATTEMPTED=false
+CONNECT_SUCCESS=false
+
+if ls /dev/ttyUSB* >/dev/null 2>&1; then
+  TTYUSB_PORTS="$(ls -1 /dev/ttyUSB* 2>/dev/null | paste -sd, - || true)"
+fi
+if ls /dev/ttyACM* >/dev/null 2>&1; then
+  TTYACM_PORTS="$(ls -1 /dev/ttyACM* 2>/dev/null | paste -sd, - || true)"
+fi
+
 if lsusb 2>/dev/null | egrep -qi "quectel|eg25|ec25"; then
   MODEM_DETECTED=true
+  LSUSB_MODEM_SIG=true
   handover_pass "Quectel modem visible on USB"
-elif ls -la /dev/ttyUSB* >/dev/null 2>&1; then
+elif [[ -n "$TTYUSB_PORTS" ]]; then
   MODEM_DETECTED=true
   handover_warn "ttyUSB present (modem likely) but Quectel not matched in lsusb"
 else
-  handover_fail "No modem USB signature or ttyUSB ports"
+  handover_warn "No modem USB signature or ttyUSB ports (Wi-Fi/Tailscale may still work)"
 fi
 
 CELL_STATE="unknown"
@@ -96,6 +111,7 @@ if command -v mmcli >/dev/null 2>&1; then
   echo "mmcli -L:"
   MM_LIST="$(mmcli -L 2>/dev/null || true)"
   echo "$MM_LIST"
+  MMCLI_MODEMS="$(python3 -c "import re,sys; ids=re.findall(r'/Modem/(\\d+)', sys.stdin.read()); print(__import__('json').dumps(ids))" <<<"$MM_LIST" 2>/dev/null || echo '[]')"
   MODEM_ID="$(echo "$MM_LIST" | sed -n 's|.*/Modem/\([0-9]*\).*|\1|p' | head -n1)"
   if [[ -n "$MODEM_ID" ]]; then
     MODEM_DETECTED=true
@@ -109,15 +125,33 @@ if command -v mmcli >/dev/null 2>&1; then
     echo "Signal:"
     mmcli -m "$MODEM_ID" --signal-get 2>/dev/null || true
     if [[ -n "$APN" ]]; then
-      mmcli -m "$MODEM_ID" --simple-connect="apn=${APN}" 2>/dev/null && handover_pass "ModemManager simple-connect attempted" || handover_warn "ModemManager connect failed or already connected"
+      CONNECT_ATTEMPTED=true
+      if mmcli -m "$MODEM_ID" --simple-connect="apn=${APN}" 2>/dev/null; then
+        handover_pass "ModemManager simple-connect attempted"
+        CONNECT_SUCCESS=true
+      else
+        handover_warn "ModemManager connect failed or already connected"
+      fi
     fi
     CELL_STATE="$(mmcli -m "$MODEM_ID" 2>/dev/null | awk -F': ' '/state:/ {print $2; exit}' || echo unknown)"
+  fi
+fi
+
+WIFI_RADIO="unknown"
+WWAN_RADIO="unknown"
+WIFI_CONNECTED=false
+if command -v nmcli >/dev/null 2>&1; then
+  WIFI_RADIO="$(nmcli -t -f WIFI radio 2>/dev/null || echo unknown)"
+  WWAN_RADIO="$(nmcli -t -f WWAN radio 2>/dev/null || echo unknown)"
+  if nmcli -t -f DEVICE,STATE device status 2>/dev/null | awk -F: '$2 ~ /connected/ && $1 ~ /^(wlan|wlp|wlx)/ {found=1} END{exit !found}'; then
+    WIFI_CONNECTED=true
   fi
 fi
 
 if command -v nmcli >/dev/null 2>&1 && [[ -n "$APN" ]]; then
   echo ""
   echo "--- NetworkManager buoy-4g profile ---"
+  CONNECT_ATTEMPTED=true
   if nmcli -t -f NAME con show 2>/dev/null | grep -qx "$CONN_NAME"; then
     nmcli con mod "$CONN_NAME" gsm.apn "$APN" 2>/dev/null || sudo nmcli con mod "$CONN_NAME" gsm.apn "$APN" 2>/dev/null || true
     [[ -n "$USER_4G" ]] && nmcli con mod "$CONN_NAME" gsm.username "$USER_4G" 2>/dev/null || true
@@ -137,11 +171,17 @@ if command -v nmcli >/dev/null 2>&1 && [[ -n "$APN" ]]; then
     nmcli con mod "$CONN_NAME" ipv4.route-metric 50 ipv6.route-metric 50 2>/dev/null || true
     handover_warn "4G preferred (--prefer-4g): route metric lowered for test"
   fi
-  nmcli con up "$CONN_NAME" 2>/dev/null || sudo nmcli con up "$CONN_NAME" 2>/dev/null \
-    && handover_pass "nmcli con up ${CONN_NAME}" \
-    || handover_warn "nmcli con up ${CONN_NAME} failed (may already be up or no SIM)"
+  if nmcli con up "$CONN_NAME" 2>/dev/null || sudo nmcli con up "$CONN_NAME" 2>/dev/null; then
+    handover_pass "nmcli con up ${CONN_NAME}"
+    CONNECT_SUCCESS=true
+  else
+    handover_warn "nmcli con up ${CONN_NAME} failed (may already be up or no SIM)"
+  fi
   CELL_CONN="$CONN_NAME"
   CELL_STATE="$(nmcli -t -f GENERAL.STATE con show "$CONN_NAME" 2>/dev/null | cut -d: -f2 || echo unknown)"
+  if [[ "$CELL_STATE" == *activated* ]] || [[ "$CELL_STATE" == *connected* ]]; then
+    CONNECT_SUCCESS=true
+  fi
 fi
 
 echo ""
@@ -175,36 +215,72 @@ else
 fi
 
 ACTIVE_IFACES="$(ip -o link show 2>/dev/null | awk -F': ' '{gsub(/^ +/,"",$2); print $2}' | paste -sd, - || echo "")"
-TS_STATUS="$(tailscale status --json 2>/dev/null | head -c 2000 || echo "")"
+TAILSCALE_ONLINE=false
+[[ -n "$TS_IP" ]] && TAILSCALE_ONLINE=true
 
-python3 - <<PY
-import json
-from datetime import datetime, timezone
+PROBE_WARNINGS="[]"
+PROBE_FAILURES="[]"
+if [[ "$MODEM_DETECTED" != true ]]; then
+  PROBE_WARNINGS='["modem_not_detected","pitalk_module_not_enumerating"]'
+fi
+if [[ "$BACKEND_OK" != true ]]; then
+  PROBE_FAILURES='["backend_unreachable"]'
+fi
 
-report = {
-    "schema_version": "v1",
-    "ts": datetime.now(timezone.utc).isoformat(),
-    "apn_configured": bool("${APN}"),
-    "modem_detected": ${MODEM_DETECTED,,},
-    "modem_id": "${MODEM_ID}",
-    "cellular_connection": "${CELL_CONN}",
-    "cellular_state": "${CELL_STATE}",
-    "default_route_iface": "${DEFAULT_IFACE}",
-    "active_interfaces": "${ACTIVE_IFACES}".split(",") if "${ACTIVE_IFACES}" else [],
-    "tailscale_ip": "${TS_IP}" or None,
-    "backend_reachable": ${BACKEND_OK,,},
-    "backend_url": "${BACKEND_URL}",
-    "prefer_4g": ${PREFER_4G} == 1,
-    "handover_summary": {"pass": ${HANDOVER_PASS}, "warn": ${HANDOVER_WARN}, "fail": ${HANDOVER_FAIL}},
-}
-with open("${REPORT_PATH}", "w", encoding="utf-8") as f:
-    json.dump(report, f, indent=2)
-    f.write("\n")
-print(f"report_written: ${REPORT_PATH}")
-PY
+PYTHON="${PYTHON:-python3}"
+REPO_ROOT="$(handover_repo_root)"
+EDGE_SRC="${REPO_ROOT}/edge/pi/src"
+if [[ ! -d "$EDGE_SRC" ]]; then
+  EDGE_SRC="${SCRIPT_DIR}/../src"
+fi
+export PYTHONPATH="${EDGE_SRC}:${PYTHONPATH:-}"
+export CONNECTIVITY_PROBE_DATA_DIR="${DATA_DIR}"
+export CONNECTIVITY_PROBE_NODE_ID="${NODE_ID}"
+export CONNECTIVITY_PROBE_WIFI_RADIO="${WIFI_RADIO}"
+export CONNECTIVITY_PROBE_WWAN_RADIO="${WWAN_RADIO}"
+export CONNECTIVITY_PROBE_WIFI_CONNECTED="$([[ "$WIFI_CONNECTED" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_DEFAULT_ROUTE_IFACE="${DEFAULT_IFACE}"
+export CONNECTIVITY_PROBE_TAILSCALE_ONLINE="$([[ "$TAILSCALE_ONLINE" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_TAILSCALE_IP="${TS_IP}"
+export CONNECTIVITY_PROBE_BACKEND_REACHABLE="$([[ "$BACKEND_OK" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_BACKEND_URL="${BACKEND_URL}"
+export CONNECTIVITY_PROBE_MODEM_DETECTED="$([[ "$MODEM_DETECTED" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_MODEM_ID="${MODEM_ID}"
+export CONNECTIVITY_PROBE_TTYUSB_PORTS="${TTYUSB_PORTS}"
+export CONNECTIVITY_PROBE_TTYACM_PORTS="${TTYACM_PORTS}"
+export CONNECTIVITY_PROBE_LSUSB_MODEM_SIGNATURE="$([[ "$LSUSB_MODEM_SIG" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_MMCLI_MODEMS="${MMCLI_MODEMS}"
+export CONNECTIVITY_PROBE_APN_CONFIGURED="$([[ -n "$APN" ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_CONNECT_ATTEMPTED="$([[ "$CONNECT_ATTEMPTED" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_CONNECT_SUCCESS="$([[ "$CONNECT_SUCCESS" == true ]] && echo true || echo false)"
+export CONNECTIVITY_PROBE_CELLULAR_CONNECTION="${CELL_CONN}"
+export CONNECTIVITY_PROBE_CELLULAR_STATE="${CELL_STATE}"
+export CONNECTIVITY_PROBE_ACTIVE_INTERFACES="${ACTIVE_IFACES}"
+export CONNECTIVITY_PROBE_WARNINGS="${PROBE_WARNINGS}"
+export CONNECTIVITY_PROBE_FAILURES="${PROBE_FAILURES}"
+
+if "$PYTHON" -m buoy.hardware.connectivity_probe; then
+  handover_pass "Wrote connectivity report"
+else
+  handover_warn "Could not write connectivity report to ${REPORT_PATH}"
+fi
 
 echo ""
 handover_print_summary
+
+if [[ "$MODEM_DETECTED" != true ]]; then
+  echo ""
+  echo "========== PITALK / 4G NEXT ACTIONS =========="
+  echo "PiTalk/Quectel module not detected on USB — 4G unavailable; Wi-Fi/Tailscale can remain active."
+  echo "  1. Confirm PiTalk HAT/module power LED or status indicator"
+  echo "  2. Press/hold PiTalk module power key for 3–4 seconds if required"
+  echo "  3. Confirm USB cable/header path between Pi and HAT (if using USB mode)"
+  echo "  4. Re-run: lsusb"
+  echo "  5. Re-run: dmesg -T | egrep -i \"quectel|eg25|ec25|ttyUSB|wwan|qmi|mbim|modem\""
+  echo "  6. Re-run this script: edge/pi/scripts/pi_pitalk_4g_bringup.sh"
+  echo "  7. Do not set APN until a modem is detected (mmcli -L or ttyUSB appears)"
+  echo "  8. Wi-Fi/Tailscale/backend handover path can stay up while troubleshooting 4G"
+fi
 
 if [[ "$REBOOT_IF_NEEDED" -eq 1 && "$HANDOVER_FAIL" -gt 0 ]]; then
   echo "Reboot requested (--reboot-if-needed) due to FAIL count."

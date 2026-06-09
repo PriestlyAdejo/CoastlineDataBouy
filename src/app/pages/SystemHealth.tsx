@@ -38,11 +38,37 @@ const processes = [
   { name: "wifi_manager", cpu: "0.0%", mem: "8 MB", status: "standby" },
 ];
 
+function connectivityLabel(ok: boolean | undefined, okText: string, badText: string): string {
+  if (ok === undefined) return "—";
+  return ok ? okText : badText;
+}
+
+function modemLabel(detected: boolean | undefined): string {
+  if (detected === undefined) return "—";
+  return detected ? "Detected" : "Not detected";
+}
+
+function cellularStateLabel(
+  modemDetected: boolean | undefined,
+  state: string | undefined,
+): string {
+  if (modemDetected === false) return "Not applicable (no modem)";
+  return state && state !== "—" ? state : "—";
+}
+
 export function SystemHealth() {
   const vm = useDeploymentView();
   const live = useLiveNode();
   const liveHealth = (live?.health ?? null) as Record<string, unknown> | null;
+  const liveNetwork = liveHealth?.network && typeof liveHealth.network === "object"
+    ? (liveHealth.network as Record<string, unknown>)
+    : null;
   const batterySource = (liveHealth?.battery_source as string) ?? "not_available";
+  const gnssLabel = live?.locationView?.label ?? "—";
+  const coreConnectivityOk = Boolean(
+    liveNetwork?.backend_reachable
+    && (liveNetwork?.online || liveNetwork?.tailscale_ip || liveNetwork?.tailscale),
+  );
   const health = vm?.health;
   const tel = vm?.telemetry;
   const storage = vm?.storage;
@@ -63,7 +89,29 @@ export function SystemHealth() {
           <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Embedded compute, power, storage, and watchdog monitoring")}</p>
         </div>
         <div className="flex items-center gap-3">
-          <StatusBadge status="success">All Systems Nominal</StatusBadge>
+          <StatusBadge
+            status={
+              isBrightonDemo()
+                ? "success"
+                : coreConnectivityOk
+                  ? liveNetwork?.modem_detected === false || live?.locationView?.kind === "no_gnss_device"
+                    ? "warning"
+                    : "success"
+                  : liveHealth
+                    ? "warning"
+                    : "neutral"
+            }
+          >
+            {isBrightonDemo()
+              ? "All Systems Nominal"
+              : coreConnectivityOk
+                ? liveNetwork?.modem_detected === false
+                  ? "Handover OK — 4G not detected"
+                  : "Handover connectivity OK"
+                : liveHealth
+                  ? "Connectivity degraded"
+                  : "Awaiting live health"}
+          </StatusBadge>
           <PinToOverviewButton widget={{ id: "health-battery", source: "System Health", label: "Battery Status", type: "metric" }} />
         </div>
       </div>
@@ -140,17 +188,22 @@ export function SystemHealth() {
         )}
       </div>
 
-      {!isBrightonDemo() && liveHealth?.network && typeof liveHealth.network === "object" && (
+      {!isBrightonDemo() && liveNetwork && (
         <Card title="Connectivity & 4G">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm font-mono dash-text-secondary">
             {[
-              ["Internet", (liveHealth.network as Record<string, unknown>).online ? "Online" : "Offline"],
-              ["Backend", (liveHealth.network as Record<string, unknown>).backend_reachable ? "Reachable" : "Unreachable"],
-              ["Tailscale IP", String((liveHealth.network as Record<string, unknown>).tailscale_ip ?? (liveHealth.network as Record<string, unknown>).tailscale ?? "—")],
-              ["Default route", String((liveHealth.network as Record<string, unknown>).default_route_iface ?? "—")],
-              ["Modem detected", (liveHealth.network as Record<string, unknown>).modem_detected ? "Yes" : "No"],
-              ["4G connection", String((liveHealth.network as Record<string, unknown>).connection_name ?? "—")],
-              ["4G state", String((liveHealth.network as Record<string, unknown>).connection_state ?? (liveHealth.network as Record<string, unknown>).modem_manager_state ?? "—")],
+              ["Wi-Fi / Internet", connectivityLabel(liveNetwork.online as boolean | undefined, "Online", "Offline")],
+              ["Backend", connectivityLabel(liveNetwork.backend_reachable as boolean | undefined, "Reachable", "Unreachable")],
+              ["Tailscale", connectivityLabel(Boolean(liveNetwork.tailscale_ip ?? liveNetwork.tailscale), "Online", "Offline")],
+              ["Tailscale IP", String(liveNetwork.tailscale_ip ?? liveNetwork.tailscale ?? "—")],
+              ["Default route", String(liveNetwork.default_route_iface ?? "—")],
+              ["4G modem", modemLabel(liveNetwork.modem_detected as boolean | undefined)],
+              ["4G connection", liveNetwork.modem_detected === false ? "Not available" : String(liveNetwork.connection_name ?? "—")],
+              ["4G state", cellularStateLabel(
+                liveNetwork.modem_detected as boolean | undefined,
+                String(liveNetwork.connection_state ?? liveNetwork.modem_manager_state ?? "—"),
+              )],
+              ["GNSS", gnssLabel],
             ].map(([label, value]) => (
               <div key={label} className="flex justify-between gap-4 border-b dash-border pb-2">
                 <span className="dash-text-muted uppercase text-xs tracking-wider">{label}</span>
@@ -158,9 +211,14 @@ export function SystemHealth() {
               </div>
             ))}
           </div>
-          {Array.isArray((liveHealth.network as Record<string, unknown>).active_interfaces) && (
+          {Array.isArray(liveNetwork.active_interfaces) && (
             <p className="mt-3 text-xs dash-text-muted">
-              Interfaces: {((liveHealth.network as Record<string, unknown>).active_interfaces as string[]).join(", ")}
+              Interfaces: {(liveNetwork.active_interfaces as string[]).join(", ")}
+            </p>
+          )}
+          {liveNetwork.modem_detected === false && (
+            <p className="mt-3 text-xs text-amber-300/90">
+              PiTalk/Quectel module not detected — Wi-Fi/Tailscale/backend may still be fine for handover. Run pi_pitalk_4g_bringup.sh on the Pi.
             </p>
           )}
         </Card>
