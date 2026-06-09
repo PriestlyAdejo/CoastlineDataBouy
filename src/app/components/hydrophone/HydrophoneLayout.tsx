@@ -106,7 +106,7 @@ export function HydrophoneLayout() {
             >
               <tab.icon size={13} />
               {tab.name}
-              <span className="text-[9px] uppercase">(future)</span>
+              <span className="text-[9px] uppercase font-semibold text-[var(--dash-warning)]">FUTURE / NOT ACTIVE</span>
             </NavLink>
           ))}
       </div>

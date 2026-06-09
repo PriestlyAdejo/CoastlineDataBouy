@@ -46,7 +46,10 @@ const severityConfig: Record<Severity, { icon: typeof Info; color: string; badge
 export function Alerts() {
   const vm = useDeploymentView();
   const alerts = useMemo<Alert[]>(() => {
-    if (!isBrightonDemo() || !vm) return clydeAlerts;
+    if (!isBrightonDemo()) {
+      return clydeAlerts.filter((a) => !a.title.toLowerCase().includes("acoustic spike"));
+    }
+    if (!vm) return clydeAlerts;
     return vm.alerts.map((a) => ({
       id: a.id,
       title: a.title,
@@ -76,8 +79,8 @@ export function Alerts() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Alerts & Notifications</h1>
-          <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("System alerts, acoustic events, and operational notifications")}</p>
+          <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Alerts & Notifications</h1>
+          <p className="dash-text-secondary text-sm mt-1">{getPageNodeSubtitle("System alerts and operational notifications")}</p>
         </div>
         <PinToOverviewButton widget={{ id: "alerts-summary", source: "Alerts", label: "Active Alerts", type: "metric" }} />
       </div>

@@ -20,7 +20,7 @@ export function Documentation() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Docs / API Docs</h1>
+        <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Docs / API Docs</h1>
         <p className="text-slate-400 text-sm mt-1">
           Friday handover: laptop backend + dashboard, Pi over Tailscale, local SSD audio. Cloud hosting is a future presentation stage, not required for Friday.
         </p>

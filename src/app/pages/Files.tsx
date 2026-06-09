@@ -97,7 +97,7 @@ export function Files() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Files & Downloads</h1>
+          <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Files & Downloads</h1>
           <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Browse, preview, and download indexed data files from local storage")}</p>
         </div>
         <div className="flex items-center gap-3">

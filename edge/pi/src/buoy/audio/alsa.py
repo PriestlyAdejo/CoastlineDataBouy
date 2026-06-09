@@ -11,10 +11,11 @@ class AlsaHw:
     device: int
     card_name: str
     device_name: str
+    alsa_id: str | None = None
 
     @property
     def hw_id(self) -> str:
-        return f"hw:{self.card},{self.device}"
+        return self.alsa_id if self.alsa_id is not None else f"hw:{self.card},{self.device}"
 
 
 ARECORD_DEVICE_RE = re.compile(

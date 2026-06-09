@@ -41,18 +41,32 @@ body,
 /* Projector / handover readable — high contrast, opaque surfaces */
 html.handover-readable {
   font-size: 17px;
-  --dash-panel-bg: #1e293b;
-  --dash-panel-border: #94a3b8;
-  --dash-text-secondary: #e2e8f0;
-  --dash-text-faint: #cbd5e1;
-  --dash-chart-axis: #94a3b8;
-  --dash-chart-label: #f1f5f9;
+  color-scheme: dark;
+  --dash-bg: #0b1220;
+  --dash-sidebar-bg: #111827;
+  --dash-header-bg: #111827;
+  --dash-panel-bg: #1f2937;
+  --dash-panel-border: #9ca3af;
+  --dash-text-primary: #f9fafb;
+  --dash-text-secondary: #e5e7eb;
+  --dash-text-faint: #d1d5db;
+  --dash-chart-grid: #6b7280;
+  --dash-chart-axis: #d1d5db;
+  --dash-chart-label: #f3f4f6;
+  --dash-chart-tooltip-bg: #1f2937;
+  --dash-chart-tooltip-border: #9ca3af;
   --dash-badge-live-bg: #047857;
   --dash-badge-live-text: #ecfdf5;
   --dash-badge-replay-bg: #b45309;
   --dash-badge-replay-text: #fffbeb;
   --dash-badge-offline-bg: #be123c;
   --dash-badge-offline-text: #fff1f2;
+  --dash-badge-neutral-bg: #374151;
+  --dash-badge-neutral-text: #f3f4f6;
+}
+
+html.handover-readable .text-\[9px\] {
+  font-size: 0.75rem !important;
 }
 
 html.handover-readable .text-\[10px\] {
@@ -61,6 +75,10 @@ html.handover-readable .text-\[10px\] {
 
 html.handover-readable .text-xs {
   font-size: 0.875rem !important;
+}
+
+html.handover-readable .text-sm {
+  font-size: 0.95rem !important;
 }
 
 /* Token utility classes */
@@ -86,6 +104,29 @@ html.handover-readable .text-xs {
   border-color: var(--dash-panel-border);
 }
 
+/* Card and table overflow — readable wrapping */
+.dash-shell .rounded-xl,
+.dash-shell .rounded-lg {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.dash-shell table td,
+.dash-shell table th {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.dash-shell .truncate {
+  max-width: 100%;
+}
+
+html.handover-readable .dash-shell h1,
+html.handover-readable .dash-shell h2,
+html.handover-readable .dash-shell h3 {
+  color: var(--dash-text-primary) !important;
+}
+
 /* Override low-contrast slate utilities inside dashboard shell */
 .dash-shell .text-slate-500,
 .dash-shell .text-slate-600 {
@@ -97,24 +138,81 @@ html.handover-readable .text-xs {
 .dash-shell .text-slate-300 {
   color: var(--dash-text-primary);
 }
+.dash-shell .text-slate-200,
 .dash-shell .text-slate-100 {
   color: var(--dash-text-primary);
 }
 
 html.handover-readable .dash-shell .text-slate-500,
 html.handover-readable .dash-shell .text-slate-600,
-html.handover-readable .dash-shell .text-slate-400 {
+html.handover-readable .dash-shell .text-slate-400,
+html.handover-readable .dash-shell .text-slate-300,
+html.handover-readable .dash-shell .text-slate-200,
+html.handover-readable .dash-shell .text-slate-100 {
   color: var(--dash-text-secondary) !important;
 }
 
+html.handover-readable .dash-shell .text-slate-200,
+html.handover-readable .dash-shell .text-slate-100 {
+  color: var(--dash-text-primary) !important;
+}
+
 html.handover-readable .border-slate-800,
-html.handover-readable .border-slate-700 {
+html.handover-readable .border-slate-700,
+html.handover-readable .border-slate-600 {
   border-color: var(--dash-panel-border) !important;
 }
 
-html.handover-readable .bg-slate-900\/40,
+html.handover-readable .bg-slate-800,
+html.handover-readable .bg-slate-900,
+html.handover-readable .bg-slate-900\/20,
 html.handover-readable .bg-slate-900\/30,
-html.handover-readable .bg-slate-900\/50 {
+html.handover-readable .bg-slate-900\/40,
+html.handover-readable .bg-slate-900\/50,
+html.handover-readable .bg-slate-900\/60,
+html.handover-readable .bg-slate-900\/95,
+html.handover-readable .bg-slate-800\/50 {
   background-color: var(--dash-panel-bg) !important;
   backdrop-filter: none !important;
+}
+
+html.handover-readable .bg-emerald-500\/5,
+html.handover-readable .bg-amber-500\/5,
+html.handover-readable .bg-cyan-500\/5,
+html.handover-readable .bg-rose-500\/5,
+html.handover-readable .bg-emerald-500\/10,
+html.handover-readable .bg-amber-500\/10,
+html.handover-readable .bg-cyan-500\/10,
+html.handover-readable .bg-cyan-500\/15 {
+  background-color: var(--dash-panel-bg) !important;
+}
+
+html.handover-readable .dash-shell nav button,
+html.handover-readable .dash-shell nav a {
+  color: var(--dash-text-secondary) !important;
+}
+
+html.handover-readable .dash-shell nav a.bg-slate-800,
+html.handover-readable .dash-shell nav a[class*="bg-slate-800"] {
+  background-color: #374151 !important;
+  color: var(--dash-accent) !important;
+}
+
+html.handover-readable .dash-shell header,
+html.handover-readable .dash-shell aside {
+  background-color: var(--dash-sidebar-bg) !important;
+}
+
+html.handover-readable .dash-shell .recharts-cartesian-axis-tick text {
+  fill: var(--dash-chart-axis) !important;
+  font-size: 12px !important;
+}
+
+html.handover-readable .dash-shell .recharts-legend-item-text {
+  color: var(--dash-chart-label) !important;
+}
+
+/* Disable subtle dot-grid background in readable mode */
+html.handover-readable .dash-shell .overflow-y-auto {
+  background-image: none !important;
 }

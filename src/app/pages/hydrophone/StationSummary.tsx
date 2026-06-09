@@ -35,8 +35,21 @@ function liveRecordingMeta(acoustics: unknown, health: unknown) {
   const h = (health && typeof health === "object" ? health : {}) as Record<string, unknown>;
   const storage = (h.storage ?? {}) as Record<string, unknown>;
   const fmt = (a.format ?? {}) as Record<string, unknown>;
-  const ts = String(a.ts_end ?? a.ts_start ?? "—");
+  const artifact = (a.artifact ?? {}) as Record<string, unknown>;
+  const device = (a.device ?? {}) as Record<string, unknown>;
+  const metrics = (a.display_metrics ?? {}) as Record<string, unknown>;
+  const tsStart = String(a.ts_start ?? "—");
+  const tsEnd = String(a.ts_end ?? a.ts_start ?? "—");
   const mount = storage.mountpoint ? String(storage.mountpoint) : "—";
+  const durationS =
+    tsStart !== "—" && tsEnd !== "—"
+      ? Math.max(0, (Date.parse(tsEnd) - Date.parse(tsStart)) / 1000)
+      : null;
+  const sizeBytes = artifact.size_bytes ?? a.size_bytes;
+  const sizeMb =
+    sizeBytes != null && Number.isFinite(Number(sizeBytes))
+      ? `${(Number(sizeBytes) / (1024 * 1024)).toFixed(2)} MB`
+      : "—";
   const formatStr = [
     fmt.sample_rate_hz != null ? `${fmt.sample_rate_hz} Hz` : null,
     fmt.channels != null ? `${fmt.channels} ch` : null,
@@ -44,7 +57,22 @@ function liveRecordingMeta(acoustics: unknown, health: unknown) {
   ]
     .filter(Boolean)
     .join(" · ") || "—";
-  return { ts, mount, formatStr, path: String(a.file_path ?? "—") };
+  return {
+    tsStart,
+    tsEnd,
+    durationS,
+    mount,
+    formatStr,
+    path: String(a.file_path ?? artifact.path ?? "—"),
+    device: String(device.hw_id ?? device.card_name ?? a.capture_device ?? "—"),
+    calibration: String(a.calibration_status ?? "uncalibrated"),
+    syncStatus: String(a.sync_status ?? "metadata_synced"),
+    sizeMb,
+    rms: metrics.rms_dbfs ?? metrics.rms_db,
+    peak: metrics.peak_dbfs ?? metrics.peak_db,
+    clippingPct: metrics.clipping_pct,
+    crestFactor: metrics.crest_factor,
+  };
 }
 
 export function StationSummary() {
@@ -90,15 +118,38 @@ export function StationSummary() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           <MetricCard title="Recording status" value={recording ? "Active" : "Idle"} trend="neutral" trendValue={recording ? "Chunk in progress or recent" : "No recent chunk"} icon={Volume2} status={recording ? "success" : "normal"} />
-          <MetricCard title="Latest chunk" value={meta.ts !== "—" ? meta.ts.slice(11, 19) : "—"} unit="UTC" trend="neutral" trendValue={meta.ts} icon={Clock} status="info" />
+          <MetricCard title="Latest chunk end" value={meta.tsEnd !== "—" ? meta.tsEnd.slice(11, 19) : "—"} unit="UTC" trend="neutral" trendValue={meta.tsEnd} icon={Clock} status="info" />
+          <MetricCard title="Chunk duration" value={meta.durationS != null ? String(meta.durationS) : "—"} unit="s" trend="neutral" trendValue="From metadata timestamps" icon={Clock} status="normal" />
           <MetricCard title="Format" value={meta.formatStr.split(" · ")[0] ?? "—"} unit="" trend="neutral" trendValue={meta.formatStr} icon={Database} status="normal" />
+          <MetricCard title="File size" value={meta.sizeMb.replace(" MB", "")} unit="MB" trend="neutral" trendValue="Latest chunk on SSD" icon={HardDrive} status="normal" />
+          <MetricCard title="Capture device" value={meta.device} unit="" trend="neutral" trendValue="ALSA hw id" icon={Radio} status="normal" />
           <MetricCard title="SSD mount" value={meta.mount} unit="" trend="neutral" trendValue={storage.mount_ok ? "Mounted" : "Check mount"} icon={HardDrive} status={storage.mount_ok ? "success" : "warning"} />
           <MetricCard title="Storage free" value={freeGb} unit="GB" trend="neutral" trendValue="On Pi SSD" icon={HardDrive} status="normal" />
-          <MetricCard title="Upload" value={live?.modeLabel === "LIVE API" ? "Synced" : "—"} unit="" trend="neutral" trendValue="Metadata to backend" icon={Zap} status="success" />
+          <MetricCard title="Calibration" value={meta.calibration} unit="" trend="neutral" trendValue="Not SPL-calibrated" icon={Volume2} status="warning" />
+          <MetricCard title="Sync status" value={live?.modeLabel === "LIVE API" ? "Synced" : "—"} unit="" trend="neutral" trendValue={meta.syncStatus} icon={Zap} status="success" />
         </div>
 
-        <div className="rounded-lg border px-4 py-3 text-sm dash-text-secondary" style={{ borderColor: "var(--dash-panel-border)" }}>
-          <strong className="dash-text-primary">Uncalibrated levels.</strong> SPL and band levels are not shown in dB re 1µPa unless a calibration certificate is applied. RMS/peak may appear as dBFS or dB rel. when provided in metadata.
+        {(meta.rms != null || meta.peak != null || meta.clippingPct != null || meta.crestFactor != null) && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {meta.rms != null && (
+              <MetricCard title="RMS level" value={Number(meta.rms).toFixed(1)} unit="dBFS" trend="neutral" trendValue="Uncalibrated · dBFS" icon={BarChart3} status="warning" />
+            )}
+            {meta.peak != null && (
+              <MetricCard title="Peak level" value={Number(meta.peak).toFixed(1)} unit="dBFS" trend="neutral" trendValue="Uncalibrated · dBFS" icon={BarChart3} status="warning" />
+            )}
+            {meta.clippingPct != null && (
+              <MetricCard title="Clipping" value={Number(meta.clippingPct).toFixed(2)} unit="%" trend="neutral" trendValue="From metadata if computed" icon={BarChart3} status="normal" />
+            )}
+            {meta.crestFactor != null && (
+              <MetricCard title="Crest factor" value={Number(meta.crestFactor).toFixed(2)} unit="" trend="neutral" trendValue="From metadata if computed" icon={BarChart3} status="normal" />
+            )}
+          </div>
+        )}
+
+        <div className="rounded-lg border px-4 py-3 text-sm dash-text-secondary break-words" style={{ borderColor: "var(--dash-panel-border)" }}>
+          <strong className="dash-text-primary">Raw SSD recording proof.</strong>{" "}
+          Local path: <span className="font-mono dash-text-primary">{meta.path}</span>.{" "}
+          <strong className="dash-text-primary">Uncalibrated levels.</strong> SPL in dB re 1µPa is not claimed. RMS/peak shown only as dBFS when present in metadata.
         </div>
 
         <RawRecordingChunks />

@@ -499,7 +499,52 @@ function SelectedNodeWidget({ node }: { node: DashboardNode }) {
   );
 }
 
+function liveAcousticSummary(acoustics: unknown, fileCount: number) {
+  const a = (acoustics && typeof acoustics === "object" ? acoustics : {}) as Record<string, unknown>;
+  const fmt = (a.format ?? {}) as Record<string, unknown>;
+  const artifact = (a.artifact ?? {}) as Record<string, unknown>;
+  const ts = String(a.ts_end ?? a.ts_start ?? "—");
+  const durationS =
+    a.ts_start && a.ts_end
+      ? Math.max(0, (Date.parse(String(a.ts_end)) - Date.parse(String(a.ts_start))) / 1000)
+      : null;
+  const sizeMb =
+    artifact.size_bytes != null
+      ? (Number(artifact.size_bytes) / (1024 * 1024)).toFixed(1)
+      : "—";
+  const formatBits = [
+    fmt.sample_rate_hz != null ? `${fmt.sample_rate_hz} Hz` : null,
+    fmt.channels != null ? `${fmt.channels} ch` : null,
+    fmt.bit_depth != null ? `${fmt.bit_depth}-bit` : null,
+  ]
+    .filter(Boolean)
+    .join(" · ") || "—";
+  const recent =
+    ts !== "—" && Number.isFinite(Date.parse(ts)) && Date.now() - Date.parse(ts) < 5 * 60 * 1000;
+  return { ts, durationS, sizeMb, formatBits, fileCount, recent };
+}
+
 function PinnedWidgetCard({ widget, onUnpin }: { widget: { id: string; source: string; label: string; type: string }; onUnpin: () => void }) {
+  const live = useLiveNode();
+  const [fileCount, setFileCount] = useState(0);
+
+  useEffect(() => {
+    if (widget.type !== "acoustic" && widget.id !== "hydrophone-acoustic") return;
+    let cancelled = false;
+    import("../api/client").then(({ createApiClient }) =>
+      createApiClient()
+        .listFiles()
+        .then((data) => {
+          if (!cancelled) setFileCount((data.items ?? []).length);
+        })
+        .catch(() => {
+          if (!cancelled) setFileCount(0);
+        }),
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [widget.id, widget.type, live?.lastUpdateIso]);
   // Render different content based on widget type/id
   if (widget.type === "chart" || widget.id === "env-water-temp") {
     return (
@@ -532,21 +577,39 @@ function PinnedWidgetCard({ widget, onUnpin }: { widget: { id: string; source: s
   }
 
   if (widget.type === "acoustic" || widget.id === "hydrophone-acoustic") {
+    const summary = liveAcousticSummary(live?.acoustics, fileCount);
     return (
-      <Card className="!bg-slate-900/60" title={
+      <Card title={
         <div className="flex items-center justify-between w-full">
           <span>{widget.label}</span>
           <div className="flex items-center gap-2">
-            <span className="text-[9px] font-mono text-slate-600 normal-case tracking-normal">{widget.source}</span>
-            <button onClick={onUnpin} className="text-slate-600 hover:text-slate-400 transition-colors"><X size={12} /></button>
+            <span className="text-[9px] font-mono dash-text-faint normal-case tracking-normal">{widget.source}</span>
+            <button onClick={onUnpin} className="dash-text-faint hover:dash-text-secondary transition-colors"><X size={12} /></button>
           </div>
         </div>
       }>
         <div className="grid grid-cols-3 gap-3 text-center mt-1">
-          <div><div className="text-[10px] font-mono text-slate-500">EVENTS</div><div className="text-lg font-mono text-slate-200">12</div><div className="text-[9px] text-slate-500">last 24h</div></div>
-          <div><div className="text-[10px] font-mono text-slate-500">SPL AVG</div><div className="text-lg font-mono text-slate-200">118</div><div className="text-[9px] text-slate-500">dB re 1μPa</div></div>
-          <div><div className="text-[10px] font-mono text-slate-500">RECORDING</div><div className="text-lg font-mono text-emerald-400">94%</div><div className="text-[9px] text-slate-500">effort</div></div>
+          <div>
+            <div className="text-[10px] font-mono dash-text-faint">STATUS</div>
+            <div className={clsx("text-lg font-mono", summary.recent ? "text-[var(--dash-success)]" : "dash-text-primary")}>
+              {summary.recent ? "Active" : "Idle"}
+            </div>
+            <div className="text-[9px] dash-text-faint">local SSD WAV</div>
+          </div>
+          <div>
+            <div className="text-[10px] font-mono dash-text-faint">CHUNKS</div>
+            <div className="text-lg font-mono dash-text-primary">{summary.fileCount}</div>
+            <div className="text-[9px] dash-text-faint">indexed files</div>
+          </div>
+          <div>
+            <div className="text-[10px] font-mono dash-text-faint">LATEST</div>
+            <div className="text-lg font-mono dash-text-primary">{summary.durationS != null ? `${summary.durationS}s` : "—"}</div>
+            <div className="text-[9px] dash-text-faint truncate">{summary.formatBits}</div>
+          </div>
         </div>
+        <p className="text-[10px] font-mono dash-text-faint mt-3 text-center">
+          Uncalibrated raw recording · metadata sync only
+        </p>
       </Card>
     );
   }

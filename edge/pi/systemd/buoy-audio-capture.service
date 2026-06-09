@@ -2,20 +2,19 @@
 Description=Buoy hydrophone audio capture (arecord chunking)
 After=network-online.target local-fs.target sound.target
 Wants=network-online.target local-fs.target sound.target
-RequiresMountsFor=/mnt/ssd/buoy
+RequiresMountsFor=@DATA_DIR@
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-WorkingDirectory=/opt/buoy/CoastlineDataBouy
+User=@SERVICE_USER@
+Group=@SERVICE_USER@
+WorkingDirectory=@REPO_ROOT@
 EnvironmentFile=/etc/buoy/buoy.env
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/opt/buoy/CoastlineDataBouy/.venv/bin/python -m buoy.services.audio_capture
+ExecStart=@PYTHON@ -m buoy.services.audio_capture
 Restart=always
 RestartSec=5
 Nice=5
 
 [Install]
 WantedBy=multi-user.target
-

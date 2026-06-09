@@ -2,19 +2,18 @@
 Description=Buoy DS18B20 polling service
 After=local-fs.target
 Wants=local-fs.target
-RequiresMountsFor=/mnt/ssd/buoy
+RequiresMountsFor=@DATA_DIR@
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-WorkingDirectory=/opt/buoy/CoastlineDataBouy
+User=@SERVICE_USER@
+Group=@SERVICE_USER@
+WorkingDirectory=@REPO_ROOT@
 EnvironmentFile=/etc/buoy/buoy.env
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/opt/buoy/CoastlineDataBouy/.venv/bin/python -m buoy.services.ds18b20d
+ExecStart=@PYTHON@ -m buoy.services.ds18b20d
 Restart=always
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
-

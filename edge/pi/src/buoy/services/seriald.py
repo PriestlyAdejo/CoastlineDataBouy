@@ -52,16 +52,37 @@ def main() -> None:
     pub_sock_path = settings.paths.base_dir / "run" / "seriald_pub.sock"
     cmd_sock_path = settings.paths.base_dir / "run" / "seriald_cmd.sock"
 
-    port = (
-        detect_serial_port(settings.serial.port, settings.serial.baud, settings.serial.read_timeout_s)
-        if settings.serial.auto_detect
-        else settings.serial.port
-    )
+    explicit_port = os.getenv("BUOY_SERIAL_PORT")
+    use_explicit = bool(explicit_port)
+    if settings.serial.auto_detect and not use_explicit:
+        port = detect_serial_port(
+            settings.serial.port,
+            settings.serial.baud,
+            settings.serial.read_timeout_s,
+            require_parse=True,
+        )
+    elif settings.serial.auto_detect and use_explicit:
+        port = detect_serial_port(
+            settings.serial.port,
+            settings.serial.baud,
+            settings.serial.read_timeout_s,
+            require_parse=False,
+        )
+    else:
+        port = settings.serial.port
+
     baud = settings.serial.baud
     con = open_db(settings.paths.data_dir / "index" / "buoy.sqlite")
     init_db(con)
 
-    logger.info("opening uart port=%s baud=%s", port, baud)
+    logger.info(
+        "opening uart port=%s baud=%s jsonl_path=%s explicit_port=%s auto_detect=%s",
+        port,
+        baud,
+        out_path,
+        use_explicit,
+        settings.serial.auto_detect,
+    )
 
     sel = selectors.DefaultSelector()
     pub_srv = _bind_unix_server(pub_sock_path)
@@ -79,6 +100,7 @@ def main() -> None:
                 "a", encoding="utf-8"
             ) as f_raw:
                 last_log_s = 0.0
+                first_parse_logged = False
                 while True:
                     # 1) Serial read (blocking only up to timeout)
                     raw = ser.readline()
@@ -92,8 +114,20 @@ def main() -> None:
                             parsed = parse_serial_payload(line)
                             rec = parsed.payload
                             if rec is None:
-                                logger.warning("parse_failed reason=%s line=%r", parsed.reason, line[:200])
+                                logger.warning(
+                                    "parse_failed reason=%s line_preview=%r",
+                                    parsed.reason,
+                                    line[:200],
+                                )
                             else:
+                                if not first_parse_logged:
+                                    logger.info(
+                                        "first_parse_ok arduino_ms=%s source=%s parser_status=%s",
+                                        rec.get("arduino_ms"),
+                                        rec.get("source"),
+                                        rec.get("parser_status"),
+                                    )
+                                    first_parse_logged = True
                                 rec["node_id"] = settings.node_id
                                 payload = json.dumps(rec, separators=(",", ":")) + "\n"
                                 f_jsonl.write(payload)

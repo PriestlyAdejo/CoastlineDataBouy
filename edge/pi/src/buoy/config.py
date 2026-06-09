@@ -13,6 +13,15 @@ def _bool_env(name: str, default: bool) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _int_env(names: tuple[str, ...], default: int) -> int:
+    """Read the first set env var from *names* (preferred name first)."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is not None and raw.strip() != "":
+            return int(raw.strip())
+    return default
+
+
 class Paths(BaseModel):
     """
     Paths are intentionally explicit so we can safely redirect to SSD mounts.
@@ -154,7 +163,10 @@ def load_settings() -> EdgeSettings:
             sample_format=os.getenv(
                 "BUOY_AUDIO_FORMAT", AudioConfig.model_fields["sample_format"].default
             ),
-            chunk_s=int(os.getenv("BUOY_AUDIO_CHUNK_S", str(AudioConfig.model_fields["chunk_s"].default))),
+            chunk_s=_int_env(
+                ("BUOY_AUDIO_CHUNK_S", "BUOY_AUDIO_CHUNK_SECONDS"),
+                int(AudioConfig.model_fields["chunk_s"].default),
+            ),
             auto_detect=_bool_env(
                 "BUOY_AUDIO_AUTO_DETECT",
                 bool(AudioConfig.model_fields["auto_detect"].default),

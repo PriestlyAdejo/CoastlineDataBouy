@@ -1,6 +1,8 @@
 [console_scripts]
 buoy-audio-capture = buoy.services.audio_capture:main
 buoy-ds18b20d = buoy.services.ds18b20d:main
+buoy-gnssd = buoy.services.gnssd:main
+buoy-healthd = buoy.services.healthd:main
 buoy-indexd = buoy.services.indexd:main
 buoy-seriald = buoy.services.seriald:main
 buoy-uploader = buoy.services.uploader:main

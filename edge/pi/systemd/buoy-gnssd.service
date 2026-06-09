@@ -2,16 +2,16 @@
 Description=Buoy GNSS collector service
 After=local-fs.target network-online.target
 Wants=local-fs.target network-online.target
-RequiresMountsFor=/mnt/ssd/buoy
+RequiresMountsFor=@DATA_DIR@
 
 [Service]
 Type=simple
-User=buoy
-Group=buoy
-WorkingDirectory=/opt/buoy/CoastlineDataBouy
+User=@SERVICE_USER@
+Group=@SERVICE_USER@
+WorkingDirectory=@REPO_ROOT@
 EnvironmentFile=/etc/buoy/buoy.env
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/opt/buoy/CoastlineDataBouy/.venv/bin/python -m buoy.services.gnssd
+ExecStart=@PYTHON@ -m buoy.services.gnssd
 Restart=always
 RestartSec=5
 

@@ -51,7 +51,7 @@ export function Telemetry() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Telemetry & Communications</h1>
+          <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Telemetry & Communications</h1>
           <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Link health, packet delivery, cadence monitoring, and comms status")}</p>
         </div>
         <div className="flex items-center gap-3">

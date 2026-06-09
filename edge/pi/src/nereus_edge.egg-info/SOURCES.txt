@@ -5,10 +5,16 @@ src/buoy/logging.py
 src/buoy/audio/__init__.py
 src/buoy/audio/alsa.py
 src/buoy/audio/record.py
+src/buoy/hardware/gnss_detect.py
+src/buoy/hardware/serial_detect.py
 src/buoy/index/__init__.py
 src/buoy/index/sqlite_index.py
+src/buoy/parsing/nmea.py
+src/buoy/parsing/serial_payload.py
 src/buoy/services/audio_capture.py
 src/buoy/services/ds18b20d.py
+src/buoy/services/gnssd.py
+src/buoy/services/healthd.py
 src/buoy/services/indexd.py
 src/buoy/services/seriald.py
 src/buoy/services/uploader.py
@@ -23,4 +29,10 @@ src/nereus_edge.egg-info/dependency_links.txt
 src/nereus_edge.egg-info/entry_points.txt
 src/nereus_edge.egg-info/requires.txt
 src/nereus_edge.egg-info/top_level.txt
+tests/test_config_audio_chunk.py
+tests/test_gnss_no_fix.py
+tests/test_nmea_parser.py
+tests/test_serial_payload_parser.py
+tests/test_uploader_cursor.py
+tests/test_uploader_mapping.py
 tests/test_wave_analysis_smoke.py

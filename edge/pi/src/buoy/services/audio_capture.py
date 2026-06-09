@@ -1,10 +1,19 @@
 from __future__ import annotations
 
 import argparse
+import os
 
 from buoy.audio.record import CaptureParams, run_capture_loop
 from buoy.config import load_settings
 from buoy.logging import setup_logging
+
+
+def _chunk_s_env_source() -> str:
+    if os.getenv("BUOY_AUDIO_CHUNK_S") is not None:
+        return "BUOY_AUDIO_CHUNK_S"
+    if os.getenv("BUOY_AUDIO_CHUNK_SECONDS") is not None:
+        return "BUOY_AUDIO_CHUNK_SECONDS"
+    return "default"
 
 
 def main() -> None:
@@ -37,10 +46,11 @@ def main() -> None:
     index_db_path = settings.paths.data_dir / "index" / "buoy.sqlite"
 
     logger.info(
-        "starting capture node_id=%s out_dir=%s chunk_s=%s rate=%s format=%s",
+        "starting capture node_id=%s out_dir=%s chunk_s=%s chunk_s_source=%s rate=%s format=%s",
         settings.node_id,
         out_dir,
         params.chunk_s,
+        _chunk_s_env_source(),
         params.sample_rate_hz,
         params.format,
     )

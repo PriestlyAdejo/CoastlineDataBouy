@@ -79,7 +79,7 @@ function NavSection({ group }: { group: NavGroup }) {
     <div className="mb-1">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-3 py-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider hover:text-slate-400 transition-colors"
+        className="w-full flex items-center justify-between px-3 py-1.5 text-[10px] font-semibold dash-text-faint uppercase tracking-wider hover:dash-text-secondary transition-colors"
       >
         {group.label}
         {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
@@ -95,8 +95,8 @@ function NavSection({ group }: { group: NavGroup }) {
                 clsx(
                   "group flex items-center justify-between rounded-md px-3 py-1.5 text-sm transition-colors",
                   isActive
-                    ? "bg-slate-800 text-cyan-400"
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
+                    ? "text-[var(--dash-accent)] dash-panel-bg border dash-border"
+                    : "dash-text-secondary hover:dash-text-primary",
                 )
               }
             >
@@ -170,8 +170,8 @@ export function Layout() {
             <Radio size={15} />
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-semibold tracking-wide text-slate-100 uppercase">Project Nereus</span>
-            <span className="text-[10px] font-mono text-slate-500">v0.4.0-alpha</span>
+            <span className="text-xs font-semibold tracking-wide dash-text-primary uppercase">Project Nereus</span>
+            <span className="text-[10px] font-mono dash-text-faint">v0.4.0-alpha</span>
           </div>
         </div>
 
@@ -189,11 +189,11 @@ export function Layout() {
               <div className="absolute top-0 left-0 h-2 w-2 rounded-full bg-emerald-500 animate-ping"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-slate-500">SYS_STATUS</span>
-              <span className="text-[10px] font-semibold text-emerald-400">ONLINE — {activeNode}</span>
+              <span className="text-[10px] font-mono dash-text-faint">SYS_STATUS</span>
+              <span className="text-[10px] font-semibold text-[var(--dash-success)]">ONLINE — {activeNode}</span>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
+          <div className="flex items-center gap-3 text-[10px] font-mono dash-text-faint">
             <span>BATT: {sidebar?.battery ?? "87%"}</span>
             <span>{isBrightonDemo() ? `PHASE: ${sidebar?.phase ?? "—"}` : "LoRa: OK"}</span>
             <span>
@@ -216,8 +216,8 @@ export function Layout() {
           style={{ backgroundColor: "var(--dash-header-bg)", borderColor: "var(--dash-panel-border)" }}
         >
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-slate-500">Active Node:</span>
-            <div className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
+            <span className="text-xs font-mono dash-text-faint">Active Node:</span>
+            <div className="px-2 py-0.5 rounded text-xs font-mono font-medium dash-panel-bg dash-text-primary border dash-border">
               {activeDisplay}
             </div>
             {isBrightonDemo() && <ReplayControlPanel compact />}
@@ -230,13 +230,13 @@ export function Layout() {
                 {isBrightonDemo() ? "BRIGHTON REPLAY" : (live?.modeLabel ?? "LIVE API")}
               </span>
               {!isBrightonDemo() && live?.locationView && (
-                <span className="text-xs text-slate-300">{live.locationView.label}</span>
+                <span className="text-xs dash-text-secondary">{live.locationView.label}</span>
               )}
             </div>
           </div>
-          <div className="flex items-center gap-3 text-slate-400">
-            <span className="text-[10px] font-mono text-slate-600">{headerTime}</span>
-            <NavLink to="/alerts" className="hover:text-slate-200 transition-colors relative">
+          <div className="flex items-center gap-3 dash-text-secondary">
+            <span className="text-[10px] font-mono dash-text-faint">{headerTime}</span>
+            <NavLink to="/alerts" className="hover:dash-text-primary transition-colors relative">
               <Bell size={16} />
               <span className="absolute -top-1 -right-1 flex h-2 w-2 rounded-full bg-cyan-500 ring-2 ring-slate-950"></span>
             </NavLink>
@@ -247,13 +247,13 @@ export function Layout() {
                 "text-xs px-2 py-0.5 rounded border transition-colors",
                 handoverReadable
                   ? "border-cyan-500/50 text-cyan-300 bg-cyan-500/10"
-                  : "border-slate-700 text-slate-400 hover:text-slate-200",
+                  : "dash-border dash-text-secondary hover:dash-text-primary",
               )}
               title="Larger text and higher contrast for projector handover"
             >
               Readable
             </button>
-            <NavLink to="/settings" className="hover:text-slate-200 transition-colors">
+            <NavLink to="/settings" className="hover:dash-text-primary transition-colors">
               <Settings size={16} />
             </NavLink>
           </div>

@@ -117,7 +117,7 @@ export function Environment() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-100 tracking-tight">Environmental Sensing</h1>
+          <h1 className="text-2xl font-semibold dash-text-primary tracking-tight">Environmental Sensing</h1>
           <p className="text-slate-500 text-sm mt-1">{getPageNodeSubtitle("Active, installed, and available sensor modules")}</p>
         </div>
         <div className="flex items-center gap-3">

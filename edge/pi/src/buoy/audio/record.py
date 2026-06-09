@@ -46,6 +46,14 @@ def choose_device(explicit_hw: str | None = None) -> AlsaHw | None:
     for d in devs:
         if d.hw_id == hw:
             return d
+    if explicit_hw and hw == explicit_hw:
+        return AlsaHw(
+            card=-1,
+            device=-1,
+            card_name="explicit",
+            device_name=explicit_hw,
+            alsa_id=explicit_hw,
+        )
     return None
 
 
@@ -71,6 +79,8 @@ def record_chunk(
         str(seconds),
         str(out_wav_tmp),
     ]
+    logger = setup_logging("buoy.audio_capture")
+    logger.info("arecord cmd=%s", " ".join(cmd))
     subprocess.check_call(cmd)
 
 
