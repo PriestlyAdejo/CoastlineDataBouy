@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, useLocation, useOutlet } from "react-router";
 import { clsx } from "clsx";
 import { useLiveNode } from "../LiveNodeProvider";
 import { isBrightonDemo } from "../../lib/demoMode";
@@ -48,6 +48,8 @@ function ssdMounted(health: unknown): boolean {
 }
 
 export function HydrophoneLayout() {
+  const location = useLocation();
+  const outlet = useOutlet();
   const live = useLiveNode();
   const vm = useDeploymentView();
   const brighton = isBrightonDemo();
@@ -136,7 +138,9 @@ export function HydrophoneLayout() {
           ))}
       </div>
 
-      <Outlet />
+      <div key={location.pathname} className="min-w-0">
+        {outlet}
+      </div>
     </div>
   );
 }

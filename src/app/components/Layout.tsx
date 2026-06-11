@@ -1,4 +1,4 @@
-import { Outlet, NavLink, useLocation } from "react-router";
+import { NavLink, useLocation, useOutlet } from "react-router";
 import {
   Activity, Radio, LayoutDashboard, Waves, Cpu, Database, Bell, Settings,
   FileText, MapPin, Thermometer, Heart, Download, Compass, BookOpen,
@@ -123,6 +123,7 @@ const HANDOVER_READABLE_KEY = "nereus.handoverReadable";
 
 export function Layout() {
   const location = useLocation();
+  const outlet = useOutlet();
   const isDashboard = location.pathname === "/";
   const isFullScreen = isDashboard || location.pathname === "/map";
   const [handoverReadable, setHandoverReadable] = useState(() => {
@@ -277,17 +278,19 @@ export function Layout() {
               "overflow-y-auto bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMwZjE3MmEiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMWUyOTNiIi8+PC9zdmc+')]",
           )}
         >
-          {isFullScreen ? (
-            <div className="relative min-h-0 flex-1">
-              <div className="absolute inset-0 min-h-0">
-                <Outlet />
-              </div>
-            </div>
-          ) : (
-            <div className="mx-auto max-w-7xl px-8 py-6">
-              <Outlet />
-            </div>
-          )}
+          <div
+            key={location.pathname}
+            className={clsx(
+              "min-h-0 flex-1 flex flex-col",
+              isFullScreen ? "relative" : "mx-auto w-full max-w-7xl px-8 py-6",
+            )}
+          >
+            {isFullScreen ? (
+              <div className="absolute inset-0 min-h-0 overflow-hidden">{outlet}</div>
+            ) : (
+              <div className="min-h-0 flex-1">{outlet}</div>
+            )}
+          </div>
         </div>
       </main>
     </div>

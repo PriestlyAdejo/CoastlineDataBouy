@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { RootProviders } from "./components/RootProviders";
 import { Layout } from "./components/Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { DesignSystem } from "./pages/DesignSystem";
@@ -29,8 +30,11 @@ import { AnomalyQualityControl } from "./pages/hydrophone/AnomalyQualityControl"
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Layout,
+    Component: RootProviders,
     children: [
+      {
+        Component: Layout,
+        children: [
       { index: true, Component: Dashboard },
       { path: "telemetry", Component: Telemetry },
       {
@@ -61,6 +65,8 @@ export const router = createBrowserRouter([
       { path: "docs", Component: Documentation },
       { path: "settings", Component: SettingsPage },
       { path: "design-system", Component: DesignSystem },
+        ],
+      },
     ],
   },
 ]);
