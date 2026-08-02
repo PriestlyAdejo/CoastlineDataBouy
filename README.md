@@ -125,7 +125,7 @@ It did not demonstrate:
 
 ### 1. Create/update the Conda env (`buoy-dev`)
 
-From repo root (or from `scripts/` â€” scripts resolve repo root themselves):
+From repo root (or from `scripts/` — scripts resolve repo root themselves):
 
 ```bat
 scripts\setup_env_windows.bat
@@ -160,7 +160,7 @@ Then run `scripts\setup_env_windows.bat` again to re-run pip editable installs a
 ### 2. Interpreter in Cursor / VS Code
 
 - **Do not** commit a hard-coded `python.defaultInterpreterPath` (machine-specific).
-- After setup, choose the **`buoy-dev`** interpreter: **Ctrl+Shift+P** â†’ **Python: Select Interpreter** â†’ pick the one named `buoy-dev`.
+- After setup, choose the **`buoy-dev`** interpreter: **Ctrl+Shift+P** → **Python: Select Interpreter** → pick the one named `buoy-dev`.
 - The repoâ€™s `.vscode/settings.json` configures analysis paths for `apps/api/src` and `edge/pi/src` so imports resolve.
 
 ### 3. Run backend
@@ -241,4 +241,4 @@ npm run dev
 ## Development notes
 
 - The dashboard can use mock data; we migrate screens to the backend API over time.
-- The Pi stack is **offline-first**: record locally â†’ index â†’ upload when connected.
+- The Pi stack is **offline-first**: record locally → index → upload when connected.
