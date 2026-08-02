@@ -12,7 +12,7 @@ try:
 except ModuleNotFoundError:
     serial = None  # type: ignore[assignment,misc]
 
-from buoy.parsing.quectel_gnss import is_nmea_sentence, parse_at_response, parse_qgpsloc
+from buoy.parsing.quectel_gnss import is_nmea_sentence, parse_at_response
 
 
 def candidate_ports() -> list[str]:
