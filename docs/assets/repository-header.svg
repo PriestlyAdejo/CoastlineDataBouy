@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-label="Coastal buoy monitoring platform repository header">
+  <rect width="1200" height="320" fill="#0A0E12"/>
+  <rect x="1" y="1" width="1198" height="318" fill="none" stroke="#1B222B" stroke-width="2"/>
+  <text x="64" y="88" fill="#FFB000" font-family='ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace' font-size="22">$ ucl-meng / coastal-buoy</text>
+  <text x="64" y="160" fill="#E6EDF3" font-family='ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace' font-size="34" font-weight="700">Coastal Buoy Monitoring Platform</text>
+  <text x="64" y="210" fill="#22D3EE" font-family='ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace' font-size="22">offline-first sensing · edge · telemetry · dashboard</text>
+  <text x="64" y="262" fill="#9AA7B2" font-family='ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace' font-size="18">software and electronics lead · five-person team · completed prototype</text>
+</svg>
